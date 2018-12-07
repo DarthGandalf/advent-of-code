@@ -1,0 +1,8 @@
+[package]
+name = "day2"
+version = "0.1.0"
+authors = ["Alexey Sokolov <sokolov@google.com>"]
+edition = "2018"
+
+[dependencies]
+edit-distance = "2.0.1"
