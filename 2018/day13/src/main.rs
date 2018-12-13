@@ -23,14 +23,14 @@ impl LastDirection {
 struct CurrentDirection(char);
 
 #[derive(Debug)]
-struct Card {
+struct Cart {
 	x: usize,
 	y: usize,
 	curdir: CurrentDirection,
 	ldir: LastDirection,
 }
 
-impl Card {
+impl Cart {
 	fn step(&mut self, field: &Field) {
 		let adjusted_track = match field.0[self.y][self.x] {
 			'+' => {
@@ -95,24 +95,24 @@ impl Card {
 
 struct Field(Vec<Vec<char>>);
 
-fn parse(input: &str) -> (Field, Vec<Card>) {
+fn parse(input: &str) -> (Field, Vec<Cart>) {
 	let mut field = Field(Vec::new());
-	let mut cards = Vec::new();
+	let mut carts = Vec::new();
 	for (y, line) in input.lines().enumerate() {
 		field.0.push(line.chars().enumerate().map(|(x, c)| match c {
-			'>'|'<' => {cards.push(Card { x, y, curdir: CurrentDirection(c), ldir: LastDirection::Right}); '-'},
-			'^'|'v' => {cards.push(Card { x, y, curdir: CurrentDirection(c), ldir: LastDirection::Right}); '|'},
+			'>'|'<' => {carts.push(Cart { x, y, curdir: CurrentDirection(c), ldir: LastDirection::Right}); '-'},
+			'^'|'v' => {carts.push(Cart { x, y, curdir: CurrentDirection(c), ldir: LastDirection::Right}); '|'},
 			_ => c,
 		}).collect());
 	}
-	(field, cards)
+	(field, carts)
 }
 
 fn _solve1(input: &str) -> (usize, usize) {
-	let (field, mut cards) = parse(&input);
-	let mut positions : HashSet<_> = cards.iter().map(|c| (c.x, c.y)).collect();
+	let (field, mut carts) = parse(&input);
+	let mut positions : HashSet<_> = carts.iter().map(|c| (c.x, c.y)).collect();
 	loop {
-		for c in &mut cards {
+		for c in &mut carts {
 			positions.remove(&(c.x, c.y));
 			c.step(&field);
 			if positions.contains(&(c.x, c.y)) {
@@ -120,10 +120,10 @@ fn _solve1(input: &str) -> (usize, usize) {
 			}
 			positions.insert((c.x, c.y));
 		}
-		cards.sort_by_key(|c| (c.y, c.x));
+		carts.sort_by_key(|c| (c.y, c.x));
 /*		println!("{:?}", &positions);
 		let mut output = field.0.clone();
-		for c in &cards {
+		for c in &carts {
 			output[c.y][c.x] = c.curdir.0;
 		}
 		for l in output {
@@ -134,34 +134,34 @@ fn _solve1(input: &str) -> (usize, usize) {
 }
 
 fn _solve2(input: &str) -> (usize, usize) {
-	let (field, mut cards) = parse(&input);
+	let (field, mut carts) = parse(&input);
 	loop {
-		let mut positions : HashMap<_, _> = cards.iter().enumerate().map(|(i, c)| ((c.x, c.y), i)).collect();
-		let mut enabled_cards = vec![true; cards.len()];
-		for (i, c) in cards.iter_mut().enumerate() {
-			if !enabled_cards[i] {
+		let mut positions : HashMap<_, _> = carts.iter().enumerate().map(|(i, c)| ((c.x, c.y), i)).collect();
+		let mut enabled_carts = vec![true; carts.len()];
+		for (i, c) in carts.iter_mut().enumerate() {
+			if !enabled_carts[i] {
 				continue;
 			}
 			positions.remove(&(c.x, c.y));
 			c.step(&field);
 			if let Some(&other) = positions.get(&(c.x, c.y)) {
-				enabled_cards[i] = false;
-				enabled_cards[other] = false;
+				enabled_carts[i] = false;
+				enabled_carts[other] = false;
 				continue;
 			}
 			positions.insert((c.x, c.y), i);
 		}
-		let mut remaining_cards = Vec::new();
-		for (i, c) in cards.into_iter().enumerate() {
-			if enabled_cards[i] {
-				remaining_cards.push(c);
+		let mut remaining_carts = Vec::new();
+		for (i, c) in carts.into_iter().enumerate() {
+			if enabled_carts[i] {
+				remaining_carts.push(c);
 			}
 		}
-		cards = remaining_cards;
-		if cards.len() == 1 {
-			return (cards[0].x, cards[0].y);
+		carts = remaining_carts;
+		if carts.len() == 1 {
+			return (carts[0].x, carts[0].y);
 		}
-		cards.sort_by_key(|c| (c.y, c.x));
+		carts.sort_by_key(|c| (c.y, c.x));
 	}
 }
 
