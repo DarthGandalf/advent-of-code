@@ -61,12 +61,12 @@ impl Unit {
 				}
 			}
 			/*println!("{:?}", next_queue);
-			  for row in prev.iter() {
-			  for col in row.iter() {
-			  print!("{:?}", col)
-			  }
-			  println!();
-			  }*/
+			for row in prev.iter() {
+			for col in row.iter() {
+			print!("{:?}", col)
+			}
+			println!();
+			}*/
 			queue = next_queue;
 		}
 		targets_found.sort();
@@ -89,11 +89,11 @@ impl Unit {
 			(self.y, self.x + 1),
 			(self.y + 1, self.x),
 		]
-			.iter()
-			.filter_map(|&coord| units_map.get(&coord))
-			.filter(|&&n| units[n].race != self.race && units[n].hp > 0)
-			.map(|&n| n)
-			.collect();
+		.iter()
+		.filter_map(|&coord| units_map.get(&coord))
+		.filter(|&&n| units[n].race != self.race && units[n].hp > 0)
+		.map(|&n| n)
+		.collect();
 		enemies.sort_by_key(|&n| units[n].hp);
 		if let Some(enemy) = enemies.into_iter().next() {
 			let enemy = &mut units[enemy];
@@ -130,7 +130,7 @@ impl Battle {
 					'#' => Square::Wall,
 					_ => Square::Empty,
 				})
-			.collect();
+				.collect();
 			field.0.push(row);
 			for (x, c) in line.chars().enumerate() {
 				match c {
@@ -139,7 +139,7 @@ impl Battle {
 						y,
 						hp: 200,
 						race: Race(c),
-						power: if c == 'G' {3} else {elfpower}
+						power: if c == 'G' { 3 } else { elfpower },
 					}),
 					_ => {}
 				}
@@ -173,9 +173,9 @@ impl Battle {
 						Square::Empty => '.',
 						Square::Wall => '#',
 					})
-				.collect()
+					.collect()
 			})
-		.collect();
+			.collect();
 		for unit in &self.units {
 			v[unit.y][unit.x] = unit.race.0;
 		}
@@ -183,23 +183,21 @@ impl Battle {
 	}
 
 	fn over(&self) -> bool {
-		let have_e = self
-			.units
-			.iter()
-			.filter(|u| u.race == Race('E'))
-			.next()
-			.is_some();
-		let have_g = self
-			.units
-			.iter()
-			.filter(|u| u.race == Race('G'))
-			.next()
-			.is_some();
-		!have_e || !have_g
+		let have = |r| {
+			self.units
+				.iter()
+				.filter(|u| u.race == r && u.hp > 0)
+				.next()
+				.is_some()
+		};
+		!have(Race('E')) || !have(Race('G'))
 	}
 
-	fn round(&mut self) {
+	fn round(&mut self) -> bool {
 		for i in 0..self.units.len() {
+			if self.over() {
+				return true;
+			}
 			self.turn(i);
 		}
 		self.units.retain(|u| u.hp > 0);
@@ -211,6 +209,7 @@ impl Battle {
 			.filter(|&(_, u)| u.hp > 0)
 			.map(|(i, u)| ((u.y, u.x), i))
 			.collect();
+		return false;
 	}
 
 	fn turn(&mut self, i: usize) {
@@ -227,15 +226,17 @@ impl Battle {
 
 	fn outcome(&mut self) -> usize {
 		let mut counter = 0;
-		while !self.over() {
-			self.round();
+		loop {
+			if self.round() {
+				break;
+			}
 			counter += 1;
 			println!("counter={}", counter);
 			#[cfg(test)]
 			println!("{}", self.debug_string());
 			println!("{:?}", self.units.iter().map(|u| u.hp).collect::<Vec<_>>());
 		}
-		counter -= 1; // WTF
+		self.units.retain(|u| u.hp > 0);
 		self.units.iter().map(|u| u.hp as usize).sum::<usize>() * counter
 	}
 }
@@ -308,12 +309,12 @@ mod tests {
 		assert_eq!(
 			battle.units.iter().map(|u| u.hp).collect::<Vec<_>>(),
 			&[200, 197, 197, 200, 197, 197]
-			);
+		);
 		battle.round();
 		assert_eq!(
 			battle.units.iter().map(|u| u.hp).collect::<Vec<_>>(),
 			&[200, 200, 188, 194, 194, 194]
-			);
+		);
 		for _ in 2..23 {
 			battle.round();
 		}
@@ -321,15 +322,15 @@ mod tests {
 		assert_eq!(
 			battle.units.iter().map(|u| u.hp).collect::<Vec<_>>(),
 			&[200, 200, 131, 131, 131]
-			);
+		);
 	}
 
-	/*	#[test]
-		fn test_outcome_1() {
+	#[test]
+	fn test_outcome_1() {
 		let mut battle = Battle::parse_elf3(include_str!("../ex4-0.txt"));
 		assert_eq!(battle.outcome(), 27730);
 		assert_eq!(battle.debug_string(), include_str!("../ex4-47.txt"));
-		}*/
+	}
 
 	#[test]
 	fn test_outcome_2() {
@@ -338,7 +339,7 @@ mod tests {
 		assert_eq!(
 			battle.units.iter().map(|u| u.hp).collect::<Vec<_>>(),
 			&[200, 197, 185, 200, 200]
-			);
+		);
 		assert_eq!(battle.debug_string(), include_str!("../ex5-37.txt"));
 	}
 
@@ -349,7 +350,7 @@ mod tests {
 		assert_eq!(
 			battle.units.iter().map(|u| u.hp).collect::<Vec<_>>(),
 			&[164, 197, 200, 98, 200]
-			);
+		);
 		assert_eq!(battle.debug_string(), include_str!("../ex6-46.txt"));
 	}
 
@@ -360,7 +361,7 @@ mod tests {
 		assert_eq!(
 			battle.units.iter().map(|u| u.hp).collect::<Vec<_>>(),
 			&[200, 98, 200, 95, 200]
-			);
+		);
 		assert_eq!(battle.debug_string(), include_str!("../ex7-35.txt"));
 	}
 
@@ -371,7 +372,7 @@ mod tests {
 		assert_eq!(
 			battle.units.iter().map(|u| u.hp).collect::<Vec<_>>(),
 			&[200, 98, 38, 200]
-			);
+		);
 		assert_eq!(battle.debug_string(), include_str!("../ex8-54.txt"));
 	}
 
@@ -382,7 +383,7 @@ mod tests {
 		assert_eq!(
 			battle.units.iter().map(|u| u.hp).collect::<Vec<_>>(),
 			&[137, 200, 200, 200, 200]
-			);
+		);
 		assert_eq!(battle.debug_string(), include_str!("../ex9-20.txt"));
 	}
 
@@ -401,21 +402,18 @@ mod tests {
 	#[test]
 	fn test_power_3() {
 		let input = include_str!("../ex7-0.txt");
-		assert_eq!(_solve2(&input), 3384);
-		//assert_eq!(_solve2(&input), 3478);
+		assert_eq!(_solve2(&input), 3478);
 	}
 
 	#[test]
 	fn test_power_4() {
 		let input = include_str!("../ex8-0.txt");
-		assert_eq!(_solve2(&input), 6308);
-		//assert_eq!(_solve2(&input), 6474);
+		assert_eq!(_solve2(&input), 6474);
 	}
 
 	#[test]
 	fn test_power_5() {
 		let input = include_str!("../ex9-0.txt");
-		assert_eq!(_solve2(&input), 1102);
-		//assert_eq!(_solve2(&input), 1140);
+		assert_eq!(_solve2(&input), 1140);
 	}
 }
