@@ -7,3 +7,9 @@ edition = "2018"
 [dependencies]
 aoc-runner = "0.2.2"
 aoc-runner-derive = "0.2.2"
+gif = { version = "0.10.3", optional = true }
+quick-error = "1.2.2"
+
+[features]
+video = ["gif"]
+#default = ["video"]
