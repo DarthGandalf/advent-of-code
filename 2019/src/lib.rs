@@ -15,9 +15,9 @@ quick_error! {
 	}
 }
 
-mod day1;
-
-#[cfg(feature = "video")]
+#[macro_use]
 mod video;
+
+mod day1;
 
 aoc_runner_derive::aoc_lib! { year = 2019 }

@@ -9,6 +9,7 @@ aoc-runner = "0.2.2"
 aoc-runner-derive = "0.2.2"
 gif = { version = "0.10.3", optional = true }
 quick-error = "1.2.2"
+enum-iterator = "0.5.0"
 
 [features]
 video = ["gif"]
