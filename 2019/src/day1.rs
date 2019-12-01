@@ -6,13 +6,13 @@ fn parse(input: &str) -> Result<Vec<i32>, std::num::ParseIntError> {
 }
 
 fn fuel_for(mass: i32) -> i32 {
-	mass / 3 - 2
+	std::cmp::max(mass / 3 - 2, 0)
 }
 
 fn total_fuel_for(mass: i32) -> i32 {
 	std::iter::successors(Some(mass), |&m| {
 		let new = fuel_for(m);
-		if new < 0 {
+		if new <= 0 {
 			None
 		} else {
 			Some(new)
