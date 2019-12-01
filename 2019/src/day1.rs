@@ -5,33 +5,51 @@ fn parse(input: &str) -> Result<Vec<i32>, std::num::ParseIntError> {
 	input.lines().map(|l| l.parse()).collect()
 }
 
-palette!(Palette {
-	Red = &[0xFF, 0x00, 0x00],
-	Blue = &[0x00, 0x00, 0xFF],
-});
+fn fuel_for(mass: &i32) -> i32 {
+	mass / 3 - 2
+}
+
+fn total_fuel_for(mass: &i32) -> i32 {
+	let mut total = fuel_for(mass);
+	let mut new_mass = total.clone();
+	loop {
+		let next = fuel_for(&new_mass);
+		if next <= 0 {
+			break;
+		}
+		total += next;
+		new_mass = next;
+	}
+	total
+}
 
 #[aoc(day1, part1)]
-fn part1(freqs: &[i32]) -> Result<i32, crate::Error> {
-	#[cfg(feature = "video")]
-	let mut video = crate::video::Video::<Palette>::new("day1part1", 1, 2, 10)?;
-	#[cfg(feature = "video")]
-	for _ in 0..100 {
-		use Palette::*;
-		video.frame(vec![vec![Blue], vec![Red]].iter())?;
-		video.frame(vec![vec![Red], vec![Blue]].iter())?;
-	}
-	Ok(freqs.len() as i32)
+fn part1(masses: &[i32]) -> i32 {
+	masses.iter().map(fuel_for).sum()
+}
+
+#[aoc(day1, part2)]
+fn part2(masses: &[i32]) -> i32 {
+	masses.iter().map(total_fuel_for).sum()
 }
 
 #[cfg(test)]
 mod tests {
 	use super::*;
 
-	const INPUT: &str = "1\n3\n-1";
+	#[test]
+	fn part1_fuel() {
+		assert_eq!(fuel_for(&12), 2);
+		assert_eq!(fuel_for(&14), 2);
+		assert_eq!(fuel_for(&1969), 654);
+		assert_eq!(fuel_for(&100756), 33583);
+	}
 
 	#[test]
-	fn part1_example() {
-		let parsed = parse(INPUT).unwrap();
-		assert_eq!(part1(&parsed), 33);
+	fn part2_fuel() {
+		assert_eq!(total_fuel_for(&12), 2);
+		assert_eq!(total_fuel_for(&14), 2);
+		assert_eq!(total_fuel_for(&1969), 966);
+		assert_eq!(total_fuel_for(&100756), 50346);
 	}
 }

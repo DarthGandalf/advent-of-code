@@ -2,6 +2,7 @@ pub trait Palette: Copy + Into<u8> + enum_iterator::IntoEnumIterator {
 	fn color(self) -> &'static [u8; 3];
 }
 
+#[allow(unused_macros)]
 macro_rules! palette {
 	($p:ident {
 		$(
