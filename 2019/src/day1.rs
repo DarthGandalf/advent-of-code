@@ -10,17 +10,16 @@ fn fuel_for(mass: &i32) -> i32 {
 }
 
 fn total_fuel_for(mass: &i32) -> i32 {
-	let mut total = fuel_for(mass);
-	let mut new_mass = total.clone();
-	loop {
-		let next = fuel_for(&new_mass);
-		if next <= 0 {
-			break;
+	std::iter::successors(Some(*mass), |m| {
+		let new = fuel_for(m);
+		if new < 0 {
+			None
+		} else {
+			Some(new)
 		}
-		total += next;
-		new_mass = next;
-	}
-	total
+	})
+	.skip(1)
+	.sum()
 }
 
 #[aoc(day1, part1)]
