@@ -60,18 +60,31 @@ macro_rules! palette {
 	};
 }
 
-#[cfg(feature = "video")]
-pub struct Video<P: Palette> {
+#[allow(dead_code)]
+struct Video<P: Palette> {
 	width: u16,
 	height: u16,
 	scale: u16,
+	#[cfg(feature = "video")]
 	encoder: gif::Encoder<std::fs::File>,
 	sprites: std::collections::HashMap<P, Vec<u8>>,
 }
 
+#[allow(dead_code)]
+pub struct OptionalVideo<P: Palette>(Option<Video<P>>);
+
 #[cfg(feature = "video")]
-impl<'a, P: Palette + 'a> Video<P> {
-	pub fn new(name: &str, width: u16, height: u16, scale: u16) -> Result<Self, crate::Error> {
+impl<'a, P: Palette + 'a> OptionalVideo<P> {
+	pub fn new(
+		enabled: bool,
+		name: &str,
+		width: u16,
+		height: u16,
+		scale: u16,
+	) -> Result<Self, crate::Error> {
+		if !enabled {
+			return Ok(Self(None));
+		}
 		let mut color_map = Vec::new();
 		let mut known_colors: std::collections::HashMap<[u8; 3], u8> =
 			std::collections::HashMap::new();
@@ -115,34 +128,42 @@ impl<'a, P: Palette + 'a> Video<P> {
 		let mut encoder = gif::Encoder::new(image, width * scale, height * scale, &color_map)?;
 		use gif::SetParameter;
 		encoder.set(gif::Repeat::Infinite)?;
-		Ok(Self {
+		Ok(Self(Some(Video {
 			width,
 			height,
 			scale,
 			encoder,
 			sprites,
-		})
+		})))
 	}
+}
 
+#[cfg(feature = "video")]
+impl<'a, P: Palette + 'a> OptionalVideo<P> {
 	pub fn frame<I: Iterator<Item = &'a Vec<P>>>(&mut self, rows: I) -> Result<(), crate::Error> {
+		let this = if let Some(this) = &mut self.0 {
+			this
+		} else {
+			return Ok(());
+		};
 		let mut frame = gif::Frame::default();
-		frame.height = self.height * self.scale;
-		frame.width = self.width * self.scale;
+		frame.height = this.height * this.scale;
+		frame.width = this.width * this.scale;
 		let mut data: Vec<u8> = vec![0; frame.height as usize * frame.width as usize];
 		let mut offset = 0;
 		for row in rows {
-			for y in 0..self.scale {
+			for y in 0..this.scale {
 				for &color in row {
-					let img = self.sprites.get(&color)?;
-					for x in 0..self.scale {
-						data[offset] = img[y as usize * self.scale as usize + x as usize];
+					let img = this.sprites.get(&color)?;
+					for x in 0..this.scale {
+						data[offset] = img[y as usize * this.scale as usize + x as usize];
 						offset += 1;
 					}
 				}
 			}
 		}
 		frame.buffer = std::borrow::Cow::Owned(data);
-		self.encoder.write_frame(&frame)?;
+		this.encoder.write_frame(&frame)?;
 		Ok(())
 	}
 }
