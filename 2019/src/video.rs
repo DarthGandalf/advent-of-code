@@ -8,7 +8,6 @@ pub trait Palette:
 #[allow(dead_code)]
 pub const BLACK: [u8; 3] = [0, 0, 0];
 
-#[allow(unused_macros)]
 macro_rules! palette {
 	(@color $x:literal) => {
 		&crate::video::BLACK
