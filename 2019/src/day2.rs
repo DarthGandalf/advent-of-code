@@ -1,4 +1,5 @@
 use aoc_runner_derive::{aoc, aoc_generator};
+use rayon::prelude::*;
 
 #[aoc_generator(day2)]
 fn parse(input: &str) -> Result<Vec<i32>, std::num::ParseIntError> {
@@ -40,19 +41,23 @@ fn part1(program: &[i32]) -> Result<i32, crate::Error> {
 
 #[aoc(day2, part2)]
 fn part2(program: &[i32]) -> Result<i32, crate::Error> {
-	for noun in 0..100 {
+	if let Some(x) = (0..100).into_par_iter().find_map_any(|noun| {
 		for verb in 0..100 {
 			let mut attempt = program.to_vec();
 			attempt[1] = noun;
 			attempt[2] = verb;
 			if let Ok(()) = run(&mut attempt) {
 				if attempt[0] == 19690720 {
-					return Ok(100 * noun + verb);
+					return Some(100 * noun + verb);
 				}
 			}
 		}
+		None
+	}) {
+		Ok(x)
+	} else {
+		Err("No solution".to_string().into())
 	}
-	Err("No solution".to_string().into())
 }
 
 #[cfg(test)]

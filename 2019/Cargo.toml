@@ -8,9 +8,10 @@ edition = "2018"
 aoc-runner = "0.2.2"
 aoc-runner-derive = "0.2.2"
 image = { version = "0.22.3", optional = true }
-gif = { version = "*", optional = true }
+gif = { version = "0.10.3", optional = true }
 quick-error = "1.2.2"
 enum-iterator = "0.5.0"
+rayon = "1.2.1"
 
 [features]
 video = ["image", "gif"]
