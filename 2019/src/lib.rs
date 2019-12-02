@@ -7,6 +7,9 @@ extern crate quick_error;
 quick_error! {
 	#[derive(Debug)]
 	pub enum Error {
+		Str(err: String) {
+			from()
+		}
 		IO(err: std::io::Error) {
 			from()
 		}
@@ -19,6 +22,9 @@ quick_error! {
 quick_error! {
 	#[derive(Debug)]
 	pub enum Error {
+		Str(err: String) {
+			from()
+		}
 		IO(err: std::io::Error) {
 			from()
 		}
@@ -35,5 +41,6 @@ quick_error! {
 mod video;
 
 mod day1;
+mod day2;
 
 aoc_runner_derive::aoc_lib! { year = 2019 }
