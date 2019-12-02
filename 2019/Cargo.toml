@@ -7,10 +7,11 @@ edition = "2018"
 [dependencies]
 aoc-runner = "0.2.2"
 aoc-runner-derive = "0.2.2"
-gif = { version = "0.10.3", optional = true }
+image = { version = "0.22.3", optional = true }
+gif = { version = "*", optional = true }
 quick-error = "1.2.2"
 enum-iterator = "0.5.0"
 
 [features]
-video = ["gif"]
+video = ["image", "gif"]
 #default = ["video"]

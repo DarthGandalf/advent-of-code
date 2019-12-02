@@ -3,13 +3,29 @@
 extern crate quick_error;
 
 // Workaround for NoneError not converting to std Error
+#[cfg(not(feature = "video"))]
 quick_error! {
 	#[derive(Debug)]
 	pub enum Error {
-		Io(err: std::io::Error) {
+		IO(err: std::io::Error) {
 			from()
 		}
-		No(err: std::option::NoneError) {
+		None(err: std::option::NoneError) {
+			from()
+		}
+	}
+}
+#[cfg(feature = "video")]
+quick_error! {
+	#[derive(Debug)]
+	pub enum Error {
+		IO(err: std::io::Error) {
+			from()
+		}
+		None(err: std::option::NoneError) {
+			from()
+		}
+		Image(err: image::ImageError) {
 			from()
 		}
 	}
