@@ -1,13 +1,5 @@
 use aoc_runner_derive::{aoc, aoc_generator};
 
-palette!(Palette {
-	Empty = [0x00, 0x00, 0x00],
-	W1 = [0x00, 0x88, 0x00],
-	W2 = [0x00, 0x00, 0x88],
-	Center = [0xFF, 0xFF, 0xFF],
-	Both = [0xFF, 0x00, 0x00],
-});
-
 enum Direction {
 	Up,
 	Down,
@@ -113,6 +105,88 @@ fn part2iter(input: &(Wire, Wire)) -> Option<usize> {
 		.map(|d| d + 2)
 }
 
+palette!(Palette {
+	Empty = [0x00, 0x00, 0x00],
+	W1 = [0x00, 0x88, 0x00],
+	W2 = [0x00, 0x00, 0x88],
+	Center = [0xFF, 0xFF, 0xFF],
+	Both = [0xFF, 0x00, 0x00],
+});
+
+#[cfg(feature = "video")]
+fn video(input: &(Wire, Wire), name: &str) -> Result<(), crate::Error> {
+	let mut maxx = 0;
+	let mut maxy = 0;
+	let mut minx = 0;
+	let mut miny = 0;
+	let mut update_minmax = |x, y| {
+		if x < minx {
+			minx = x;
+		}
+		if x > maxx {
+			maxx = x;
+		}
+		if y < miny {
+			miny = y;
+		}
+		if y > maxy {
+			maxy = y;
+		}
+	};
+	let mut grid1 = std::collections::HashMap::<i32, std::collections::HashSet<i32>>::new();
+	for (x, y) in iter_wire(&input.0) {
+		update_minmax(x, y);
+		grid1.entry(y).or_default().insert(x);
+	}
+	let mut grid2 = std::collections::HashMap::<i32, std::collections::HashSet<i32>>::new();
+	for (x, y) in iter_wire(&input.1) {
+		update_minmax(x, y);
+		grid2.entry(y).or_default().insert(x);
+	}
+	let mut video = crate::video::OptionalVideo::<Palette>::new(
+		true,
+		name,
+		(maxx - minx + 1) as u16,
+		(maxy - miny + 1) as u16,
+		1,
+	)?;
+	video.frame((miny..=maxy).into_iter().map(|y| {
+		(minx..=maxx)
+			.into_iter()
+			.map(|x| {
+				let w1 = grid1
+					.get(&y)
+					.map(|row| row.contains(&x))
+					.unwrap_or_default();
+				let w2 = grid2
+					.get(&y)
+					.map(|row| row.contains(&x))
+					.unwrap_or_default();
+				use Palette::*;
+				if x == 0 && y == 0 {
+					Center
+				} else if w1 && w2 {
+					Both
+				} else if w1 {
+					W1
+				} else if w2 {
+					W2
+				} else {
+					Empty
+				}
+			})
+			.collect()
+	}))?;
+	Ok(())
+}
+
+#[aoc(day3, part2, video)]
+#[cfg(feature = "video")]
+fn big_video(input: &(Wire, Wire) /*, name: &str*/) -> Result<i32, crate::Error> {
+	video(input, "day3")?;
+	Ok(0)
+}
+
 #[cfg(test)]
 mod tests {
 	use super::*;
@@ -128,6 +202,8 @@ U62,R66,U55,R34,D71,R55,D58,R83",
 		};
 		assert_eq!(part1iter(&wires), Some(159));
 		assert_eq!(part2iter(&wires), Some(610));
+		#[cfg(feature = "video")]
+		assert_eq!(video(&wires, "day3-1"), Ok(()));
 	}
 
 	#[test]
@@ -141,5 +217,7 @@ U98,R91,D20,R16,D67,R40,U7,R15,U6,R7",
 		};
 		assert_eq!(part1iter(&wires), Some(135));
 		assert_eq!(part2iter(&wires), Some(410));
+		#[cfg(feature = "video")]
+		assert_eq!(video(&wires, "day3-2"), Ok(()));
 	}
 }
