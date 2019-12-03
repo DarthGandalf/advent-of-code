@@ -129,15 +129,15 @@ fn video(input: &(Wire, Wire), name: &str) -> Result<(), crate::Error> {
 			maxy = y;
 		}
 	};
-	let mut grid1 = std::collections::HashMap::<i32, std::collections::HashSet<i32>>::new();
+	let mut grid1 = std::collections::HashSet::<(i32, i32)>::new();
 	for (x, y) in iter_wire(&input.0) {
 		update_minmax(x, y);
-		grid1.entry(y).or_default().insert(x);
+		grid1.insert((x, y));
 	}
-	let mut grid2 = std::collections::HashMap::<i32, std::collections::HashSet<i32>>::new();
+	let mut grid2 = std::collections::HashSet::<(i32, i32)>::new();
 	for (x, y) in iter_wire(&input.1) {
 		update_minmax(x, y);
-		grid2.entry(y).or_default().insert(x);
+		grid2.insert((x, y));
 	}
 	let mut video = crate::video::OptionalVideo::<Palette>::new(
 		true,
@@ -150,14 +150,8 @@ fn video(input: &(Wire, Wire), name: &str) -> Result<(), crate::Error> {
 		(minx..=maxx)
 			.into_iter()
 			.map(|x| {
-				let w1 = grid1
-					.get(&y)
-					.map(|row| row.contains(&x))
-					.unwrap_or_default();
-				let w2 = grid2
-					.get(&y)
-					.map(|row| row.contains(&x))
-					.unwrap_or_default();
+				let w1 = grid1.contains(&(x, y));
+				let w2 = grid2.contains(&(x, y));
 				use Palette::*;
 				if x == 0 && y == 0 {
 					Center
