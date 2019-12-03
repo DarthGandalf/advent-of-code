@@ -139,7 +139,7 @@ impl<'a, P: Palette + 'a> OptionalVideo<P> {
 
 #[cfg(feature = "video")]
 impl<'a, P: Palette + 'a> OptionalVideo<P> {
-	pub fn frame<I: Iterator<Item = &'a Vec<P>>>(&mut self, rows: I) -> Result<(), crate::Error> {
+	pub fn frame<I: Iterator<Item = Vec<P>>>(&mut self, rows: I) -> Result<(), crate::Error> {
 		let this = if let Some(this) = &mut self.0 {
 			this
 		} else {
@@ -152,7 +152,7 @@ impl<'a, P: Palette + 'a> OptionalVideo<P> {
 		let mut offset = 0;
 		for row in rows {
 			for y in 0..this.scale {
-				for &color in row {
+				for color in &row {
 					let img = this.sprites.get(&color)?;
 					for x in 0..this.scale {
 						data[offset] = img[y as usize * this.scale as usize + x as usize];

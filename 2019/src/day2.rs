@@ -55,8 +55,8 @@ fn run(program: &mut Vec<i32>, _video: bool) -> Result<(), crate::Error> {
 			_ => return Err(format!("Position {} is unknown {}", pc, program[pc]).into()),
 		}
 		#[cfg(feature = "video")]
-		video.frame(
-			vec![program
+		video.frame(std::iter::once(
+			program
 				.iter()
 				.enumerate()
 				.map(|(i, _)| {
@@ -75,9 +75,8 @@ fn run(program: &mut Vec<i32>, _video: bool) -> Result<(), crate::Error> {
 						Other
 					}
 				})
-				.collect()]
-			.iter(),
-		)?;
+				.collect(),
+		))?;
 	}
 }
 
