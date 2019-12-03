@@ -68,16 +68,14 @@ fn iter_wire<'a>(wire: &'a Wire) -> impl Iterator<Item = (i32, i32)> + 'a {
 
 #[aoc(day3, part1, iterator)]
 fn part1iter(input: &(Wire, Wire)) -> Option<i32> {
-	let mut grid = std::collections::HashMap::<i32, std::collections::HashSet<i32>>::new();
+	let mut grid = std::collections::HashSet::<(i32, i32)>::new();
 	for (x, y) in iter_wire(&input.0) {
-		grid.entry(y).or_default().insert(x);
+		grid.insert((x, y));
 	}
 	let mut intersections = Vec::new();
 	for (x, y) in iter_wire(&input.1) {
-		if let Some(row) = grid.get(&y) {
-			if row.contains(&x) {
-				intersections.push(x.abs() + y.abs());
-			}
+		if grid.contains(&(x, y)) {
+			intersections.push(x.abs() + y.abs());
 		}
 	}
 	intersections.into_iter().filter(|d| d > &0).min()
@@ -85,16 +83,14 @@ fn part1iter(input: &(Wire, Wire)) -> Option<i32> {
 
 #[aoc(day3, part2, iterator)]
 fn part2iter(input: &(Wire, Wire)) -> Option<usize> {
-	let mut grid = std::collections::HashMap::<i32, std::collections::HashMap<i32, usize>>::new();
+	let mut grid = std::collections::HashMap::<(i32, i32), usize>::new();
 	for (dist, (x, y)) in iter_wire(&input.0).enumerate() {
-		grid.entry(y).or_default().insert(x, dist);
+		grid.insert((x, y), dist);
 	}
 	let mut intersections = Vec::new();
 	for (dist, (x, y)) in iter_wire(&input.1).enumerate() {
-		if let Some(row) = grid.get(&y) {
-			if let Some(other) = row.get(&x) {
-				intersections.push(dist + other);
-			}
+		if let Some(other) = grid.get(&(x, y)) {
+			intersections.push(dist + other);
 		}
 	}
 	intersections
