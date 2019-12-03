@@ -15,17 +15,17 @@ enum Direction {
 	Left,
 }
 
-struct Step {
+struct Segment {
 	dir: Direction,
 	len: u32,
 }
 
-struct Wire(Vec<Step>);
+struct Wire(Vec<Segment>);
 
 fn parse_wire(input: &str) -> Result<Wire, crate::Error> {
-	let steps: Result<Vec<Step>, crate::Error> = input
+	let segments: Result<Vec<Segment>, crate::Error> = input
 		.split(',')
-		.map(|s| -> Result<Step, crate::Error> {
+		.map(|s| -> Result<Segment, crate::Error> {
 			let dir = match s.chars().next()? {
 				'R' => Direction::Right,
 				'L' => Direction::Left,
@@ -34,10 +34,10 @@ fn parse_wire(input: &str) -> Result<Wire, crate::Error> {
 				_ => return Err(format!("Unknown direction {}", s).into()),
 			};
 			let len = s.split_at(1).1.parse()?;
-			Ok(Step { dir, len })
+			Ok(Segment { dir, len })
 		})
 		.collect();
-	Ok(Wire(steps?))
+	Ok(Wire(segments?))
 }
 
 #[aoc_generator(day3)]
@@ -48,52 +48,47 @@ fn parse(input: &str) -> Result<(Wire, Wire), crate::Error> {
 	Ok((wire1, wire2))
 }
 
-fn place_wire<'a, F: FnMut(i32, i32, i32) + 'a>(wire: &Wire, mut cb: F) {
+fn place_wire<'a, F: FnMut(i32, i32) + 'a>(wire: &Wire, mut cb: F) {
 	let mut x = 0;
 	let mut y = 0;
-	let mut total = 0;
 	for s in &wire.0 {
 		match s.dir {
 			Direction::Up => {
-				for yy in 1..=s.len {
-					total += 1;
-					cb(x, y - yy as i32, total);
+				for _ in 0..s.len {
+					y -= 1;
+					cb(x, y);
 				}
-				y -= s.len as i32;
 			}
 			Direction::Down => {
-				for yy in 1..=s.len {
-					total += 1;
-					cb(x, y + yy as i32, total);
+				for _ in 0..s.len {
+					y += 1;
+					cb(x, y);
 				}
-				y += s.len as i32;
 			}
 			Direction::Left => {
-				for xx in 1..=s.len {
-					total += 1;
-					cb(x - xx as i32, y, total);
+				for _ in 0..s.len {
+					x -= 1;
+					cb(x, y);
 				}
-				x -= s.len as i32;
 			}
 			Direction::Right => {
-				for xx in 1..=s.len {
-					total += 1;
-					cb(x + xx as i32, y, total);
+				for _ in 0..s.len {
+					x += 1;
+					cb(x, y);
 				}
-				x += s.len as i32;
 			}
 		}
 	}
 }
 
-#[aoc(day3, part1)]
-fn part1(input: &(Wire, Wire)) -> Option<i32> {
+#[aoc(day3, part1, callback)]
+fn part1cb(input: &(Wire, Wire)) -> Option<i32> {
 	let mut grid = std::collections::HashMap::<i32, std::collections::HashSet<i32>>::new();
-	place_wire(&input.0, |x, y, _| {
+	place_wire(&input.0, |x, y| {
 		grid.entry(y).or_default().insert(x);
 	});
 	let mut intersections = Vec::new();
-	place_wire(&input.1, |x, y, _| {
+	place_wire(&input.1, |x, y| {
 		if let Some(row) = grid.get(&y) {
 			if row.contains(&x) {
 				intersections.push(x.abs() + y.abs());
@@ -103,21 +98,99 @@ fn part1(input: &(Wire, Wire)) -> Option<i32> {
 	intersections.into_iter().filter(|d| d > &0).min()
 }
 
-#[aoc(day3, part2)]
-fn part2(input: &(Wire, Wire)) -> Option<i32> {
+#[aoc(day3, part2, callback)]
+fn part2cb(input: &(Wire, Wire)) -> Option<i32> {
 	let mut grid = std::collections::HashMap::<i32, std::collections::HashMap<i32, i32>>::new();
-	place_wire(&input.0, |x, y, total| {
-		grid.entry(y).or_default().insert(x, total);
+	let mut dist = 0;
+	place_wire(&input.0, |x, y| {
+		dist += 1;
+		grid.entry(y).or_default().insert(x, dist);
 	});
 	let mut intersections = Vec::new();
-	place_wire(&input.1, |x, y, total| {
+	let mut dist2 = 0;
+	place_wire(&input.1, |x, y| {
+		dist2 += 1;
 		if let Some(row) = grid.get(&y) {
 			if let Some(other) = row.get(&x) {
-				intersections.push(total + other);
+				intersections.push(dist2 + other);
 			}
 		}
 	});
 	intersections.into_iter().filter(|d| d > &0).min()
+}
+
+fn iter_wire<'a>(wire: &'a Wire) -> impl Iterator<Item = (i32, i32)> + 'a {
+	gen_iter::GenIter(move || {
+		let mut x = 0;
+		let mut y = 0;
+		for s in &wire.0 {
+			match s.dir {
+				Direction::Up => {
+					for _ in 0..s.len {
+						y -= 1;
+						yield (x, y);
+					}
+				}
+				Direction::Down => {
+					for _ in 0..s.len {
+						y += 1;
+						yield (x, y);
+					}
+				}
+				Direction::Left => {
+					for _ in 0..s.len {
+						x -= 1;
+						yield (x, y);
+					}
+				}
+				Direction::Right => {
+					for _ in 0..s.len {
+						x += 1;
+						yield (x, y);
+					}
+				}
+			}
+		}
+	})
+}
+
+#[aoc(day3, part1, iterator)]
+fn part1iter(input: &(Wire, Wire)) -> Option<i32> {
+	let mut grid = std::collections::HashMap::<i32, std::collections::HashSet<i32>>::new();
+	for (x, y) in iter_wire(&input.0) {
+		grid.entry(y).or_default().insert(x);
+	}
+	let mut intersections = Vec::new();
+	for (x, y) in iter_wire(&input.1) {
+		if let Some(row) = grid.get(&y) {
+			if row.contains(&x) {
+				intersections.push(x.abs() + y.abs());
+			}
+		}
+	}
+	intersections.into_iter().filter(|d| d > &0).min()
+}
+
+#[aoc(day3, part2, iterator)]
+fn part2iter(input: &(Wire, Wire)) -> Option<usize> {
+	let mut grid = std::collections::HashMap::<i32, std::collections::HashMap<i32, usize>>::new();
+	for (dist, (x, y)) in iter_wire(&input.0).enumerate() {
+		grid.entry(y).or_default().insert(x, dist);
+	}
+	let mut intersections = Vec::new();
+	for (dist, (x, y)) in iter_wire(&input.1).enumerate() {
+		if let Some(row) = grid.get(&y) {
+			if let Some(other) = row.get(&x) {
+				intersections.push(dist + other);
+			}
+		}
+	}
+	intersections
+		.into_iter()
+		.filter(|d| d > &0)
+		.min()
+		// enumerate() counts from 0
+		.map(|d| d + 2)
 }
 
 #[cfg(test)]
@@ -133,8 +206,10 @@ U62,R66,U55,R34,D71,R55,D58,R83",
 			Ok(wires) => wires,
 			Err(err) => panic!(err),
 		};
-		assert_eq!(part1(&wires), Some(159));
-		assert_eq!(part2(&wires), Some(610));
+		assert_eq!(part1cb(&wires), Some(159));
+		assert_eq!(part2cb(&wires), Some(610));
+		assert_eq!(part1iter(&wires), Some(159));
+		assert_eq!(part2iter(&wires), Some(610));
 	}
 
 	#[test]
@@ -146,7 +221,9 @@ U98,R91,D20,R16,D67,R40,U7,R15,U6,R7",
 			Ok(wires) => wires,
 			Err(err) => panic!(err),
 		};
-		assert_eq!(part1(&wires), Some(135));
-		assert_eq!(part2(&wires), Some(410));
+		assert_eq!(part1cb(&wires), Some(135));
+		assert_eq!(part2cb(&wires), Some(410));
+		assert_eq!(part1iter(&wires), Some(135));
+		assert_eq!(part2iter(&wires), Some(410));
 	}
 }
