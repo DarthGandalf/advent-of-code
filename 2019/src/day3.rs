@@ -48,77 +48,6 @@ fn parse(input: &str) -> Result<(Wire, Wire), crate::Error> {
 	Ok((wire1, wire2))
 }
 
-fn place_wire<'a, F: FnMut(i32, i32) + 'a>(wire: &Wire, mut cb: F) {
-	let mut x = 0;
-	let mut y = 0;
-	for s in &wire.0 {
-		match s.dir {
-			Direction::Up => {
-				for _ in 0..s.len {
-					y -= 1;
-					cb(x, y);
-				}
-			}
-			Direction::Down => {
-				for _ in 0..s.len {
-					y += 1;
-					cb(x, y);
-				}
-			}
-			Direction::Left => {
-				for _ in 0..s.len {
-					x -= 1;
-					cb(x, y);
-				}
-			}
-			Direction::Right => {
-				for _ in 0..s.len {
-					x += 1;
-					cb(x, y);
-				}
-			}
-		}
-	}
-}
-
-#[aoc(day3, part1, callback)]
-fn part1cb(input: &(Wire, Wire)) -> Option<i32> {
-	let mut grid = std::collections::HashMap::<i32, std::collections::HashSet<i32>>::new();
-	place_wire(&input.0, |x, y| {
-		grid.entry(y).or_default().insert(x);
-	});
-	let mut intersections = Vec::new();
-	place_wire(&input.1, |x, y| {
-		if let Some(row) = grid.get(&y) {
-			if row.contains(&x) {
-				intersections.push(x.abs() + y.abs());
-			}
-		}
-	});
-	intersections.into_iter().filter(|d| d > &0).min()
-}
-
-#[aoc(day3, part2, callback)]
-fn part2cb(input: &(Wire, Wire)) -> Option<i32> {
-	let mut grid = std::collections::HashMap::<i32, std::collections::HashMap<i32, i32>>::new();
-	let mut dist = 0;
-	place_wire(&input.0, |x, y| {
-		dist += 1;
-		grid.entry(y).or_default().insert(x, dist);
-	});
-	let mut intersections = Vec::new();
-	let mut dist2 = 0;
-	place_wire(&input.1, |x, y| {
-		dist2 += 1;
-		if let Some(row) = grid.get(&y) {
-			if let Some(other) = row.get(&x) {
-				intersections.push(dist2 + other);
-			}
-		}
-	});
-	intersections.into_iter().filter(|d| d > &0).min()
-}
-
 fn iter_wire<'a>(wire: &'a Wire) -> impl Iterator<Item = (i32, i32)> + 'a {
 	gen_iter::GenIter(move || {
 		let mut x = 0;
@@ -206,8 +135,6 @@ U62,R66,U55,R34,D71,R55,D58,R83",
 			Ok(wires) => wires,
 			Err(err) => panic!(err),
 		};
-		assert_eq!(part1cb(&wires), Some(159));
-		assert_eq!(part2cb(&wires), Some(610));
 		assert_eq!(part1iter(&wires), Some(159));
 		assert_eq!(part2iter(&wires), Some(610));
 	}
@@ -221,8 +148,6 @@ U98,R91,D20,R16,D67,R40,U7,R15,U6,R7",
 			Ok(wires) => wires,
 			Err(err) => panic!(err),
 		};
-		assert_eq!(part1cb(&wires), Some(135));
-		assert_eq!(part2cb(&wires), Some(410));
 		assert_eq!(part1iter(&wires), Some(135));
 		assert_eq!(part2iter(&wires), Some(410));
 	}
