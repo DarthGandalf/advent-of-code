@@ -182,7 +182,7 @@ fn video(input: &(Wire, Wire), name: &str) -> Result<(), crate::Error> {
 
 #[aoc(day3, part2, video)]
 #[cfg(feature = "video")]
-fn big_video(input: &(Wire, Wire) /*, name: &str*/) -> Result<i32, crate::Error> {
+fn big_video(input: &(Wire, Wire)) -> Result<i32, crate::Error> {
 	video(input, "day3")?;
 	Ok(0)
 }
