@@ -53,31 +53,22 @@ fn iter_wire<'a>(wire: &'a Wire) -> impl Iterator<Item = (i32, i32)> + 'a {
 		let mut x = 0;
 		let mut y = 0;
 		for s in &wire.0 {
-			match s.dir {
-				Direction::Up => {
-					for _ in 0..s.len {
+			for _ in 0..s.len {
+				match s.dir {
+					Direction::Up => {
 						y -= 1;
-						yield (x, y);
 					}
-				}
-				Direction::Down => {
-					for _ in 0..s.len {
+					Direction::Down => {
 						y += 1;
-						yield (x, y);
 					}
-				}
-				Direction::Left => {
-					for _ in 0..s.len {
+					Direction::Left => {
 						x -= 1;
-						yield (x, y);
 					}
-				}
-				Direction::Right => {
-					for _ in 0..s.len {
+					Direction::Right => {
 						x += 1;
-						yield (x, y);
 					}
 				}
+				yield (x, y);
 			}
 		}
 	})
