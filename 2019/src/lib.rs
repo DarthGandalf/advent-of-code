@@ -1,5 +1,6 @@
 #![feature(generators)]
 #![feature(try_trait)]
+#![feature(stmt_expr_attributes)]
 
 #[macro_use]
 extern crate quick_error;

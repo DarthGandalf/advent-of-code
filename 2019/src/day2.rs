@@ -97,7 +97,10 @@ fn part2(program: &[i32]) -> Result<i32, crate::Error> {
 			attempt[1] = noun;
 			attempt[2] = verb;
 			if let Ok(()) = run(&mut attempt, false) {
-				if attempt[0] == 19690720 {
+				if attempt[0]
+					== #[allow(clippy::inconsistent_digit_grouping)]
+					1969_07_20
+				{
 					return Some(100 * noun + verb);
 				}
 			}

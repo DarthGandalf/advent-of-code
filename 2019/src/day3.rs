@@ -78,7 +78,7 @@ fn part1iter(input: &(Wire, Wire)) -> Option<i32> {
 			intersections.push(x.abs() + y.abs());
 		}
 	}
-	intersections.into_iter().filter(|d| d > &0).min()
+	intersections.into_iter().filter(|&d| d > 0).min()
 }
 
 #[aoc(day3, part2, iterator)]
@@ -95,7 +95,7 @@ fn part2iter(input: &(Wire, Wire)) -> Option<usize> {
 	}
 	intersections
 		.into_iter()
-		.filter(|d| d > &0)
+		.filter(|&d| d > 0)
 		.min()
 		// enumerate() counts from 0
 		.map(|d| d + 2)
