@@ -24,13 +24,12 @@ fn part2(program: &[i32]) -> Result<i32, crate::Error> {
 			let mut attempt = program.to_vec();
 			attempt[1] = noun;
 			attempt[2] = verb;
-			if let Ok(_) = run(&mut attempt, &[], None) {
-				if attempt[0]
+			if run(&mut attempt, &[], None).is_ok()
+				&& attempt[0]
 					== #[allow(clippy::inconsistent_digit_grouping)]
 					1969_07_20
-				{
-					return Some(100 * noun + verb);
-				}
+			{
+				return Some(100 * noun + verb);
 			}
 		}
 		None

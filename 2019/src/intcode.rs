@@ -22,14 +22,17 @@ pub fn run(
 		#[cfg(feature = "video")]
 		let mut write = std::collections::HashSet::new();
 		let opcode = program[pc];
+		// dummy_read and dummy_write are only to silence warning that read_value and write_value shouldn't be mut while video feature is disabled
+		let mut dummy_read = 0;
 		let mut read_value = |index| -> i32 {
+			dummy_read = 0;
 			let mut mode = opcode / 100;
 			//println!("index {}", index);
 			for _ in 1..index {
 				mode /= 10;
 			}
 			let value = program[pc + index];
-			let result = if mode % 10 > 0 {
+			if mode % 10 > 0 {
 				#[cfg(feature = "video")]
 				read.insert(pc + index);
 				value
@@ -37,11 +40,12 @@ pub fn run(
 				#[cfg(feature = "video")]
 				read.insert(value as usize);
 				program[value as usize]
-			};
+			}
 			//println!("mode {} value={} result={}", mode, value, result);
-			result
 		};
+		let mut dummy_write = 0;
 		let mut write_value = |program: &mut Vec<i32>, index, value| {
+			dummy_write = 0;
 			let pos = program[pc + index] as usize;
 			#[cfg(feature = "video")]
 			write.insert(pos);
