@@ -64,6 +64,8 @@ impl PartialEq for Error {
 #[macro_use]
 mod video;
 
+mod intcode;
+
 mod day1;
 mod day2;
 mod day3;

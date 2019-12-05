@@ -140,8 +140,7 @@ fn video(input: &(Wire, Wire), name: &str) -> Result<(), crate::Error> {
 		grid2.insert((x, y));
 	}
 	let mut video = crate::video::OptionalVideo::<Palette>::new(
-		true,
-		name,
+		Some(name),
 		(maxx - minx + 1) as u16,
 		(maxy - miny + 1) as u16,
 		1,

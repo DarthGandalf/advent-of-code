@@ -75,15 +75,16 @@ pub struct OptionalVideo<P: Palette>(Option<Video<P>>);
 #[cfg(feature = "video")]
 impl<'a, P: Palette + 'a> OptionalVideo<P> {
 	pub fn new(
-		enabled: bool,
-		name: &str,
+		name: Option<&str>,
 		width: u16,
 		height: u16,
 		scale: u16,
 	) -> Result<Self, crate::Error> {
-		if !enabled {
+		let name = if let Some(name) = name {
+			name
+		} else {
 			return Ok(Self(None));
-		}
+		};
 		let mut color_map = Vec::new();
 		let mut known_colors: std::collections::HashMap<[u8; 3], u8> =
 			std::collections::HashMap::new();

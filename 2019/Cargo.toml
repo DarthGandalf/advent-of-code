@@ -18,4 +18,4 @@ pest_derive= "2.1.0"
 
 [features]
 video = ["image", "gif"]
-#default = ["video"]
+default = ["video"]
