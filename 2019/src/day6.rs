@@ -56,15 +56,15 @@ fn part1(input: &Input) -> i32 {
 
 #[aoc(day6, part2)]
 fn part2(input: &Input) -> Option<usize> {
-	let mut edges = std::collections::HashMap::<String, Vec<String>>::new();
+	let mut edges = std::collections::HashMap::<&str, Vec<&str>>::new();
 	for (x, y) in &input.0 {
-		edges.entry(x.to_string()).or_default().push(y.to_string());
-		edges.entry(y.to_string()).or_default().push(x.to_string());
+		edges.entry(x).or_default().push(y);
+		edges.entry(y).or_default().push(x);
 	}
 	pathfinding::prelude::bfs(
-		&"YOU".to_string(),
+		&"YOU",
 		|what| edges.get(what).unwrap_or(&Vec::new()).clone(),
-		|what| what == "SAN",
+		|what| what == &"SAN",
 	)
 	.map(|path| path.len() - 3)
 }
