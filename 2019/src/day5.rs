@@ -8,13 +8,13 @@ fn parse(input: &str) -> Result<Vec<i32>, std::num::ParseIntError> {
 }
 
 #[aoc(day5, part1)]
-fn part1(program: &[i32]) -> Result<(i32), crate::Error> {
+fn part1(program: &[i32]) -> Result<i32, crate::Error> {
 	let output = run_copy(program, &[1], Some("day5-1"))?.0;
 	Ok(output[output.len() - 1])
 }
 
 #[aoc(day5, part2)]
-fn part2(program: &[i32]) -> Result<(i32), crate::Error> {
+fn part2(program: &[i32]) -> Result<i32, crate::Error> {
 	let output = run_copy(program, &[5], Some("day5-2"))?.0;
 	Ok(output[output.len() - 1])
 }

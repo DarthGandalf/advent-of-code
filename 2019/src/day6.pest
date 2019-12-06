@@ -1,0 +1,3 @@
+object = { ASCII_ALPHANUMERIC+ }
+orbit = { object ~ ")" ~ object }
+input = { SOI ~ orbit ~ (NEWLINE ~ orbit)* ~ EOI }
