@@ -6,36 +6,38 @@ use pest::Parser;
 struct Day6Parser;
 
 #[derive(Debug)]
-struct Input(std::collections::HashMap<String, String>);
+struct Input(std::collections::HashMap<i32, i32>);
+
+fn parse_num(input: &str) -> Result<i32, std::num::ParseIntError> {
+	i32::from_str_radix(input, 36)
+}
 
 #[aoc_generator(day6)]
 fn parse(input: &str) -> Result<Input, crate::Error> {
 	let input = Day6Parser::parse(Rule::input, input)?.next()?;
-	let orbits: Result<std::collections::HashMap<String, String>, crate::Error> = input
+	let orbits: Result<std::collections::HashMap<i32, i32>, crate::Error> = input
 		.into_inner()
 		.filter(|pair| pair.as_rule() == Rule::orbit)
-		.map(|pair| -> Result<(String, String), crate::Error> {
+		.map(|pair| -> Result<(i32, i32), crate::Error> {
 			let mut orb = pair.into_inner();
-			let center = orb.next()?.as_str().to_string();
-			let object = orb.next()?.as_str().to_string();
+			let center = parse_num(orb.next()?.as_str())?;
+			let object = parse_num(orb.next()?.as_str())?;
 			Ok((object, center))
 		})
 		.collect();
 	Ok(Input(orbits?))
 }
 
-fn distance(
-	input: &Input,
-	what: String,
-	cache: &mut std::collections::HashMap<String, i32>,
-) -> i32 {
+fn distance(input: &Input, what: i32, cache: &mut std::collections::HashMap<i32, i32>) -> i32 {
 	if let Some(v) = cache.get(&what) {
 		return *v;
 	}
-	let result = if what == "COM" {
+	let result = if what == 16438
+	/* COM */
+	{
 		0
 	} else if let Some(parent) = input.0.get(&what) {
-		let result = distance(input, parent.to_string(), cache) + 1;
+		let result = distance(input, *parent, cache) + 1;
 		result
 	} else {
 		0
@@ -50,21 +52,23 @@ fn part1(input: &Input) -> i32 {
 	input
 		.0
 		.keys()
-		.map(|what| distance(input, what.to_string(), &mut cache))
+		.map(|&what| distance(input, what, &mut cache))
 		.sum()
 }
 
 #[aoc(day6, part2)]
 fn part2(input: &Input) -> Option<usize> {
-	let mut edges = std::collections::HashMap::<&str, Vec<&str>>::new();
-	for (x, y) in &input.0 {
+	let you = 44958;
+	let san = 36671;
+	let mut edges = std::collections::HashMap::<i32, Vec<i32>>::new();
+	for (&x, &y) in &input.0 {
 		edges.entry(x).or_default().push(y);
 		edges.entry(y).or_default().push(x);
 	}
 	pathfinding::prelude::bfs(
-		&"YOU",
+		&you,
 		|what| edges.get(what).unwrap_or(&Vec::new()).clone(),
-		|what| what == &"SAN",
+		|what| what == &san,
 	)
 	.map(|path| path.len() - 3)
 }
