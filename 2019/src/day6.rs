@@ -55,24 +55,18 @@ fn part1(input: &Input) -> i32 {
 }
 
 #[aoc(day6, part2)]
-fn part2(input: &Input) -> Option<i32> {
-	let mut edges = std::collections::HashMap::<String, Vec<(String, i32)>>::new();
+fn part2(input: &Input) -> Option<usize> {
+	let mut edges = std::collections::HashMap::<String, Vec<String>>::new();
 	for (x, y) in &input.0 {
-		edges
-			.entry(x.to_string())
-			.or_default()
-			.push((y.to_string(), 1));
-		edges
-			.entry(y.to_string())
-			.or_default()
-			.push((x.to_string(), 1));
+		edges.entry(x.to_string()).or_default().push(y.to_string());
+		edges.entry(y.to_string()).or_default().push(x.to_string());
 	}
-	let path = pathfinding::prelude::dijkstra(
+	pathfinding::prelude::bfs(
 		&"YOU".to_string(),
 		|what| edges.get(what).unwrap_or(&Vec::new()).clone(),
 		|what| what == "SAN",
-	)?;
-	Some(path.1 - 2)
+	)
+	.map(|path| path.len() - 3)
 }
 
 #[cfg(test)]
