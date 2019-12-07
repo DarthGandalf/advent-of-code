@@ -9,8 +9,9 @@ fn parse(input: &str) -> Result<Vec<i32>, std::num::ParseIntError> {
 
 #[aoc(day7, part1)]
 fn part1(program: &[i32]) -> Result<i32, crate::Error> {
-	let results: Result<Vec<i32>, crate::Error> = permute::permutations_of(&[0, 1, 2, 3, 4])
-		.map(|x| -> Result<i32, crate::Error> {
+	use fallible_iterator::FallibleIterator;
+	let result = fallible_iterator::convert(permute::permutations_of(&[0, 1, 2, 3, 4]).map(
+		|x| -> Result<i32, crate::Error> {
 			let mut signal = vec![0];
 			for &amp in x {
 				signal.insert(0, amp);
@@ -18,9 +19,10 @@ fn part1(program: &[i32]) -> Result<i32, crate::Error> {
 				signal = new_signal;
 			}
 			Ok(signal[0])
-		})
-		.collect();
-	Ok(results?.into_iter().max()?)
+		},
+	))
+	.max()??;
+	Ok(result)
 }
 
 #[cfg(test)]
