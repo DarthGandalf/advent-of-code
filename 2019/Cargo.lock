@@ -42,6 +42,7 @@ dependencies = [
  "gif 0.10.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "image 0.22.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "pathfinding 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "permute 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "pest 2.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "pest_derive 2.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "quick-error 1.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -380,6 +381,11 @@ dependencies = [
 ]
 
 [[package]]
+name = "permute"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
 name = "pest"
 version = "2.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -659,6 +665,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum num_cpus 1.11.1 (registry+https://github.com/rust-lang/crates.io-index)" = "76dac5ed2a876980778b8b85f75a71b6cbf0db0b1232ee12f826bccb00d09d72"
 "checksum opaque-debug 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "2839e79665f131bdb5782e51f2c6c9599c133c6098982a54c794358bf432529c"
 "checksum pathfinding 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "4bf90bbcaa527ca0d8e734ea1cdb3452f89d9b9f7cbe28ab2c832758f80170fa"
+"checksum permute 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "add5cf6a6a9e572d398fc2e73500305c18b6eb66c46cc730ee3737025a4e9209"
 "checksum pest 2.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "7e4fb201c5c22a55d8b24fef95f78be52738e5e1361129be1b5e862ecdb6894a"
 "checksum pest_derive 2.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "833d1ae558dc601e9a60366421196a8d94bc0ac980476d0b67e1d0988d72b2d0"
 "checksum pest_generator 2.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7b9fcf299b5712d06ee128a556c94709aaa04512c4dffb8ead07c5c998447fc0"
