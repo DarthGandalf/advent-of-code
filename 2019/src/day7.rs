@@ -2,7 +2,7 @@ use aoc_runner_derive::{aoc, aoc_generator};
 
 #[aoc_generator(day7)]
 fn parse(input: &str) -> Result<Vec<i32>, std::num::ParseIntError> {
-	input.split(',').map(|l| l.parse()).collect()
+	input.trim().split(',').map(|l| l.parse()).collect()
 }
 
 #[aoc(day7, part1)]
@@ -22,20 +22,46 @@ fn part1(program: &[i32]) -> Result<i32, crate::Error> {
 	.max()??;
 	Ok(result)
 }
-/*
+
 #[aoc(day7, part2)]
 fn part2(program: &[i32]) -> Result<i32, crate::Error> {
 	use fallible_iterator::FallibleIterator;
-	let result = fallible_iterator::convert(permute::permutations_of(&[0, 1, 2, 3, 4]).map(
-		|x| -> Result<i32, crate::Error> {
-			let x = 0;
-			Ok(0)
+	let result = fallible_iterator::convert(permute::permutations_of(&[5, 6, 7, 8, 9]).map(
+		|mut x| -> Result<i32, crate::Error> {
+			let (txa, rxa) = std::sync::mpsc::channel();
+			let (txab, rxab) = std::sync::mpsc::channel();
+			let (txbc, rxbc) = std::sync::mpsc::channel();
+			let (txcd, rxcd) = std::sync::mpsc::channel();
+			let (txde, rxde) = std::sync::mpsc::channel();
+			let (txe, rxe) = std::sync::mpsc::channel();
+			txa.send(*x.next()?)?;
+			txab.send(*x.next()?)?;
+			txbc.send(*x.next()?)?;
+			txcd.send(*x.next()?)?;
+			txde.send(*x.next()?)?;
+			txa.send(0)?;
+			let mut ampa = crate::intcode::Computer::new(program.to_vec(), rxa, txab);
+			let mut ampb = crate::intcode::Computer::new(program.to_vec(), rxab, txbc);
+			let mut ampc = crate::intcode::Computer::new(program.to_vec(), rxbc, txcd);
+			let mut ampd = crate::intcode::Computer::new(program.to_vec(), rxcd, txde);
+			let mut ampe = crate::intcode::Computer::new(program.to_vec(), rxde, txe);
+			std::thread::spawn(move || ampa.run(None));
+			std::thread::spawn(move || ampb.run(None));
+			std::thread::spawn(move || ampc.run(None));
+			std::thread::spawn(move || ampd.run(None));
+			std::thread::spawn(move || ampe.run(None));
+			let mut last = -1;
+			for z in rxe {
+				last = z;
+				let _ = txa.send(z);
+			}
+			Ok(last)
 		},
 	))
 	.max()??;
 	Ok(result)
 }
-*/
+
 #[cfg(test)]
 mod tests {
 	use super::*;
@@ -63,8 +89,28 @@ mod tests {
 	}
 
 	#[test]
+	fn test_part2() {
+		assert_eq!(
+			part2(&[
+				3, 26, 1001, 26, -4, 26, 3, 27, 1002, 27, 2, 27, 1, 27, 26, 27, 4, 27, 1001, 28,
+				-1, 28, 1005, 28, 6, 99, 0, 0, 5
+			]),
+			Ok(139629729)
+		);
+		assert_eq!(
+			part2(&[
+				3, 52, 1001, 52, -5, 52, 3, 53, 1, 52, 56, 54, 1007, 54, 5, 55, 1005, 55, 26, 1001,
+				54, -5, 54, 1105, 1, 12, 1, 53, 54, 53, 1008, 54, 0, 55, 1001, 55, 1, 55, 2, 53,
+				55, 53, 4, 53, 1001, 56, -1, 56, 1005, 56, 6, 99, 0, 0, 0, 0, 10
+			]),
+			Ok(18216)
+		);
+	}
+
+	#[test]
 	fn answers() {
 		let input = parse(include_str!("../input/2019/day7.txt")).unwrap();
 		assert_eq!(part1(&input), Ok(929800));
+		assert_eq!(part2(&input), Ok(15432220));
 	}
 }
