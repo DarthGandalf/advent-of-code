@@ -22,6 +22,12 @@ quick_error! {
 		IO(err: std::io::Error) {
 			from()
 		}
+		ThrRecv(err: std::sync::mpsc::RecvError) {
+			from()
+		}
+		ThrSend(err: std::sync::mpsc::SendError<crate::intcode::Type>) {
+			from()
+		}
 		None(err: std::option::NoneError) {
 			from()
 		}
@@ -38,6 +44,12 @@ quick_error! {
 			from()
 		}
 		IO(err: std::io::Error) {
+			from()
+		}
+		ThrRecv(err: std::sync::mpsc::RecvError) {
+			from()
+		}
+		ThrSend(err: std::sync::mpsc::SendError) {
 			from()
 		}
 		None(err: std::option::NoneError) {

@@ -209,4 +209,11 @@ U98,R91,D20,R16,D67,R40,U7,R15,U6,R7",
 		#[cfg(feature = "video")]
 		assert_eq!(video(&wires, "day3-2"), Ok(()));
 	}
+
+	#[test]
+	fn answers() {
+		let input = parse(include_str!("../input/2019/day3.txt")).unwrap();
+		assert_eq!(part1iter(&input), Some(1264));
+		assert_eq!(part2iter(&input), Some(37390));
+	}
 }

@@ -1,7 +1,5 @@
 use aoc_runner_derive::{aoc, aoc_generator};
 
-use crate::intcode::run_copy;
-
 #[aoc_generator(day7)]
 fn parse(input: &str) -> Result<Vec<i32>, std::num::ParseIntError> {
 	input.split(',').map(|l| l.parse()).collect()
@@ -15,7 +13,7 @@ fn part1(program: &[i32]) -> Result<i32, crate::Error> {
 			let mut signal = vec![0];
 			for &amp in x {
 				signal.insert(0, amp);
-				let new_signal = run_copy(program, &signal, None)?.0;
+				let new_signal = crate::intcode::run_copy(program, &signal, None)?.0;
 				signal = new_signal;
 			}
 			Ok(signal[0])
@@ -24,7 +22,20 @@ fn part1(program: &[i32]) -> Result<i32, crate::Error> {
 	.max()??;
 	Ok(result)
 }
-
+/*
+#[aoc(day7, part2)]
+fn part2(program: &[i32]) -> Result<i32, crate::Error> {
+	use fallible_iterator::FallibleIterator;
+	let result = fallible_iterator::convert(permute::permutations_of(&[0, 1, 2, 3, 4]).map(
+		|x| -> Result<i32, crate::Error> {
+			let x = 0;
+			Ok(0)
+		},
+	))
+	.max()??;
+	Ok(result)
+}
+*/
 #[cfg(test)]
 mod tests {
 	use super::*;
@@ -49,5 +60,11 @@ mod tests {
 			]),
 			Ok(65210)
 		);
+	}
+
+	#[test]
+	fn answers() {
+		let input = parse(include_str!("../input/2019/day7.txt")).unwrap();
+		assert_eq!(part1(&input), Ok(929800));
 	}
 }

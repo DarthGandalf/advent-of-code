@@ -55,4 +55,11 @@ mod tests {
 		assert_eq!(total_fuel_for(1969), 966);
 		assert_eq!(total_fuel_for(100756), 50346);
 	}
+
+	#[test]
+	fn answers() {
+		let input = parse(include_str!("../input/2019/day1.txt")).unwrap();
+		assert_eq!(part1(&input), 3273715);
+		assert_eq!(part2(&input), 4907702);
+	}
 }

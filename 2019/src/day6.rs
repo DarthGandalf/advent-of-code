@@ -17,7 +17,7 @@ fn parse_num(input: &str) -> i32 {
 
 #[aoc_generator(day6)]
 fn parse(input: &str) -> Result<Input, crate::Error> {
-	let input = Day6Parser::parse(Rule::input, input)?.next()?;
+	let input = Day6Parser::parse(Rule::input, input.trim())?.next()?;
 	let orbits: Result<std::collections::HashMap<i32, i32>, crate::Error> = input
 		.into_inner()
 		.filter(|pair| pair.as_rule() == Rule::orbit)
@@ -124,5 +124,12 @@ I)SAN",
 			Err(err) => panic!("{:?}", err),
 		};
 		assert_eq!(part2(&input), Some(4));
+	}
+
+	#[test]
+	fn answers() {
+		let input = parse(include_str!("../input/2019/day6.txt")).unwrap();
+		assert_eq!(part1(&input), 144909);
+		assert_eq!(part2(&input), Some(259));
 	}
 }

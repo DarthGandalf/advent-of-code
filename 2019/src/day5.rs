@@ -4,7 +4,7 @@ use crate::intcode::run_copy;
 
 #[aoc_generator(day5)]
 fn parse(input: &str) -> Result<Vec<i32>, std::num::ParseIntError> {
-	input.split(',').map(|l| l.parse()).collect()
+	input.trim().split(',').map(|l| l.parse()).collect()
 }
 
 #[aoc(day5, part1)]
@@ -24,7 +24,7 @@ mod tests {
 	use super::*;
 
 	#[test]
-	fn part1() {
+	fn test_part1() {
 		assert_eq!(
 			run_copy(&[3, 0, 4, 0, 99], &[444], None),
 			Ok((vec![444], vec![444, 0, 4, 0, 99]))
@@ -121,5 +121,12 @@ mod tests {
 		assert_eq!(run(8), 1000);
 		assert_eq!(run(9), 1001);
 		assert_eq!(run(10), 1001);
+	}
+
+	#[test]
+	fn answers() {
+		let input = parse(include_str!("../input/2019/day5.txt")).unwrap();
+		assert_eq!(part1(&input), Ok(7839346));
+		assert_eq!(part2(&input), Ok(447803));
 	}
 }

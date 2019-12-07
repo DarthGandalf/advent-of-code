@@ -76,4 +76,11 @@ mod tests {
 		assert!(!check_pass2(123444));
 		assert!(check_pass2(111122));
 	}
+
+	#[test]
+	fn answers() {
+		let input = parse(include_str!("../input/2019/day4.txt")).unwrap();
+		assert_eq!(part1(&input), 1650);
+		assert_eq!(part2(&input), 1129);
+	}
 }
