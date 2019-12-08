@@ -49,7 +49,7 @@ quick_error! {
 		ThrRecv(err: std::sync::mpsc::RecvError) {
 			from()
 		}
-		ThrSend(err: std::sync::mpsc::SendError) {
+		ThrSend(err: std::sync::mpsc::SendError<crate::intcode::Type>) {
 			from()
 		}
 		None(err: std::option::NoneError) {

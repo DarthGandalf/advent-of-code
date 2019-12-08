@@ -34,7 +34,8 @@ impl Computer {
 	pub fn run(&mut self, _video: Option<&str>) -> Result<(), crate::Error> {
 		let mut pc = 0;
 		#[cfg(feature = "video")]
-		let mut video = crate::video::OptionalVideo::<Palette>::new(_video, program.len() as u16, 1, 10)?;
+		let mut video =
+			crate::video::OptionalVideo::<Palette>::new(_video, self.memory.len() as u16, 1, 10)?;
 		loop {
 			#[cfg(feature = "video")]
 			let mut read = std::collections::HashSet::new();
@@ -121,7 +122,7 @@ impl Computer {
 			}
 			#[cfg(feature = "video")]
 			video.frame(std::iter::once(
-				program
+				self.memory
 					.iter()
 					.enumerate()
 					.map(|(i, _)| {
