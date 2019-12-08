@@ -1,0 +1,4 @@
+pixel = { '0'..'2' }
+row = { pixel{25} }
+layer = { row{6} }
+input = { SOI ~ layer+ ~ EOI }

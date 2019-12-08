@@ -18,6 +18,7 @@ pest_derive = "2.1.0"
 pathfinding = "2.0.0"
 permute = "0.1.0"
 fallible-iterator = "0.2.0"
+itertools = "0.8.2"
 
 [features]
 video = ["image", "gif"]
