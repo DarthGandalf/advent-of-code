@@ -79,18 +79,23 @@ fn part2(input: &Image) -> String {
 	)
 }
 
-#[test]
-fn answers() {
-	let input = parse(include_str!("../input/2019/day8.txt")).unwrap();
-	assert_eq!(part1(&input), 1703);
-	assert_eq!(
-		part2(&input),
-		"
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn answers() {
+		let input = parse(include_str!("../input/2019/day8.txt")).unwrap();
+		assert_eq!(part1(&input), 1703);
+		assert_eq!(
+			part2(&input),
+			"
 X  X  XX   XX  XXXX XXXX 
 X  X X  X X  X X    X    
 XXXX X    X    XXX  XXX  
 X  X X    X XX X    X    
 X  X X  X X  X X    X    
 X  X  XX   XXX X    XXXX "
-	);
+		);
+	}
 }
