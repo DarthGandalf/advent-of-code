@@ -27,29 +27,24 @@ fn part1(program: &[i32]) -> Result<i32, crate::Error> {
 fn part2(program: &[i32]) -> Result<i32, crate::Error> {
 	use fallible_iterator::FallibleIterator;
 	let result = fallible_iterator::convert(permute::permutations_of(&[5, 6, 7, 8, 9]).map(
-		|mut x| -> Result<i32, crate::Error> {
-			let (txa, rxa) = std::sync::mpsc::channel();
-			let (txab, rxab) = std::sync::mpsc::channel();
-			let (txbc, rxbc) = std::sync::mpsc::channel();
-			let (txcd, rxcd) = std::sync::mpsc::channel();
-			let (txde, rxde) = std::sync::mpsc::channel();
-			let (txe, rxe) = std::sync::mpsc::channel();
-			txa.send(*x.next()?)?;
-			txab.send(*x.next()?)?;
-			txbc.send(*x.next()?)?;
-			txcd.send(*x.next()?)?;
-			txde.send(*x.next()?)?;
+		|x| -> Result<i32, crate::Error> {
+			let mut rx = std::collections::VecDeque::new();
+			let mut tx = std::collections::VecDeque::new();
+			for _ in 0..=5 {
+				let (t, r) = std::sync::mpsc::channel();
+				rx.push_back(r);
+				tx.push_back(t);
+			}
+			for (phase, t) in x.zip(tx.iter()) {
+				t.send(*phase)?;
+			}
+			let txa = tx.pop_front()?;
+			let rxe = rx.pop_back()?;
 			txa.send(0)?;
-			let mut ampa = crate::intcode::Computer::new(program.to_vec(), rxa, txab);
-			let mut ampb = crate::intcode::Computer::new(program.to_vec(), rxab, txbc);
-			let mut ampc = crate::intcode::Computer::new(program.to_vec(), rxbc, txcd);
-			let mut ampd = crate::intcode::Computer::new(program.to_vec(), rxcd, txde);
-			let mut ampe = crate::intcode::Computer::new(program.to_vec(), rxde, txe);
-			std::thread::spawn(move || ampa.run(None));
-			std::thread::spawn(move || ampb.run(None));
-			std::thread::spawn(move || ampc.run(None));
-			std::thread::spawn(move || ampd.run(None));
-			std::thread::spawn(move || ampe.run(None));
+			for (r, t) in rx.into_iter().zip(tx.into_iter()) {
+				let mut amp = crate::intcode::Computer::new(program.to_vec(), r, t);
+				std::thread::spawn(move || amp.run(None));
+			}
 			let mut last = -1;
 			for z in rxe {
 				last = z;
