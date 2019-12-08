@@ -31,7 +31,7 @@ impl Computer {
 		self.memory
 	}
 
-	pub fn run(&mut self, _video: Option<&str>) -> Result<(), crate::Error> {
+	pub fn run(&mut self, _video: Option<&str>) -> anyhow::Result<()> {
 		let mut pc = 0;
 		#[cfg(feature = "video")]
 		let mut video =
@@ -118,7 +118,13 @@ impl Computer {
 					pc += 4;
 				}
 				99 => return Ok(()),
-				_ => return Err(format!("Position {} is unknown {}", pc, self.memory[pc]).into()),
+				_ => {
+					return Err(anyhow::anyhow!(
+						"Position {} is unknown {}",
+						pc,
+						self.memory[pc]
+					))
+				}
 			}
 			#[cfg(feature = "video")]
 			video.frame(std::iter::once(
@@ -151,7 +157,7 @@ pub fn run_copy(
 	program: &[i32],
 	input: &[i32],
 	_video: Option<&str>,
-) -> Result<(Vec<i32>, Vec<i32>), crate::Error> {
+) -> anyhow::Result<(Vec<i32>, Vec<i32>)> {
 	let (tx1, rx1) = std::sync::mpsc::channel();
 	let (tx2, rx2) = std::sync::mpsc::channel();
 	let mut computer = Computer::new(program.to_vec(), rx1, tx2);

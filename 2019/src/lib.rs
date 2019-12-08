@@ -1,75 +1,20 @@
 #![feature(generators)]
-#![feature(try_trait)]
 #![feature(stmt_expr_attributes)]
-
-#[macro_use]
-extern crate quick_error;
 
 #[macro_use]
 extern crate pest_derive;
 
-// Workaround for NoneError not converting to std Error
-#[cfg(not(feature = "video"))]
-quick_error! {
-	#[derive(Debug)]
-	pub enum Error {
-		ParseInt(err: std::num::ParseIntError) {
-			from()
-		}
-		Str(err: String) {
-			from()
-		}
-		IO(err: std::io::Error) {
-			from()
-		}
-		ThrRecv(err: std::sync::mpsc::RecvError) {
-			from()
-		}
-		ThrSend(err: std::sync::mpsc::SendError<crate::intcode::Type>) {
-			from()
-		}
-		None(err: std::option::NoneError) {
-			from()
-		}
-	}
+// Workaround for std NoneError from try_trait feature not converting to std Error
+trait NoneError<T> {
+	fn none_err(self) -> anyhow::Result<T>;
 }
-#[cfg(feature = "video")]
-quick_error! {
-	#[derive(Debug)]
-	pub enum Error {
-		ParseInt(err: std::num::ParseIntError) {
-			from()
+impl<T> NoneError<T> for Option<T> {
+	fn none_err(self) -> anyhow::Result<T> {
+		if let Some(value) = self {
+			Ok(value)
+		} else {
+			Err(anyhow::anyhow!("Option is None"))
 		}
-		Str(err: String) {
-			from()
-		}
-		IO(err: std::io::Error) {
-			from()
-		}
-		ThrRecv(err: std::sync::mpsc::RecvError) {
-			from()
-		}
-		ThrSend(err: std::sync::mpsc::SendError<crate::intcode::Type>) {
-			from()
-		}
-		None(err: std::option::NoneError) {
-			from()
-		}
-		Image(err: image::ImageError) {
-			from()
-		}
-	}
-}
-
-impl<X: Copy + Ord + std::hash::Hash + std::fmt::Debug> From<pest::error::Error<X>> for Error {
-	fn from(err: pest::error::Error<X>) -> Error {
-		Error::Str(format!("{}", &err))
-	}
-}
-
-impl PartialEq for Error {
-	fn eq(&self, _: &Error) -> bool {
-		true
 	}
 }
 

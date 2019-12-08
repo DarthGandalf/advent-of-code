@@ -1,3 +1,4 @@
+use crate::NoneError;
 use aoc_runner_derive::{aoc, aoc_generator};
 use pest::Parser;
 
@@ -16,15 +17,17 @@ fn parse_num(input: &str) -> i32 {
 }
 
 #[aoc_generator(day6)]
-fn parse(input: &str) -> Result<Input, crate::Error> {
-	let input = Day6Parser::parse(Rule::input, input.trim())?.next()?;
-	let orbits: Result<std::collections::HashMap<i32, i32>, crate::Error> = input
+fn parse(input: &str) -> anyhow::Result<Input> {
+	let input = Day6Parser::parse(Rule::input, input.trim())?
+		.next()
+		.none_err()?;
+	let orbits: anyhow::Result<std::collections::HashMap<i32, i32>> = input
 		.into_inner()
 		.filter(|pair| pair.as_rule() == Rule::orbit)
-		.map(|pair| -> Result<(i32, i32), crate::Error> {
+		.map(|pair| -> anyhow::Result<(i32, i32)> {
 			let mut orb = pair.into_inner();
-			let center = parse_num(orb.next()?.as_str());
-			let object = parse_num(orb.next()?.as_str());
+			let center = parse_num(orb.next().none_err()?.as_str());
+			let object = parse_num(orb.next().none_err()?.as_str());
 			Ok((object, center))
 		})
 		.collect();

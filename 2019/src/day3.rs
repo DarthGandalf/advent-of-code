@@ -1,3 +1,4 @@
+use crate::NoneError;
 use aoc_runner_derive::{aoc, aoc_generator};
 
 enum Direction {
@@ -14,16 +15,16 @@ struct Segment {
 
 struct Wire(Vec<Segment>);
 
-fn parse_wire(input: &str) -> Result<Wire, crate::Error> {
-	let segments: Result<Vec<Segment>, crate::Error> = input
+fn parse_wire(input: &str) -> anyhow::Result<Wire> {
+	let segments: anyhow::Result<Vec<Segment>> = input
 		.split(',')
-		.map(|s| -> Result<Segment, crate::Error> {
-			let dir = match s.chars().next()? {
+		.map(|s| -> anyhow::Result<Segment> {
+			let dir = match s.chars().next().none_err()? {
 				'R' => Direction::Right,
 				'L' => Direction::Left,
 				'U' => Direction::Up,
 				'D' => Direction::Down,
-				_ => return Err(format!("Unknown direction {}", s).into()),
+				_ => return Err(anyhow::anyhow!("Unknown direction {}", s).into()),
 			};
 			let len = s.split_at(1).1.parse()?;
 			Ok(Segment { dir, len })
@@ -33,10 +34,10 @@ fn parse_wire(input: &str) -> Result<Wire, crate::Error> {
 }
 
 #[aoc_generator(day3)]
-fn parse(input: &str) -> Result<(Wire, Wire), crate::Error> {
+fn parse(input: &str) -> anyhow::Result<(Wire, Wire)> {
 	let mut input = input.lines().map(parse_wire);
-	let wire1 = input.next()??;
-	let wire2 = input.next()??;
+	let wire1 = input.next().none_err()??;
+	let wire2 = input.next().none_err()??;
 	Ok((wire1, wire2))
 }
 

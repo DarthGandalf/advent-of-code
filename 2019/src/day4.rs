@@ -1,3 +1,4 @@
+use crate::NoneError;
 use aoc_runner_derive::{aoc, aoc_generator};
 use pest::Parser;
 
@@ -8,11 +9,11 @@ struct Input(i32, i32);
 struct Day4Parser;
 
 #[aoc_generator(day4)]
-fn parse(input: &str) -> Result<Input, crate::Error> {
-	let input = Day4Parser::parse(Rule::file, input)?.next()?;
+fn parse(input: &str) -> anyhow::Result<Input> {
+	let input = Day4Parser::parse(Rule::file, input)?.next().none_err()?;
 	let mut input = input.into_inner();
-	let min = input.next()?.as_str().parse()?;
-	let max = input.next()?.as_str().parse()?;
+	let min = input.next().none_err()?.as_str().parse()?;
+	let max = input.next().none_err()?.as_str().parse()?;
 	Ok(Input(min, max))
 }
 

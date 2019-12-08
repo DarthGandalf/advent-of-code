@@ -1,3 +1,4 @@
+use crate::NoneError;
 use aoc_runner_derive::{aoc, aoc_generator};
 use pest::Parser;
 
@@ -10,18 +11,20 @@ struct Layer(Vec<Row>);
 struct Image(Vec<Layer>);
 
 #[aoc_generator(day8)]
-fn parse(input: &str) -> Result<Image, crate::Error> {
-	let input = Day8Parser::parse(Rule::input, input.trim())?.next()?;
-	let image: Result<Vec<Layer>, crate::Error> = input
+fn parse(input: &str) -> anyhow::Result<Image> {
+	let input = Day8Parser::parse(Rule::input, input.trim())?
+		.next()
+		.none_err()?;
+	let image: anyhow::Result<Vec<Layer>> = input
 		.into_inner()
 		.filter(|pair| pair.as_rule() == Rule::layer)
-		.map(|pair| -> Result<Layer, crate::Error> {
-			let layer: Result<Vec<Row>, crate::Error> = pair
+		.map(|pair| -> anyhow::Result<Layer> {
+			let layer: anyhow::Result<Vec<Row>> = pair
 				.into_inner()
 				.map(|pa| {
-					let row: Result<Vec<u8>, crate::Error> = pa
+					let row: anyhow::Result<Vec<u8>> = pa
 						.into_inner()
-						.map(|p| -> Result<u8, crate::Error> { Ok(p.as_str().parse()?) })
+						.map(|p| -> anyhow::Result<u8> { Ok(p.as_str().parse()?) })
 						.collect();
 					Ok(Row(row?))
 				})
