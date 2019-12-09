@@ -6,7 +6,7 @@ palette!(Palette {
 	Other = [0x00, 0x00, 0x00],
 });
 
-pub type Type = i32;
+pub type Type = i64;
 
 pub struct Computer {
 	memory: Vec<Type>,
@@ -154,10 +154,10 @@ impl Computer {
 }
 
 pub fn run_copy(
-	program: &[i32],
-	input: &[i32],
+	program: &[Type],
+	input: &[Type],
 	_video: Option<&str>,
-) -> anyhow::Result<(Vec<i32>, Vec<i32>)> {
+) -> anyhow::Result<(Vec<Type>, Vec<Type>)> {
 	let (tx1, rx1) = std::sync::mpsc::channel();
 	let (tx2, rx2) = std::sync::mpsc::channel();
 	let mut computer = Computer::new(program.to_vec(), rx1, tx2);

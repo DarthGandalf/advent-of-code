@@ -3,18 +3,18 @@ use aoc_runner_derive::{aoc, aoc_generator};
 use crate::intcode::run_copy;
 
 #[aoc_generator(day5)]
-fn parse(input: &str) -> Result<Vec<i32>, std::num::ParseIntError> {
+fn parse(input: &str) -> Result<Vec<crate::intcode::Type>, std::num::ParseIntError> {
 	input.trim().split(',').map(|l| l.parse()).collect()
 }
 
 #[aoc(day5, part1)]
-fn part1(program: &[i32]) -> anyhow::Result<i32> {
+fn part1(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Type> {
 	let output = run_copy(program, &[1], Some("day5-1"))?.0;
 	Ok(output[output.len() - 1])
 }
 
 #[aoc(day5, part2)]
-fn part2(program: &[i32]) -> anyhow::Result<i32> {
+fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Type> {
 	let output = run_copy(program, &[5], Some("day5-2"))?.0;
 	Ok(output[output.len() - 1])
 }

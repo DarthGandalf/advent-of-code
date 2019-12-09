@@ -2,15 +2,15 @@ use crate::NoneError;
 use aoc_runner_derive::{aoc, aoc_generator};
 
 #[aoc_generator(day7)]
-fn parse(input: &str) -> Result<Vec<i32>, std::num::ParseIntError> {
+fn parse(input: &str) -> Result<Vec<crate::intcode::Type>, std::num::ParseIntError> {
 	input.trim().split(',').map(|l| l.parse()).collect()
 }
 
 #[aoc(day7, part1)]
-fn part1(program: &[i32]) -> anyhow::Result<i32> {
+fn part1(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Type> {
 	use fallible_iterator::FallibleIterator;
 	let result = fallible_iterator::convert(permute::permutations_of(&[0, 1, 2, 3, 4]).map(
-		|x| -> anyhow::Result<i32> {
+		|x| -> anyhow::Result<crate::intcode::Type> {
 			let mut signal = vec![0];
 			for &amp in x {
 				signal.insert(0, amp);
@@ -26,10 +26,10 @@ fn part1(program: &[i32]) -> anyhow::Result<i32> {
 }
 
 #[aoc(day7, part2)]
-fn part2(program: &[i32]) -> anyhow::Result<i32> {
+fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Type> {
 	use fallible_iterator::FallibleIterator;
 	let result = fallible_iterator::convert(permute::permutations_of(&[5, 6, 7, 8, 9]).map(
-		|x| -> anyhow::Result<i32> {
+		|x| -> anyhow::Result<crate::intcode::Type> {
 			let mut rx = std::collections::VecDeque::new();
 			let mut tx = std::collections::VecDeque::new();
 			for _ in 0..=5 {
