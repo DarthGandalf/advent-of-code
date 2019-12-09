@@ -39,7 +39,7 @@ fn digits_in_layer(layer: &Layer, digit: u8) -> usize {
 	layer
 		.0
 		.iter()
-		.map(|row| row.0.iter().filter(|&&pixel| pixel == digit).count())
+		.map(|row| bytecount::count(&row.0, digit))
 		.sum()
 }
 

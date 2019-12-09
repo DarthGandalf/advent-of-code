@@ -19,6 +19,7 @@ permute = "0.1.0"
 fallible-iterator = "0.2.0"
 itertools = "0.8.2"
 anyhow = "1.0.25"
+bytecount = "0.6.0"
 
 [features]
 video = ["image", "gif"]

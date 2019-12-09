@@ -24,7 +24,7 @@ fn parse_wire(input: &str) -> anyhow::Result<Wire> {
 				'L' => Direction::Left,
 				'U' => Direction::Up,
 				'D' => Direction::Down,
-				_ => return Err(anyhow::anyhow!("Unknown direction {}", s).into()),
+				_ => return Err(anyhow::anyhow!("Unknown direction {}", s)),
 			};
 			let len = s.split_at(1).1.parse()?;
 			Ok(Segment { dir, len })

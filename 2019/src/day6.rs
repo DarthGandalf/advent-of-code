@@ -37,7 +37,7 @@ fn parse(input: &str) -> anyhow::Result<Input> {
 #[aoc(day6, part1)]
 fn part1(input: &Input) -> usize {
 	let mut cache = std::collections::HashMap::new();
-	cache.insert(/* COM */ 4411213, 0);
+	cache.insert(/* COM */ 4_411_213, 0);
 	input
 		.0
 		.keys()
@@ -66,8 +66,8 @@ fn part1(input: &Input) -> usize {
 
 #[aoc(day6, part2)]
 fn part2(input: &Input) -> Option<usize> {
-	let you = 5853013;
-	let san = 5456206;
+	let you = 5_853_013;
+	let san = 5_456_206;
 	let mut edges = std::collections::HashMap::<i32, Vec<i32>>::new();
 	for (&x, &y) in &input.0 {
 		edges.entry(x).or_default().push(y);
