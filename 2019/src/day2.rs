@@ -6,7 +6,12 @@ fn parse(input: &str) -> Result<Vec<crate::intcode::Type>, std::num::ParseIntErr
 	input.trim().split(',').map(|l| l.parse()).collect()
 }
 
-fn run(program: &[crate::intcode::Type], noun: crate::intcode::Type, verb: crate::intcode::Type, video: Option<&str>) -> anyhow::Result<Vec<crate::intcode::Type>> {
+fn run(
+	program: &[crate::intcode::Type],
+	noun: crate::intcode::Type,
+	verb: crate::intcode::Type,
+	video: Option<&str>,
+) -> anyhow::Result<Vec<crate::intcode::Type>> {
 	let mut memory = program.to_vec();
 	memory[1] = noun;
 	memory[2] = verb;
@@ -20,19 +25,21 @@ fn part1(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Typ
 
 #[aoc(day2, part2)]
 fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Type> {
-	if let Some(x) = (0..100 as crate::intcode::Type).into_par_iter().find_map_any(|noun| {
-		for verb in 0..100 {
-			if let Ok(result) = run(program, noun, verb, None) {
-				if result[0]
-					== #[allow(clippy::inconsistent_digit_grouping)]
-					1969_07_20
-				{
-					return Some(100 * noun + verb);
+	if let Some(x) = (0..100 as crate::intcode::Type)
+		.into_par_iter()
+		.find_map_any(|noun| {
+			for verb in 0..100 {
+				if let Ok(result) = run(program, noun, verb, None) {
+					if result[0]
+						== #[allow(clippy::inconsistent_digit_grouping)]
+						1969_07_20
+					{
+						return Some(100 * noun + verb);
+					}
 				}
 			}
-		}
-		None
-	}) {
+			None
+		}) {
 		Ok(x)
 	} else {
 		Err(anyhow::anyhow!("No solution"))

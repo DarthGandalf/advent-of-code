@@ -9,7 +9,7 @@ palette!(Palette {
 pub type Type = i64;
 
 pub struct Computer {
-	memory: Vec<Type>,
+	memory: std::collections::BTreeMap<usize, Type>,
 	input: std::sync::mpsc::Receiver<Type>,
 	output: std::sync::mpsc::Sender<Type>,
 }
@@ -21,18 +21,19 @@ impl Computer {
 		output: std::sync::mpsc::Sender<Type>,
 	) -> Self {
 		Self {
-			memory,
+			memory: memory.into_iter().enumerate().collect(),
 			input,
 			output,
 		}
 	}
 
 	pub fn into_memory(self) -> Vec<Type> {
-		self.memory
+		self.memory.values().cloned().collect()
 	}
 
 	pub fn run(&mut self, _video: Option<&str>) -> anyhow::Result<()> {
-		let mut pc = 0;
+		let mut pc: usize = 0;
+		let mut base: Type = 0;
 		#[cfg(feature = "video")]
 		let mut video =
 			crate::video::OptionalVideo::<Palette>::new(_video, self.memory.len() as u16, 1, 10)?;
@@ -41,36 +42,56 @@ impl Computer {
 			let mut read = std::collections::HashSet::new();
 			#[cfg(feature = "video")]
 			let mut write = std::collections::HashSet::new();
-			let opcode = self.memory[pc];
-			// dummy_read and dummy_write are only to silence warning that read_value and write_value shouldn't be mut while video feature is disabled
-			let mut dummy_read = 0;
-			let mut read_value = |index| -> Type {
-				dummy_read = 0;
+			let opcode = *self.memory.get(&pc).unwrap_or(&0);
+			let mode = |index| {
 				let mut mode = opcode / 100;
-				//println!("index {}", index);
 				for _ in 1..index {
 					mode /= 10;
 				}
-				let value = self.memory[pc + index];
-				if mode % 10 > 0 {
-					#[cfg(feature = "video")]
-					read.insert(pc + index);
-					value
-				} else {
-					#[cfg(feature = "video")]
-					read.insert(value as usize);
-					self.memory[value as usize]
+				mode % 10
+			};
+			// dummy_read and dummy_write are only to silence warning that read_value and write_value shouldn't be mut while video feature is disabled
+			let mut dummy_read = 0;
+			let mut read_value = |index| -> Type {
+				let value = *self.memory.get(&(pc + index)).unwrap_or(&0);
+				match mode(index) {
+					0 => {
+						#[cfg(feature = "video")]
+						read.insert(value as usize);
+						*self.memory.get(&(value as usize)).unwrap_or(&0)
+					}
+					1 => {
+						#[cfg(feature = "video")]
+						read.insert(pc + index);
+						value as Type
+					}
+					2 => *self
+						.memory
+						.get(&((value as Type + base) as usize))
+						.unwrap_or(&0),
+					_ => {
+						dummy_read = 0;
+						0
+					}
 				}
 				//println!("mode {} value={} result={}", mode, value, result);
 			};
 			let mut dummy_write = 0;
-			let mut write_value = |memory: &mut Vec<Type>, index, value| {
-				dummy_write = 0;
-				let pos = memory[pc + index] as usize;
-				#[cfg(feature = "video")]
-				write.insert(pos);
-				memory[pos] = value;
-			};
+			let mut write_value =
+				|memory: &mut std::collections::BTreeMap<usize, Type>, index, value| {
+					let pos = *memory.entry(pc + index).or_default();
+					match mode(index) {
+						0 => {
+							#[cfg(feature = "video")]
+							write.insert(pos);
+							*memory.entry(pos as usize).or_default() = value;
+						}
+						2 => {
+							*memory.entry((base + pos) as usize).or_default() = value;
+						}
+						_ => dummy_write = 0,
+					}
+				};
 			//println!("{:?} pc={} output={:?}", program, pc, output);
 			match opcode % 100 {
 				1 => {
@@ -117,13 +138,17 @@ impl Computer {
 					write_value(&mut self.memory, 3, result);
 					pc += 4;
 				}
+				9 => {
+					base += read_value(1);
+					pc += 2;
+				}
 				99 => return Ok(()),
 				_ => {
 					return Err(anyhow::anyhow!(
 						"Position {} is unknown {}",
 						pc,
-						self.memory[pc]
-					))
+						self.memory.get(&pc).unwrap_or(&0)
+					));
 				}
 			}
 			#[cfg(feature = "video")]
