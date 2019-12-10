@@ -1,3 +1,5 @@
+#[cfg(feature = "video")]
+use crate::NoneError;
 use aoc_runner_derive::{aoc, aoc_generator};
 
 #[derive(PartialEq, Default, Copy, Clone, Debug)]
@@ -112,7 +114,7 @@ fn part1(asteroids: &Asteroids) -> usize {
 }
 
 #[aoc(day10, part2)]
-fn part2(asteroids: &Asteroids) -> usize {
+fn part2(asteroids: &Asteroids) -> anyhow::Result<usize> {
 	let station = part1_full(asteroids).1;
 	let mut directions: std::collections::BTreeMap<Angle, Vec<Position>> =
 		std::collections::BTreeMap::new();
@@ -127,18 +129,54 @@ fn part2(asteroids: &Asteroids) -> usize {
 	for line in directions.values_mut() {
 		line.sort_by_key(|p| -(p.x - station.x).abs() - (p.y - station.y).abs());
 	}
+	#[cfg(feature = "video")]
+	let height = asteroids.0.iter().map(|p| p.x).max().none_err()? as u16 + 1;
+	#[cfg(feature = "video")]
+	let width = asteroids.0.iter().map(|p| p.y).max().none_err()? as u16 + 1;
+	#[cfg(feature = "video")]
+	let mut video = crate::video::OptionalVideo::new(
+		#[cfg(not(test))]
+		Some("day10"),
+		#[cfg(test)]
+		None,
+		height,
+		width,
+		5,
+	)?;
+	#[cfg(feature = "video")]
+	let mut grid = vec![vec![Palette::Empty; width as usize]; height as usize];
+	#[cfg(feature = "video")]
+	{
+		for a in &asteroids.0 {
+			grid[a.y as usize][a.x as usize] = Palette::Rock;
+		}
+		grid[station.y as usize][station.x as usize] = Palette::Station;
+	}
 	let mut index = 0;
 	loop {
 		for line in directions.values_mut() {
 			if let Some(pos) = line.pop() {
+				#[cfg(feature = "video")]
+				{
+					grid[pos.y as usize][pos.x as usize] = Palette::Explosion;
+					video.frame(grid.iter().cloned())?;
+					grid[pos.y as usize][pos.x as usize] = Palette::Empty;
+				}
 				index += 1;
 				if index == 200 {
-					return (pos.x * 100 + pos.y) as usize;
+					return Ok((pos.x * 100 + pos.y) as usize);
 				}
 			}
 		}
 	}
 }
+
+palette!(Palette {
+	Empty = [0x00, 0x00, 0x00],
+	Rock = [0x80, 0x80, 0x00],
+	Explosion = [0xFF, 0x00, 0x00],
+	Station = [0xFF, 0xFF, 0xFF],
+});
 
 #[cfg(test)]
 mod tests {
@@ -225,13 +263,13 @@ mod tests {
 ###.##.####.##.#..##",
 		);
 		assert_eq!(part1_full(&big_map), (210, Position { x: 11, y: 13 }));
-		assert_eq!(part2(&big_map), 802);
+		assert_eq!(part2(&big_map).unwrap(), 802);
 	}
 
 	#[test]
 	fn answers() {
 		let input = parse(include_str!("../input/2019/day10.txt"));
 		assert_eq!(part1(&input), 278);
-		assert_eq!(part2(&input), 1417);
+		assert_eq!(part2(&input).unwrap(), 1417);
 	}
 }
