@@ -111,7 +111,7 @@ palette!(Palette {
 });
 
 #[cfg(feature = "video")]
-fn video(input: &(Wire, Wire), name: &str) -> Result<(), crate::Error> {
+fn video(input: &(Wire, Wire), name: &str) -> anyhow::Result<()> {
 	let mut maxx = 0;
 	let mut maxy = 0;
 	let mut minx = 0;
@@ -172,7 +172,7 @@ fn video(input: &(Wire, Wire), name: &str) -> Result<(), crate::Error> {
 
 #[aoc(day3, part2, video)]
 #[cfg(feature = "video")]
-fn big_video(input: &(Wire, Wire)) -> Result<i32, crate::Error> {
+fn big_video(input: &(Wire, Wire)) -> anyhow::Result<i32> {
 	video(input, "day3")?;
 	Ok(0)
 }
@@ -193,7 +193,7 @@ U62,R66,U55,R34,D71,R55,D58,R83",
 		assert_eq!(part1iter(&wires), Some(159));
 		assert_eq!(part2iter(&wires), Some(610));
 		#[cfg(feature = "video")]
-		assert_eq!(video(&wires, "day3-1"), Ok(()));
+		video(&wires, "day3-1").unwrap();
 	}
 
 	#[test]
@@ -208,7 +208,7 @@ U98,R91,D20,R16,D67,R40,U7,R15,U6,R7",
 		assert_eq!(part1iter(&wires), Some(135));
 		assert_eq!(part2iter(&wires), Some(410));
 		#[cfg(feature = "video")]
-		assert_eq!(video(&wires, "day3-2"), Ok(()));
+		video(&wires, "day3-2").unwrap();
 	}
 
 	#[test]

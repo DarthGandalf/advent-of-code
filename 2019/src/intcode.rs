@@ -35,13 +35,22 @@ impl Computer {
 		let mut pc: usize = 0;
 		let mut base: Type = 0;
 		#[cfg(feature = "video")]
-		let mut video =
-			crate::video::OptionalVideo::<Palette>::new(_video, self.memory.len() as u16, 1, 10)?;
+		let mut video = crate::video::OptionalVideo::<Palette>::new(
+			#[cfg(not(test))]
+			_video,
+			#[cfg(test)]
+			None,
+			self.memory.len() as u16,
+			1,
+			10,
+		)?;
+		#[cfg(feature = "video")]
+		video.silence_unused_warning();
 		loop {
 			#[cfg(feature = "video")]
-			let mut read = std::collections::HashSet::new();
+			let mut read = std::collections::HashSet::<Type>::new();
 			#[cfg(feature = "video")]
-			let mut write = std::collections::HashSet::new();
+			let mut write = std::collections::HashSet::<Type>::new();
 			let opcode = *self.memory.get(&pc).unwrap_or(&0);
 			let mode = |index| {
 				let mut mode = opcode / 100;
@@ -57,12 +66,14 @@ impl Computer {
 				match mode(index) {
 					0 => {
 						#[cfg(feature = "video")]
-						read.insert(value as usize);
+						#[cfg(not(test))]
+						read.insert(value);
 						*self.memory.get(&(value as usize)).unwrap_or(&0)
 					}
 					1 => {
 						#[cfg(feature = "video")]
-						read.insert(pc + index);
+						#[cfg(not(test))]
+						read.insert((pc + index) as Type);
 						value as Type
 					}
 					2 => *self
@@ -83,6 +94,7 @@ impl Computer {
 					match mode(index) {
 						0 => {
 							#[cfg(feature = "video")]
+							#[cfg(not(test))]
 							write.insert(pos);
 							*memory.entry(pos as usize).or_default() = value;
 						}
@@ -152,11 +164,13 @@ impl Computer {
 				}
 			}
 			#[cfg(feature = "video")]
+			#[cfg(not(test))]
 			video.frame(std::iter::once(
 				self.memory
 					.iter()
 					.enumerate()
 					.map(|(i, _)| {
+						let i = i as Type;
 						use Palette::*;
 						if read.contains(&i) {
 							if write.contains(&i) {
@@ -166,7 +180,7 @@ impl Computer {
 							}
 						} else if write.contains(&i) {
 							Write
-						} else if i == pc {
+						} else if i == pc as Type {
 							PC
 						} else {
 							Other
@@ -174,6 +188,13 @@ impl Computer {
 					})
 					.collect(),
 			))?;
+			#[cfg(feature = "video")]
+			{
+				read.insert(0);
+				write.insert(0);
+				std::mem::drop(read);
+				std::mem::drop(write);
+			}
 		}
 	}
 }

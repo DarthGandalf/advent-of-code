@@ -1,3 +1,6 @@
+#[cfg(feature = "video")]
+use crate::NoneError;
+
 pub trait Palette:
 	Copy + enum_iterator::IntoEnumIterator + Eq + std::hash::Hash + std::fmt::Debug
 {
@@ -74,12 +77,7 @@ pub struct OptionalVideo<P: Palette>(Option<Video<P>>);
 
 #[cfg(feature = "video")]
 impl<'a, P: Palette + 'a> OptionalVideo<P> {
-	pub fn new(
-		name: Option<&str>,
-		width: u16,
-		height: u16,
-		scale: u16,
-	) -> Result<Self, crate::Error> {
+	pub fn new(name: Option<&str>, width: u16, height: u16, scale: u16) -> anyhow::Result<Self> {
 		let name = if let Some(name) = name {
 			name
 		} else {
@@ -96,7 +94,12 @@ impl<'a, P: Palette + 'a> OptionalVideo<P> {
 				next_index - 1
 			})
 		};
-		let mut path: std::path::PathBuf = std::path::Path::new(file!()).parent()?.parent()?.into();
+		let mut path: std::path::PathBuf = std::path::Path::new(file!())
+			.parent()
+			.none_err()?
+			.parent()
+			.none_err()?
+			.into();
 		let mut read_path = path.clone();
 		read_path.push("sprites");
 		let mut sprites = std::collections::HashMap::new();
@@ -140,7 +143,9 @@ impl<'a, P: Palette + 'a> OptionalVideo<P> {
 
 #[cfg(feature = "video")]
 impl<'a, P: Palette + 'a> OptionalVideo<P> {
-	pub fn frame<I: Iterator<Item = Vec<P>>>(&mut self, rows: I) -> Result<(), crate::Error> {
+	pub fn silence_unused_warning(&mut self) {}
+
+	pub fn frame<I: Iterator<Item = Vec<P>>>(&mut self, rows: I) -> anyhow::Result<()> {
 		let this = if let Some(this) = &mut self.0 {
 			this
 		} else {
@@ -154,7 +159,7 @@ impl<'a, P: Palette + 'a> OptionalVideo<P> {
 		for row in rows {
 			for y in 0..this.scale {
 				for color in &row {
-					let img = this.sprites.get(&color)?;
+					let img = this.sprites.get(&color).none_err()?;
 					for x in 0..this.scale {
 						data[offset] = img[y as usize * this.scale as usize + x as usize];
 						offset += 1;
