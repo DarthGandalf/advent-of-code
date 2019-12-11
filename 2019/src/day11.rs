@@ -119,8 +119,10 @@ fn run_robot<R: Robot>(
 	}
 }
 
-#[aoc(day11, part1)]
-fn part1(program: &[crate::intcode::Type]) -> anyhow::Result<usize> {
+fn run_real_robot(
+	program: &[crate::intcode::Type],
+	white: bool,
+) -> anyhow::Result<(usize, String)> {
 	let (ti, ri) = crossbeam::channel::bounded(0);
 	let (to, ro) = crossbeam::channel::bounded(0);
 	let (tw, rw) = crossbeam::channel::bounded(0);
@@ -128,41 +130,40 @@ fn part1(program: &[crate::intcode::Type]) -> anyhow::Result<usize> {
 	let mut robot = crate::intcode::Computer::new(program.to_vec(), ri, tw, to, te);
 	std::thread::spawn(move || robot.run(None));
 	let mut grid = std::collections::HashMap::<Position, bool>::new();
-	let robot = RealRobot { ti, rw, ro, re };
-	run_robot(&robot, &mut grid)?;
-	Ok(grid.len())
-}
-
-#[aoc(day11, part2)]
-fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<String> {
-	let (ti, ri) = crossbeam::channel::bounded(0);
-	let (to, ro) = crossbeam::channel::bounded(0);
-	let (tw, rw) = crossbeam::channel::bounded(0);
-	let (te, re) = crossbeam::channel::bounded(0);
-	let mut robot = crate::intcode::Computer::new(program.to_vec(), ri, tw, to, te);
-	std::thread::spawn(move || robot.run(None));
-	let mut grid = std::collections::HashMap::<Position, bool>::new();
-	grid.insert(Position { x: 0, y: 0 }, true);
+	grid.insert(Position { x: 0, y: 0 }, white);
 	let robot = RealRobot { ti, rw, ro, re };
 	run_robot(&robot, &mut grid)?;
 	let minx = grid.keys().map(|pos| pos.x).min().none_err()?;
 	let maxx = grid.keys().map(|pos| pos.x).max().none_err()?;
 	let miny = grid.keys().map(|pos| pos.y).min().none_err()?;
 	let maxy = grid.keys().map(|pos| pos.y).max().none_err()?;
-	Ok(itertools::join(
-		(miny..=maxy).map(|y| {
-			std::iter::once('\n')
-				.chain((minx..=maxx).map(|x| {
-					if grid.get(&Position { x, y }).cloned().unwrap_or_default() {
-						'#'
-					} else {
-						' '
-					}
-				}))
-				.collect::<String>()
-		}),
-		"",
+	Ok((
+		grid.len(),
+		itertools::join(
+			(miny..=maxy).map(|y| {
+				std::iter::once('\n')
+					.chain((minx..=maxx).map(|x| {
+						if grid.get(&Position { x, y }).cloned().unwrap_or_default() {
+							'#'
+						} else {
+							' '
+						}
+					}))
+					.collect::<String>()
+			}),
+			"",
+		),
 	))
+}
+
+#[aoc(day11, part1)]
+fn part1(program: &[crate::intcode::Type]) -> anyhow::Result<usize> {
+	Ok(run_real_robot(program, false)?.0)
+}
+
+#[aoc(day11, part2)]
+fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<String> {
+	Ok(run_real_robot(program, true)?.1)
 }
 
 #[cfg(test)]
