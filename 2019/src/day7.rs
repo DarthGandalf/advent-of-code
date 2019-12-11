@@ -33,7 +33,7 @@ fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Typ
 			let mut rx = std::collections::VecDeque::new();
 			let mut tx = std::collections::VecDeque::new();
 			for _ in 0..=5 {
-				let (t, r) = std::sync::mpsc::channel();
+				let (t, r) = crossbeam::channel::unbounded();
 				rx.push_back(r);
 				tx.push_back(t);
 			}
@@ -44,7 +44,10 @@ fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Typ
 			let rxe = rx.pop_back().none_err()?;
 			txa.send(0)?;
 			for (r, t) in rx.into_iter().zip(tx.into_iter()) {
-				let mut amp = crate::intcode::Computer::new(program.to_vec(), r, t);
+				let (w, ignoring) = crossbeam::channel::unbounded();
+				let (e, _) = crossbeam::channel::unbounded();
+				std::thread::spawn(|| for _ in ignoring {});
+				let mut amp = crate::intcode::Computer::new(program.to_vec(), r, w, t, e);
 				std::thread::spawn(move || amp.run(None));
 			}
 			let mut last = -1;
