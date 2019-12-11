@@ -14,6 +14,7 @@ rayon = "1.2.1"
 gen-iter = { git = "https://github.com/sumeet/gen-iter" }
 pest = "2.1.2"
 pest_derive = "2.1.0"
+crossbeam = "0.7.3"
 pathfinding = "2.0.0"
 permute = "0.1.0"
 fallible-iterator = "0.2.0"

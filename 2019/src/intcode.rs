@@ -10,20 +10,26 @@ pub type Type = i64;
 
 pub struct Computer {
 	memory: std::collections::BTreeMap<usize, Type>,
-	input: std::sync::mpsc::Receiver<Type>,
-	output: std::sync::mpsc::Sender<Type>,
+	input: crossbeam::channel::Receiver<Type>,
+	want_input: crossbeam::channel::Sender<()>,
+	output: crossbeam::channel::Sender<Type>,
+	exit: crossbeam::channel::Sender<()>,
 }
 
 impl Computer {
 	pub fn new(
 		memory: Vec<Type>,
-		input: std::sync::mpsc::Receiver<Type>,
-		output: std::sync::mpsc::Sender<Type>,
+		input: crossbeam::channel::Receiver<Type>,
+		want_input: crossbeam::channel::Sender<()>,
+		output: crossbeam::channel::Sender<Type>,
+		exit: crossbeam::channel::Sender<()>,
 	) -> Self {
 		Self {
 			memory: memory.into_iter().enumerate().collect(),
 			input,
+			want_input,
 			output,
+			exit,
 		}
 	}
 
@@ -119,6 +125,7 @@ impl Computer {
 					pc += 4;
 				}
 				3 => {
+					let _ = self.want_input.send(());
 					write_value(&mut self.memory, 1, self.input.recv()?);
 					pc += 2;
 				}
@@ -154,7 +161,10 @@ impl Computer {
 					base += read_value(1);
 					pc += 2;
 				}
-				99 => return Ok(()),
+				99 => {
+					let _ = self.exit.send(());
+					return Ok(());
+				}
 				_ => {
 					return Err(anyhow::anyhow!(
 						"Position {} is unknown {}",
@@ -204,9 +214,11 @@ pub fn run_copy(
 	input: &[Type],
 	_video: Option<&str>,
 ) -> anyhow::Result<(Vec<Type>, Vec<Type>)> {
-	let (tx1, rx1) = std::sync::mpsc::channel();
-	let (tx2, rx2) = std::sync::mpsc::channel();
-	let mut computer = Computer::new(program.to_vec(), rx1, tx2);
+	let (tx1, rx1) = crossbeam::channel::unbounded();
+	let (tx2, rx2) = crossbeam::channel::unbounded();
+	let (txw, _) = crossbeam::channel::unbounded();
+	let (txe, _) = crossbeam::channel::unbounded();
+	let mut computer = Computer::new(program.to_vec(), rx1, txw, tx2, txe);
 	for &i in input {
 		tx1.send(i)?;
 	}
