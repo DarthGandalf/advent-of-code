@@ -99,6 +99,11 @@ impl Robot for RealRobot {
 fn run_robot<R: Robot>(
 	r: &R,
 	grid: &mut std::collections::HashMap<Position, bool>,
+	#[cfg(feature = "video")] video: &mut crate::video::OptionalVideo<Palette>,
+	_minx: i32,
+	_maxx: i32,
+	_miny: i32,
+	_maxy: i32,
 ) -> anyhow::Result<()> {
 	let mut pos = Position { x: 0, y: 0 };
 	let mut dir = Direction::Up;
@@ -111,6 +116,16 @@ fn run_robot<R: Robot>(
 				*grid.entry(pos.clone()).or_default() = color? == 1;
 				dir = if r.output().recv()? == 1 { dir.right() } else { dir.left() };
 				pos = dir.forward(&pos);
+				#[cfg(feature = "video")]
+				video.frame((_miny..=_maxy).map(|y| (_minx..=_maxx).map(|x| {
+					if pos.x == x && pos.y == y {
+						Palette::Robot
+					} else if grid.get(&Position{x,y}).cloned().unwrap_or_default() {
+						Palette::White
+					} else {
+						Palette::Black
+					}
+				}).collect()))?;
 			}
 			recv(&r.exit()) -> _ => {
 				return Ok(());
@@ -122,7 +137,29 @@ fn run_robot<R: Robot>(
 fn run_real_robot(
 	program: &[crate::intcode::Type],
 	white: bool,
-) -> anyhow::Result<(usize, String)> {
+	_video: Option<&str>,
+) -> anyhow::Result<(usize, String, i32, i32, i32, i32)> {
+	let (_width, _height, minx, maxx, miny, maxy) = if _video.is_some() {
+		#[cfg(feature = "video")]
+		let (_, _, minx, maxx, miny, maxy) = run_real_robot(program, white, None)?;
+		#[cfg(not(feature = "video"))]
+		let (minx, maxx, miny, maxy) = (0, 0, 0, 0);
+		let height = maxy - miny + 1;
+		let width = maxx - minx + 1;
+		(width as u16, height as u16, minx, maxx, miny, maxy)
+	} else {
+		(0, 0, 0, 0, 0, 0)
+	};
+	#[cfg(feature = "video")]
+	let mut video = crate::video::OptionalVideo::<Palette>::new(
+		#[cfg(not(test))]
+		_video,
+		#[cfg(test)]
+		None,
+		_width,
+		_height,
+		1,
+	)?;
 	let (ti, ri) = crossbeam::channel::bounded(0);
 	let (to, ro) = crossbeam::channel::bounded(0);
 	let (tw, rw) = crossbeam::channel::bounded(0);
@@ -132,7 +169,16 @@ fn run_real_robot(
 	let mut grid = std::collections::HashMap::<Position, bool>::new();
 	grid.insert(Position { x: 0, y: 0 }, white);
 	let robot = RealRobot { ti, rw, ro, re };
-	run_robot(&robot, &mut grid)?;
+	run_robot(
+		&robot,
+		&mut grid,
+		#[cfg(feature = "video")]
+		&mut video,
+		minx,
+		maxx,
+		miny,
+		maxy,
+	)?;
 	let minx = grid.keys().map(|pos| pos.x).min().none_err()?;
 	let maxx = grid.keys().map(|pos| pos.x).max().none_err()?;
 	let miny = grid.keys().map(|pos| pos.y).min().none_err()?;
@@ -153,17 +199,27 @@ fn run_real_robot(
 			}),
 			"",
 		),
+		minx,
+		maxx,
+		miny,
+		maxy,
 	))
 }
 
+palette!(Palette {
+	Black = [0x00, 0x00, 0x00],
+	White = [0xFF, 0xFF, 0xFF],
+	Robot = [0xFF, 0x00, 0x00],
+});
+
 #[aoc(day11, part1)]
 fn part1(program: &[crate::intcode::Type]) -> anyhow::Result<usize> {
-	Ok(run_real_robot(program, false)?.0)
+	Ok(run_real_robot(program, false, Some("day11-1"))?.0)
 }
 
 #[aoc(day11, part2)]
 fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<String> {
-	Ok(run_real_robot(program, true)?.1)
+	Ok(run_real_robot(program, true, Some("day11-2"))?.1)
 }
 
 #[cfg(test)]
