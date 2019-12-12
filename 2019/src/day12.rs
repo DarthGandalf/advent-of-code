@@ -83,17 +83,18 @@ fn part1(input: &Moons) -> anyhow::Result<i32> {
 	part1_energy(input, 1000)
 }
 
-fn find_repeat(input: &Moons, check: impl Fn(&Moons) -> bool) -> u64 {
-	for (i, moons) in iterator(input.clone()).enumerate().skip(1) {
-		if check(&moons) {
-			return i as u64;
-		}
-	}
-	0
+fn find_repeat(input: &Moons, check: impl Fn(&Moons) -> bool) -> usize {
+	iterator(input.clone())
+		.enumerate()
+		.skip(1)
+		.filter(|(_, moons)| check(&moons))
+		.next()
+		.unwrap()
+		.0
 }
 
 #[aoc(day12, part2)]
-fn part2(input: &Moons) -> u64 {
+fn part2(input: &Moons) -> usize {
 	let x = find_repeat(&input, |moons| {
 		itertools::zip(&input.0, &moons.0).all(|(a, b)| a.pos.0 == b.pos.0 && a.vel.0 == b.vel.0)
 	});
