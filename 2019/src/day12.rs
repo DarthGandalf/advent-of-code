@@ -83,29 +83,29 @@ fn part1(input: &Moons) -> anyhow::Result<i32> {
 	part1_energy(input, 1000)
 }
 
-fn find_repeat(input: &Moons, check: impl Fn(&Moons) -> bool) -> usize {
-	iterator(input.clone())
+fn find_repeat(input: &Moons, check: impl Fn(&Moons) -> bool) -> anyhow::Result<usize> {
+	Ok(iterator(input.clone())
 		.enumerate()
 		.skip(1)
 		.filter(|(_, moons)| check(&moons))
 		.next()
-		.unwrap()
-		.0
+		.none_err()?
+		.0)
 }
 
 #[aoc(day12, part2)]
-fn part2(input: &Moons) -> usize {
+fn part2(input: &Moons) -> anyhow::Result<usize> {
 	let x = find_repeat(&input, |moons| {
 		itertools::zip(&input.0, &moons.0).all(|(a, b)| a.pos.0 == b.pos.0 && a.vel.0 == b.vel.0)
-	});
+	})?;
 	let y = find_repeat(&input, |moons| {
 		itertools::zip(&input.0, &moons.0).all(|(a, b)| a.pos.1 == b.pos.1 && a.vel.1 == b.vel.1)
-	});
+	})?;
 	let z = find_repeat(&input, |moons| {
 		itertools::zip(&input.0, &moons.0).all(|(a, b)| a.pos.2 == b.pos.2 && a.vel.2 == b.vel.2)
-	});
+	})?;
 	use num::Integer;
-	x.lcm(&y).lcm(&z)
+	Ok(x.lcm(&y).lcm(&z))
 }
 
 #[cfg(test)]
@@ -123,7 +123,7 @@ mod tests {
 		)
 		.unwrap();
 		assert_eq!(part1_energy(&input, 10).unwrap(), 179);
-		assert_eq!(part2(&input), 2772);
+		assert_eq!(part2(&input).unwrap(), 2772);
 	}
 
 	#[test]
@@ -137,13 +137,13 @@ mod tests {
 		)
 		.unwrap();
 		assert_eq!(part1_energy(&input, 100).unwrap(), 1940);
-		assert_eq!(part2(&input), 4686774924);
+		assert_eq!(part2(&input).unwrap(), 4686774924);
 	}
 
 	#[test]
 	fn answers() {
 		let input = parse(include_str!("../input/2019/day12.txt")).unwrap();
 		assert_eq!(part1(&input).unwrap(), 14907);
-		assert_eq!(part2(&input), 467081194429464);
+		assert_eq!(part2(&input).unwrap(), 467081194429464);
 	}
 }
