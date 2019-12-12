@@ -13,10 +13,10 @@ struct Moon {
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-struct Input(Vec<Moon>);
+struct Moons(Vec<Moon>);
 
 #[aoc_generator(day12)]
-fn parse(input: &str) -> anyhow::Result<Input> {
+fn parse(input: &str) -> anyhow::Result<Moons> {
 	let input = Day12Parser::parse(Rule::input, input.trim())?
 		.next()
 		.none_err()?;
@@ -34,10 +34,10 @@ fn parse(input: &str) -> anyhow::Result<Input> {
 			})
 		})
 		.collect();
-	Ok(Input(moons?))
+	Ok(Moons(moons?))
 }
 
-fn iterator(input: Input) -> impl Iterator<Item = Input> {
+fn iterator(input: Moons) -> impl Iterator<Item = Moons> {
 	std::iter::successors(Some(input), |moons| {
 		let mut new_moons = moons.clone();
 		for m1 in 0..new_moons.0.len() {
@@ -65,7 +65,7 @@ fn iterator(input: Input) -> impl Iterator<Item = Input> {
 	})
 }
 
-fn part1_energy(input: &Input, steps: usize) -> anyhow::Result<i32> {
+fn part1_energy(input: &Moons, steps: usize) -> anyhow::Result<i32> {
 	let result = iterator(input.clone()).skip(steps).next().none_err()?;
 	Ok(result
 		.0
@@ -79,21 +79,21 @@ fn part1_energy(input: &Input, steps: usize) -> anyhow::Result<i32> {
 }
 
 #[aoc(day12, part1)]
-fn part1(input: &Input) -> anyhow::Result<i32> {
+fn part1(input: &Moons) -> anyhow::Result<i32> {
 	part1_energy(input, 1000)
 }
 
-fn find_repeat(input: &Input, check: impl Fn(&Input) -> bool) -> usize {
+fn find_repeat(input: &Moons, check: impl Fn(&Moons) -> bool) -> u64 {
 	for (i, moons) in iterator(input.clone()).enumerate().skip(1) {
 		if check(&moons) {
-			return i;
+			return i as u64;
 		}
 	}
 	0
 }
 
 #[aoc(day12, part2)]
-fn part2(input: &Input) -> usize {
+fn part2(input: &Moons) -> u64 {
 	let x = find_repeat(&input, |moons| {
 		itertools::zip(&input.0, &moons.0).all(|(a, b)| a.pos.0 == b.pos.0 && a.vel.0 == b.vel.0)
 	});
