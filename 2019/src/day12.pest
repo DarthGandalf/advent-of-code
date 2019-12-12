@@ -1,0 +1,3 @@
+coordinate = { "-"? ~ ASCII_DIGIT+ }
+moon = { "<x=" ~ coordinate ~ ", y=" ~ coordinate ~ ", z=" ~ coordinate ~ ">" }
+input = { SOI ~ moon ~ (NEWLINE ~ moon)* ~ EOI }
