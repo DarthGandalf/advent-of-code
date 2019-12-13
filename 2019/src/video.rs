@@ -29,7 +29,8 @@ macro_rules! palette {
 			$n:ident = $v:tt,
 		)+
 	}) => {
-		#[derive(Clone, Copy, enum_iterator::IntoEnumIterator, Eq, PartialEq, Hash, Debug)]
+		#[derive(Clone, Copy, enum_iterator::IntoEnumIterator, Eq, PartialEq, Hash, Debug, num_enum::TryFromPrimitive)]
+		#[repr(u8)]
 		enum $p {
 			$(
 				$n,
