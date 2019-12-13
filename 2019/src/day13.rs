@@ -10,9 +10,9 @@ fn parse(input: &str) -> Result<Vec<crate::intcode::Type>, std::num::ParseIntErr
 palette!(Palette {
 	Empty = [0x00, 0x00, 0x00],
 	Wall = [0xFF, 0xFF, 0xFF],
-	Block = [0x00, 0xFF, 0xFF],
-	Paddle = [0x00, 0xFF, 0x00],
-	Ball = [0xFF, 0x00, 0x00],
+	Block = "block.png",
+	Paddle = "paddle.png",
+	Ball = "ball.png",
 });
 
 #[aoc(day13, part1)]
@@ -50,7 +50,7 @@ fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Typ
 	#[cfg(feature = "video")]
 	const HEIGHT: u16 = 21;
 	#[cfg(feature = "video")]
-	let mut video = crate::video::OptionalVideo::<Palette>::new(Some("day13"), WIDTH, HEIGHT, 5)?;
+	let mut video = crate::video::OptionalVideo::<Palette>::new(Some("day13"), WIDTH, HEIGHT, 10)?;
 	let mut score = 0;
 	let mut ballx = 0;
 	let mut paddlex = None;
@@ -66,6 +66,12 @@ fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Typ
 						ti.send(0)?;
 					}
 				}
+				#[cfg(feature = "video")]
+				video.frame((0..HEIGHT as crate::intcode::Type).map(|y| {
+					(0..WIDTH as crate::intcode::Type)
+						.map(|x| grid.get(&(x, y)).cloned().unwrap_or(Palette::Empty))
+						.collect()
+				}))?;
 			}
 			recv(ro) -> x => {
 				let x = x?;
@@ -81,16 +87,6 @@ fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Typ
 					Palette::Paddle => paddlex = Some(x),
 					Palette::Ball => ballx = x,
 					_ => {}
-				}
-				if paddlex.is_some() {
-					if t != Palette::Empty {
-						#[cfg(feature = "video")]
-						video.frame((0..HEIGHT as crate::intcode::Type).map(|y| {
-							(0..WIDTH as crate::intcode::Type)
-								.map(|x| grid.get(&(x, y)).cloned().unwrap_or(Palette::Empty))
-								.collect()
-						}))?;
-					}
 				}
 			}
 			recv(re) -> _ => {
