@@ -24,6 +24,7 @@ bytecount = "0.6.0"
 num = "0.2.0"
 num_enum = "0.4.2"
 linked-hash-map = "0.5.2"
+fnv = "1.0.6"
 
 [features]
 video = ["image", "gif"]

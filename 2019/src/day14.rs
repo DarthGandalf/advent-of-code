@@ -33,7 +33,7 @@ fn parse(input: &str) -> anyhow::Result<Recipes> {
 	let input = Day14Parser::parse(Rule::input, input.trim())?
 		.next()
 		.none_err()?;
-	let recipes: anyhow::Result<std::collections::HashMap<_, _>> = input
+	let recipes: anyhow::Result<fnv::FnvHashMap<_, _>> = input
 		.into_inner()
 		.filter(|pair| pair.as_rule() == Rule::recipe)
 		.map(|pair| {
@@ -78,7 +78,7 @@ fn parse(input: &str) -> anyhow::Result<Recipes> {
 fn process_n_fuel(recipes: &Recipes, fuel: u64) -> anyhow::Result<u64> {
 	let fuel_resource = hash_resource("FUEL");
 	let ore_resource = hash_resource("ORE");
-	let mut requirements = std::collections::HashMap::new();
+	let mut requirements = fnv::FnvHashMap::default();
 	requirements.insert(fuel_resource, fuel);
 	for (Amount { num, resource }, ingrs) in recipes {
 		let requirement = requirements.remove(resource).unwrap_or_default();
