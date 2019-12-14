@@ -45,24 +45,26 @@ fn parse(input: &str) -> anyhow::Result<Recipes> {
 	Ok(recipes?)
 }
 
-#[aoc(day14, part1)]
-fn part1(recipes: &Recipes) -> anyhow::Result<u64> {
+fn process_n_fuel(recipes: &Recipes, fuel: u64) -> anyhow::Result<u64> {
+	let mut leftovers = std::collections::HashMap::<Resource, u64>::new();
 	let mut requirements = linked_hash_map::LinkedHashMap::new();
 	let mut ore = 0;
-	requirements.insert("FUEL".to_string(), 1);
-	let mut leftovers = std::collections::HashMap::<Resource, u64>::new();
+	requirements.insert("FUEL".to_string(), fuel);
 	while let Some((resource, num)) = requirements.pop_front() {
 		if resource == "ORE" {
 			ore += num;
 			continue;
 		}
 		let leftover = leftovers.entry(resource.clone()).or_default();
-		while *leftover < num {
+		if *leftover < num {
 			let (getting, ingredients) = recipes.get(&resource).none_err()?;
+			// Round up
+			let times = (num - *leftover + getting - 1) / getting;
 			for ingredient in ingredients {
-				*requirements.entry(ingredient.resource.clone()).or_insert(0) += ingredient.num;
+				*requirements.entry(ingredient.resource.clone()).or_insert(0) +=
+					ingredient.num * times;
 			}
-			*leftover += getting;
+			*leftover += getting * times;
 		}
 		*leftover -= num;
 		if *leftover == 0 {
@@ -70,6 +72,28 @@ fn part1(recipes: &Recipes) -> anyhow::Result<u64> {
 		}
 	}
 	Ok(ore)
+}
+
+#[aoc(day14, part1)]
+fn part1(recipes: &Recipes) -> anyhow::Result<u64> {
+	Ok(process_n_fuel(recipes, 1)?)
+}
+
+#[aoc(day14, part2)]
+fn part2(recipes: &Recipes) -> anyhow::Result<u64> {
+	let mut lower = 1;
+	let mut upper = 1_000_000_000;
+	let mut good_attempt = lower;
+	while lower < upper {
+		let attempt = (upper + lower) / 2;
+		if process_n_fuel(recipes, attempt)? <= 1_000_000_000_000 {
+			good_attempt = attempt;
+			lower = attempt + 1;
+		} else {
+			upper = attempt;
+		}
+	}
+	Ok(good_attempt)
 }
 
 #[cfg(test)]
@@ -123,6 +147,7 @@ mod tests {
 		)
 		.unwrap();
 		assert_eq!(part1(&input).unwrap(), 13312);
+		assert_eq!(part2(&input).unwrap(), 82892753);
 	}
 
 	#[test]
@@ -144,6 +169,7 @@ mod tests {
 		)
 		.unwrap();
 		assert_eq!(part1(&input).unwrap(), 180697);
+		assert_eq!(part2(&input).unwrap(), 5586022);
 	}
 
 	#[test]
@@ -170,12 +196,13 @@ mod tests {
 		)
 		.unwrap();
 		assert_eq!(part1(&input).unwrap(), 2210736);
+		assert_eq!(part2(&input).unwrap(), 460664);
 	}
 
 	#[test]
 	fn answers() {
 		let input = parse(include_str!("../input/2019/day14.txt")).unwrap();
 		assert_eq!(part1(&input).unwrap(), 907302);
-		//assert_eq!(part2(&input).unwrap(), 467081194429464);
+		assert_eq!(part2(&input).unwrap(), 1670299);
 	}
 }
