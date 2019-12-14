@@ -20,7 +20,7 @@ impl Amount {
 		Ok(Amount { num, resource })
 	}
 }
-type Recipes = std::collections::HashMap<Resource, (u64, Vec<Amount>)>;
+type Recipes = Vec<(Amount, Vec<Amount>)>;
 
 #[aoc_generator(day14)]
 fn parse(input: &str) -> anyhow::Result<Recipes> {
@@ -42,36 +42,48 @@ fn parse(input: &str) -> anyhow::Result<Recipes> {
 			Ok((result.resource, (result.num, ingredients?)))
 		})
 		.collect();
-	Ok(recipes?)
+	let mut recipes = recipes?;
+	let nodes: Vec<String> = recipes
+		.keys()
+		.cloned()
+		.chain(std::iter::once("ORE".to_string()))
+		.collect();
+	Ok(pathfinding::prelude::topological_sort(&nodes, |node| {
+		recipes
+			.get(node)
+			.map(|ingredients| {
+				ingredients
+					.1
+					.iter()
+					.map(|i| i.resource.clone())
+					.collect::<Vec<String>>()
+			})
+			.unwrap_or_default()
+	})
+	.map_err(|_| anyhow::anyhow!("cycle"))?
+	.into_iter()
+	.map(|i| {
+		let (num, ingredients) = recipes.remove(&i).unwrap_or_else(|| (1, vec![]));
+		(Amount { num, resource: i }, ingredients)
+	})
+	.collect())
 }
 
 fn process_n_fuel(recipes: &Recipes, fuel: u64) -> anyhow::Result<u64> {
-	let mut leftovers = std::collections::HashMap::<Resource, u64>::new();
-	let mut requirements = linked_hash_map::LinkedHashMap::new();
-	let mut ore = 0;
+	let mut requirements = std::collections::HashMap::new();
 	requirements.insert("FUEL".to_string(), fuel);
-	while let Some((resource, num)) = requirements.pop_front() {
+	for (Amount { num, resource }, ingrs) in recipes {
+		let requirement = requirements.remove(resource).unwrap_or_default();
 		if resource == "ORE" {
-			ore += num;
-			continue;
+			return Ok(requirement);
 		}
-		let leftover = leftovers.entry(resource.clone()).or_default();
-		if *leftover < num {
-			let (getting, ingredients) = recipes.get(&resource).none_err()?;
-			// Round up
-			let times = (num - *leftover + getting - 1) / getting;
-			for ingredient in ingredients {
-				*requirements.entry(ingredient.resource.clone()).or_insert(0) +=
-					ingredient.num * times;
-			}
-			*leftover += getting * times;
-		}
-		*leftover -= num;
-		if *leftover == 0 {
-			leftovers.remove(&resource);
+		// Round up
+		let times = (requirement + num - 1) / num;
+		for ingredient in ingrs {
+			*requirements.entry(ingredient.resource.clone()).or_insert(0) += ingredient.num * times;
 		}
 	}
-	Ok(ore)
+	Err(anyhow::anyhow!("unreachable"))
 }
 
 #[aoc(day14, part1)]
