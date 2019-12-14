@@ -77,7 +77,7 @@ fn parse(input: &str) -> anyhow::Result<Recipes> {
 	))
 }
 
-fn process_n_fuel(recipes: &Recipes, fuel: u64) -> anyhow::Result<u64> {
+fn process_n_fuel(recipes: &Recipes, fuel: u64) -> u64 {
 	let fuel_resource = hash_resource("FUEL");
 	let ore_resource = hash_resource("ORE");
 	let mut requirements = fnv::FnvHashMap::default();
@@ -85,7 +85,7 @@ fn process_n_fuel(recipes: &Recipes, fuel: u64) -> anyhow::Result<u64> {
 	for (Amount { num, resource }, ingrs) in &recipes.0 {
 		let requirement = requirements.remove(resource).unwrap_or_default();
 		if *resource == ore_resource {
-			return Ok(requirement);
+			return requirement;
 		}
 		// Round up
 		let times = (requirement + num - 1) / num;
@@ -93,29 +93,29 @@ fn process_n_fuel(recipes: &Recipes, fuel: u64) -> anyhow::Result<u64> {
 			*requirements.entry(ingredient.resource.clone()).or_insert(0) += ingredient.num * times;
 		}
 	}
-	Err(anyhow::anyhow!("unreachable"))
+	0
 }
 
 #[aoc(day14, part1)]
-fn part1(recipes: &Recipes) -> anyhow::Result<u64> {
-	Ok(process_n_fuel(recipes, 1)?)
+fn part1(recipes: &Recipes) -> u64 {
+	process_n_fuel(recipes, 1)
 }
 
 #[aoc(day14, part2)]
-fn part2(recipes: &Recipes) -> anyhow::Result<u64> {
+fn part2(recipes: &Recipes) -> u64 {
 	let mut lower = 1;
 	let mut upper = 1_000_000_000;
 	let mut good_attempt = lower;
 	while lower < upper {
 		let attempt = (upper + lower) / 2;
-		if process_n_fuel(recipes, attempt)? <= 1_000_000_000_000 {
+		if process_n_fuel(recipes, attempt) <= 1_000_000_000_000 {
 			good_attempt = attempt;
 			lower = attempt + 1;
 		} else {
 			upper = attempt;
 		}
 	}
-	Ok(good_attempt)
+	good_attempt
 }
 
 #[cfg(test)]
@@ -134,7 +134,7 @@ mod tests {
 7 A, 1 E => 1 FUEL",
 		)
 		.unwrap();
-		assert_eq!(part1(&input).unwrap(), 31);
+		assert_eq!(part1(&input), 31);
 	}
 
 	#[test]
@@ -150,7 +150,7 @@ mod tests {
 2 AB, 3 BC, 4 CA => 1 FUEL",
 		)
 		.unwrap();
-		assert_eq!(part1(&input).unwrap(), 165);
+		assert_eq!(part1(&input), 165);
 	}
 
 	#[test]
@@ -168,8 +168,8 @@ mod tests {
 3 DCFZ, 7 NZVS, 5 HKGWZ, 10 PSHF => 8 KHKGT",
 		)
 		.unwrap();
-		assert_eq!(part1(&input).unwrap(), 13312);
-		assert_eq!(part2(&input).unwrap(), 82892753);
+		assert_eq!(part1(&input), 13312);
+		assert_eq!(part2(&input), 82892753);
 	}
 
 	#[test]
@@ -190,8 +190,8 @@ mod tests {
 176 ORE => 6 VJHF",
 		)
 		.unwrap();
-		assert_eq!(part1(&input).unwrap(), 180697);
-		assert_eq!(part2(&input).unwrap(), 5586022);
+		assert_eq!(part1(&input), 180697);
+		assert_eq!(part2(&input), 5586022);
 	}
 
 	#[test]
@@ -217,14 +217,14 @@ mod tests {
 5 BHXH, 4 VRPVC => 5 LTCX",
 		)
 		.unwrap();
-		assert_eq!(part1(&input).unwrap(), 2210736);
-		assert_eq!(part2(&input).unwrap(), 460664);
+		assert_eq!(part1(&input), 2210736);
+		assert_eq!(part2(&input), 460664);
 	}
 
 	#[test]
 	fn answers() {
 		let input = parse(include_str!("../input/2019/day14.txt")).unwrap();
-		assert_eq!(part1(&input).unwrap(), 907302);
-		assert_eq!(part2(&input).unwrap(), 1670299);
+		assert_eq!(part1(&input), 907302);
+		assert_eq!(part2(&input), 1670299);
 	}
 }
