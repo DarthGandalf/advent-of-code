@@ -62,10 +62,10 @@ impl std::cmp::Ord for Angle {
 		if self == other {
 			return std::cmp::Ordering::Equal;
 		}
-		if self.xsign == 0 && self.ratio.numer() < &0 {
+		if self.xsign == 0 && *self.ratio.numer() < 0 {
 			return std::cmp::Ordering::Less;
 		}
-		if other.xsign == 0 && other.ratio.numer() < &0 {
+		if other.xsign == 0 && *other.ratio.numer() < 0 {
 			return std::cmp::Ordering::Greater;
 		}
 		if self.xsign > 0 && other.xsign <= 0 {

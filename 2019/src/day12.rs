@@ -66,7 +66,7 @@ fn iterator(input: Moons) -> impl Iterator<Item = Moons> {
 }
 
 fn part1_energy(input: &Moons, steps: usize) -> anyhow::Result<i32> {
-	let result = iterator(input.clone()).skip(steps).next().none_err()?;
+	let result = iterator(input.clone()).nth(steps).none_err()?;
 	Ok(result
 		.0
 		.iter()
@@ -87,8 +87,7 @@ fn find_repeat(input: &Moons, check: impl Fn(&Moons) -> bool) -> anyhow::Result<
 	Ok(iterator(input.clone())
 		.enumerate()
 		.skip(1)
-		.filter(|(_, moons)| check(&moons))
-		.next()
+		.find(|(_, moons)| check(&moons))
 		.none_err()?
 		.0)
 }

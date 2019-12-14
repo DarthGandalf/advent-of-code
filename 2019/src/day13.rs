@@ -52,19 +52,13 @@ fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Typ
 	#[cfg(feature = "video")]
 	let mut video = crate::video::OptionalVideo::<Palette>::new(Some("day13"), WIDTH, HEIGHT, 10)?;
 	let mut score = 0;
-	let mut ballx = 0;
-	let mut paddlex = None;
+	let mut ballx: crate::intcode::Type = 0;
+	let mut paddlex: Option<crate::intcode::Type> = None;
 	loop {
 		crossbeam::channel::select! {
 			recv(rw) -> _ => {
 				if let Some(paddlex) = paddlex {
-					if paddlex < ballx {
-						ti.send(1)?;
-					} else if paddlex > ballx {
-						ti.send(-1)?;
-					} else {
-						ti.send(0)?;
-					}
+					ti.send((ballx - paddlex).signum())?;
 				}
 				#[cfg(feature = "video")]
 				video.frame((0..HEIGHT as crate::intcode::Type).map(|y| {

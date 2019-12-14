@@ -20,7 +20,7 @@ impl Amount {
 		Ok(Amount { num, resource })
 	}
 }
-type Recipes = Vec<(Amount, Vec<Amount>)>;
+struct Recipes(Vec<(Amount, Vec<Amount>)>);
 
 fn hash_resource(input: &str) -> u64 {
 	let mut hasher = std::collections::hash_map::DefaultHasher::new();
@@ -54,25 +54,27 @@ fn parse(input: &str) -> anyhow::Result<Recipes> {
 		.cloned()
 		.chain(std::iter::once(hash_resource("ORE")))
 		.collect();
-	Ok(pathfinding::prelude::topological_sort(&nodes, |node| {
-		recipes
-			.get(node)
-			.map(|ingredients| {
-				ingredients
-					.1
-					.iter()
-					.map(|i| i.resource.clone())
-					.collect::<Vec<Resource>>()
-			})
-			.unwrap_or_default()
-	})
-	.map_err(|_| anyhow::anyhow!("cycle"))?
-	.into_iter()
-	.map(|i| {
-		let (num, ingredients) = recipes.remove(&i).unwrap_or_else(|| (1, vec![]));
-		(Amount { num, resource: i }, ingredients)
-	})
-	.collect())
+	Ok(Recipes(
+		pathfinding::prelude::topological_sort(&nodes, |node| {
+			recipes
+				.get(node)
+				.map(|ingredients| {
+					ingredients
+						.1
+						.iter()
+						.map(|i| i.resource)
+						.collect::<Vec<Resource>>()
+				})
+				.unwrap_or_default()
+		})
+		.map_err(|_| anyhow::anyhow!("cycle"))?
+		.into_iter()
+		.map(|i| {
+			let (num, ingredients) = recipes.remove(&i).unwrap_or_else(|| (1, vec![]));
+			(Amount { num, resource: i }, ingredients)
+		})
+		.collect(),
+	))
 }
 
 fn process_n_fuel(recipes: &Recipes, fuel: u64) -> anyhow::Result<u64> {
@@ -80,7 +82,7 @@ fn process_n_fuel(recipes: &Recipes, fuel: u64) -> anyhow::Result<u64> {
 	let ore_resource = hash_resource("ORE");
 	let mut requirements = fnv::FnvHashMap::default();
 	requirements.insert(fuel_resource, fuel);
-	for (Amount { num, resource }, ingrs) in recipes {
+	for (Amount { num, resource }, ingrs) in &recipes.0 {
 		let requirement = requirements.remove(resource).unwrap_or_default();
 		if *resource == ore_resource {
 			return Ok(requirement);
