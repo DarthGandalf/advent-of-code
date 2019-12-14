@@ -1,0 +1,7 @@
+num = { ASCII_DIGIT+ }
+resource = { ASCII_ALPHA_UPPER+ }
+amount = { num ~ resource }
+ingredients = { amount ~ ("," ~ amount)* }
+recipe = {  ingredients ~ "=>" ~ amount }
+input = { SOI ~ recipe ~ (NEWLINE ~ recipe)* ~ EOI }
+WHITESPACE = _{ " " }
