@@ -6,7 +6,7 @@ use pest::Parser;
 #[grammar = "day14.pest"]
 struct Day14Parser;
 
-type Resource = String;
+type Resource = u64;
 #[derive(Debug)]
 struct Amount {
 	num: u64,
@@ -16,11 +16,17 @@ impl Amount {
 	fn parse(pair: pest::iterators::Pair<Rule>) -> anyhow::Result<Self> {
 		let mut amount = pair.into_inner();
 		let num = amount.next().none_err()?.as_str().trim().parse()?;
-		let resource = amount.next().none_err()?.as_str().trim().to_string();
+		let resource = hash_resource(amount.next().none_err()?.as_str().trim());
 		Ok(Amount { num, resource })
 	}
 }
 type Recipes = Vec<(Amount, Vec<Amount>)>;
+
+fn hash_resource(input: &str) -> u64 {
+	let mut hasher = std::collections::hash_map::DefaultHasher::new();
+	std::hash::Hash::hash(input, &mut hasher);
+	std::hash::Hasher::finish(&hasher)
+}
 
 #[aoc_generator(day14)]
 fn parse(input: &str) -> anyhow::Result<Recipes> {
@@ -43,10 +49,10 @@ fn parse(input: &str) -> anyhow::Result<Recipes> {
 		})
 		.collect();
 	let mut recipes = recipes?;
-	let nodes: Vec<String> = recipes
+	let nodes: Vec<Resource> = recipes
 		.keys()
 		.cloned()
-		.chain(std::iter::once("ORE".to_string()))
+		.chain(std::iter::once(hash_resource("ORE")))
 		.collect();
 	Ok(pathfinding::prelude::topological_sort(&nodes, |node| {
 		recipes
@@ -56,7 +62,7 @@ fn parse(input: &str) -> anyhow::Result<Recipes> {
 					.1
 					.iter()
 					.map(|i| i.resource.clone())
-					.collect::<Vec<String>>()
+					.collect::<Vec<Resource>>()
 			})
 			.unwrap_or_default()
 	})
@@ -70,11 +76,13 @@ fn parse(input: &str) -> anyhow::Result<Recipes> {
 }
 
 fn process_n_fuel(recipes: &Recipes, fuel: u64) -> anyhow::Result<u64> {
+	let fuel_resource = hash_resource("FUEL");
+	let ore_resource = hash_resource("ORE");
 	let mut requirements = std::collections::HashMap::new();
-	requirements.insert("FUEL".to_string(), fuel);
+	requirements.insert(fuel_resource, fuel);
 	for (Amount { num, resource }, ingrs) in recipes {
 		let requirement = requirements.remove(resource).unwrap_or_default();
-		if resource == "ORE" {
+		if *resource == ore_resource {
 			return Ok(requirement);
 		}
 		// Round up
