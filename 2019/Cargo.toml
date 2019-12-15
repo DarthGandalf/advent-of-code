@@ -27,5 +27,6 @@ linked-hash-map = "0.5.2"
 fnv = "1.0.6"
 
 [features]
+intcode_video = ["image", "gif"]
 video = ["image", "gif"]
 #default = ["video"]

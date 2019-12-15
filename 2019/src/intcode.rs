@@ -40,7 +40,7 @@ impl Computer {
 	pub fn run(&mut self, _video: Option<&str>) -> anyhow::Result<()> {
 		let mut pc: usize = 0;
 		let mut base: Type = 0;
-		#[cfg(feature = "video")]
+		#[cfg(feature = "intcode_video")]
 		let mut video = crate::video::OptionalVideo::<Palette>::new(
 			#[cfg(not(test))]
 			_video,
@@ -50,12 +50,10 @@ impl Computer {
 			1,
 			10,
 		)?;
-		#[cfg(feature = "video")]
-		video.silence_unused_warning();
 		loop {
-			#[cfg(feature = "video")]
+			#[cfg(feature = "intcode_video")]
 			let mut read = std::collections::HashSet::<Type>::new();
-			#[cfg(feature = "video")]
+			#[cfg(feature = "intcode_video")]
 			let mut write = std::collections::HashSet::<Type>::new();
 			let opcode = *self.memory.get(&pc).unwrap_or(&0);
 			let mode = |index| {
@@ -71,13 +69,13 @@ impl Computer {
 				let value = *self.memory.get(&(pc + index)).unwrap_or(&0);
 				match mode(index) {
 					0 => {
-						#[cfg(feature = "video")]
+						#[cfg(feature = "intcode_video")]
 						#[cfg(not(test))]
 						read.insert(value);
 						*self.memory.get(&(value as usize)).unwrap_or(&0)
 					}
 					1 => {
-						#[cfg(feature = "video")]
+						#[cfg(feature = "intcode_video")]
 						#[cfg(not(test))]
 						read.insert((pc + index) as Type);
 						value as Type
@@ -99,7 +97,7 @@ impl Computer {
 					let pos = *memory.entry(pc + index).or_default();
 					match mode(index) {
 						0 => {
-							#[cfg(feature = "video")]
+							#[cfg(feature = "intcode_video")]
 							#[cfg(not(test))]
 							write.insert(pos);
 							*memory.entry(pos as usize).or_default() = value;
@@ -173,7 +171,7 @@ impl Computer {
 					));
 				}
 			}
-			#[cfg(feature = "video")]
+			#[cfg(feature = "intcode_video")]
 			#[cfg(not(test))]
 			video.frame(std::iter::once(
 				self.memory
@@ -198,7 +196,7 @@ impl Computer {
 					})
 					.collect(),
 			))?;
-			#[cfg(feature = "video")]
+			#[cfg(feature = "intcode_video")]
 			{
 				read.insert(0);
 				write.insert(0);

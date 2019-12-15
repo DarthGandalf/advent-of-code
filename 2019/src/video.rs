@@ -144,8 +144,6 @@ impl<'a, P: Palette + 'a> OptionalVideo<P> {
 
 #[cfg(feature = "video")]
 impl<'a, P: Palette + 'a> OptionalVideo<P> {
-	pub fn silence_unused_warning(&mut self) {}
-
 	pub fn frame<I: Iterator<Item = Vec<P>>>(&mut self, rows: I) -> anyhow::Result<()> {
 		let this = if let Some(this) = &mut self.0 {
 			this
