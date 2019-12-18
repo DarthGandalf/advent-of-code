@@ -1,6 +1,6 @@
 use aoc_runner_derive::{aoc, aoc_generator};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Map {
 	wall: Vec<Vec<bool>>,
 	start: (usize, usize),
@@ -103,6 +103,81 @@ fn part1(map: &Map) -> Option<usize> {
 	Some(path.1)
 }
 
+#[aoc(day18, part2)]
+fn part2(map: &Map) -> Option<usize> {
+	let mut map = map.clone();
+	map.wall[map.start.0][map.start.1] = true;
+	map.wall[map.start.0 - 1][map.start.1] = true;
+	map.wall[map.start.0 + 1][map.start.1] = true;
+	map.wall[map.start.0][map.start.1 - 1] = true;
+	map.wall[map.start.0][map.start.1 + 1] = true;
+	#[derive(Eq, Hash, Clone, PartialEq, Debug)]
+	struct Node {
+		pos: [(usize, usize); 4],
+		need_keys: std::collections::BTreeSet<char>,
+	}
+	let path = pathfinding::directed::dijkstra::dijkstra(
+		&Node {
+			pos: [
+				(map.start.0 - 1, map.start.1 - 1),
+				(map.start.0 - 1, map.start.1 + 1),
+				(map.start.0 + 1, map.start.1 - 1),
+				(map.start.0 + 1, map.start.1 + 1),
+			],
+			need_keys: map.keys.values().cloned().collect(),
+		},
+		|n: &Node| {
+			#[derive(Eq, Hash, Clone, PartialEq, Debug)]
+			struct Subnode((usize, usize));
+			let mut neigh = vec![];
+			let mut try_move = |robot: usize| {
+				for (pos, (_, cost)) in pathfinding::directed::dijkstra::dijkstra_all(
+					&Subnode(n.pos[robot]),
+					|sn: &Subnode| {
+						let mut nei = vec![];
+						let mut try_add = |pos: (usize, usize)| {
+							if map.wall[pos.0][pos.1] {
+								return;
+							}
+							if let Some(door) = map.doors.get(&pos) {
+								if n.need_keys.contains(&door) {
+									return;
+								}
+							}
+							nei.push((Subnode(pos), 1));
+						};
+						try_add(((sn.0).0, (sn.0).1 + 1));
+						try_add(((sn.0).0, (sn.0).1 - 1));
+						try_add(((sn.0).0 + 1, (sn.0).1));
+						try_add(((sn.0).0 - 1, (sn.0).1));
+						nei
+					},
+				)
+				.into_iter()
+				{
+					if let Some(key) = map.keys.get(&pos.0) {
+						if n.need_keys.contains(&key) {
+							let mut new_pos = n.pos.clone();
+							new_pos[robot] = pos.0.clone();
+							let pos = new_pos;
+							let mut need_keys = n.need_keys.clone();
+							need_keys.remove(&key);
+							neigh.push((Node { pos, need_keys }, cost));
+						}
+					}
+				}
+			};
+			try_move(0);
+			try_move(1);
+			try_move(2);
+			try_move(3);
+			neigh
+		},
+		|n: &Node| n.need_keys.is_empty(),
+	)?;
+	Some(path.1)
+}
+
 #[cfg(test)]
 mod tests {
 	use super::*;
@@ -181,9 +256,76 @@ mod tests {
 	}
 
 	#[test]
+	fn test6() {
+		let input = parse(
+			"
+#######
+#a.#Cd#
+##...##
+##.@.##
+##...##
+#cB#Ab#
+#######",
+		)
+		.unwrap();
+		assert_eq!(part2(&input).unwrap(), 8);
+	}
+
+	#[test]
+	fn test7() {
+		let input = parse(
+			"
+###############
+#d.ABC.#.....a#
+######.#.######
+#######@#######
+######.#.######
+#b.....#.....c#
+###############",
+		)
+		.unwrap();
+		assert_eq!(part2(&input).unwrap(), 24);
+	}
+
+	#[test]
+	fn test8() {
+		let input = parse(
+			"
+#############
+#DcBa.#.GhKl#
+#.###.#.#I###
+#e#d##@##j#k#
+###C#.#.###J#
+#fEbA.#.FgHi#
+#############",
+		)
+		.unwrap();
+		assert_eq!(part2(&input).unwrap(), 32);
+	}
+
+	#[test]
+	fn test9() {
+		let input = parse(
+			"
+#############
+#g#f.D#..h#l#
+#F###e#E###.#
+#dCba.#.BcIJ#
+######@######
+#nK.L.#.G...#
+#M###N#H###.#
+#o#m..#i#jk.#
+#############",
+		)
+		.unwrap();
+		assert_eq!(part2(&input).unwrap(), 72);
+	}
+
+	#[test]
+	#[cfg(feature = "false")]
 	fn answers() {
-		let input = include_str!("../input/2019/day18.txt").trim();
+		let input = parse(include_str!("../input/2019/day18.txt")).unwrap();
 		assert_eq!(part1(&input).unwrap(), 4270);
-		//assert_eq!(part2(&input).unwrap(), "32749588");
+		assert_eq!(part2(&input).unwrap(), 1982);
 	}
 }
