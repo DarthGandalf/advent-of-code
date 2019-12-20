@@ -1,6 +1,5 @@
 #![feature(generators)]
 #![feature(stmt_expr_attributes)]
-#![feature(param_attrs)]
 
 #[macro_use]
 extern crate pest_derive;
@@ -44,5 +43,6 @@ mod day16;
 mod day17;
 mod day18;
 mod day19;
+mod day20;
 
 aoc_runner_derive::aoc_lib! { year = 2019 }
