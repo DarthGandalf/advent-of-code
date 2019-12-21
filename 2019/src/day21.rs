@@ -58,6 +58,36 @@ fn part1(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Typ
 	Ok(brute(program, 476161).none_err()?)
 }
 
+#[aoc(day21, part2)]
+fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Type> {
+	let (ti, ri) = crossbeam::channel::unbounded();
+	let (to, ro) = crossbeam::channel::unbounded();
+	let (tw, _) = crossbeam::channel::unbounded();
+	let (te, _) = crossbeam::channel::unbounded();
+	let mut robot = crate::intcode::Computer::new(program.to_vec(), ri, tw, to, te);
+	std::thread::spawn(move || robot.run(None));
+	let input = "
+NOT C J
+AND H J
+NOT B T
+OR T J
+NOT A T
+OR T J
+AND D J
+RUN\n"
+		.trim_start_matches('\n');
+	for c in input.chars() {
+		let _ = ti.send(c as u8 as crate::intcode::Type);
+	}
+	for c in ro.into_iter() {
+		if c > 200 {
+			return Ok(c);
+		}
+		print!("{}", c as u8 as char);
+	}
+	Ok(0)
+}
+
 #[cfg(test)]
 mod tests {
 	use super::*;
@@ -66,6 +96,6 @@ mod tests {
 	fn answers() {
 		let input = parse(include_str!("../input/2019/day21.txt")).unwrap();
 		assert_eq!(part1(&input).unwrap(), 19352638);
-		//assert_eq!(part2(&input).unwrap(), 1045393);
+		assert_eq!(part2(&input).unwrap(), 1141251258);
 	}
 }
