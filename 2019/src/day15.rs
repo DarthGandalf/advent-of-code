@@ -80,10 +80,9 @@ fn part1(program: &[crate::intcode::Type]) -> anyhow::Result<usize> {
 					continue;
 				}
 				if let Ok(result) = single_path(program, &path_new) {
-					if grid.insert(path_new.position(), result).is_none() {
-						if result != Palette::Wall {
-							paths.push(path_new);
-						}
+					if grid.insert(path_new.position(), result).is_none() && result != Palette::Wall
+					{
+						paths.push(path_new);
 					}
 				}
 			}
@@ -131,7 +130,7 @@ fn part1(program: &[crate::intcode::Type]) -> anyhow::Result<usize> {
 				.collect()
 		}))?;
 	}
-	return Ok(path[path.len() - 1].0.len());
+	Ok(path[path.len() - 1].0.len())
 }
 
 #[aoc(day15, part2)]
@@ -149,10 +148,9 @@ fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<usize> {
 					continue;
 				}
 				if let Ok(result) = single_path(program, &path_new) {
-					if grid.insert(path_new.position(), result).is_none() {
-						if result != Palette::Wall {
-							paths.push(path_new);
-						}
+					if grid.insert(path_new.position(), result).is_none() && result != Palette::Wall
+					{
+						paths.push(path_new);
 					}
 				}
 			}

@@ -18,12 +18,12 @@ fn brute(program: &[crate::intcode::Type], attempt: usize) -> Option<crate::intc
 	let mut number: usize = attempt;
 	let mut input = String::new();
 	while number > 0 {
-		input.extend(ALL_INSTRUCTIONS[number % ALL_INSTRUCTIONS.len()].chars());
+		input.push_str(ALL_INSTRUCTIONS[number % ALL_INSTRUCTIONS.len()]);
 		input.push('\n');
 		number /= ALL_INSTRUCTIONS.len();
 	}
 	println!("Attempt {}:\n{}", attempt, input);
-	input.extend("WALK\n".chars());
+	input.push_str("WALK\n");
 	let (ti, ri) = crossbeam::channel::unbounded();
 	let (to, ro) = crossbeam::channel::unbounded();
 	let (tw, _) = crossbeam::channel::unbounded();
@@ -55,7 +55,7 @@ fn part1(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Typ
 	AND A T
 	NOT T J
 	*/
-	Ok(brute(program, 476161).none_err()?)
+	Ok(brute(program, 476_161).none_err()?)
 }
 
 #[aoc(day21, part2)]

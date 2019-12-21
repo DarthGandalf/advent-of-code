@@ -157,8 +157,8 @@ fn part2(map: &Map) -> Option<usize> {
 				{
 					if let Some(key) = map.keys.get(&pos.0) {
 						if n.need_keys.contains(&key) {
-							let mut new_pos = n.pos.clone();
-							new_pos[robot] = pos.0.clone();
+							let mut new_pos = n.pos;
+							new_pos[robot] = pos.0;
 							let pos = new_pos;
 							let mut need_keys = n.need_keys.clone();
 							need_keys.remove(&key);

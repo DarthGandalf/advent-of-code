@@ -91,6 +91,7 @@ fn parse(input: &str) -> anyhow::Result<Map> {
 				.push((inner_bottom + 1, x));
 		}
 	}
+	#[allow(clippy::needless_range_loop)]
 	for y in 0..grid.len() {
 		if grid[y][0] != ' ' {
 			positions
@@ -105,6 +106,7 @@ fn parse(input: &str) -> anyhow::Result<Map> {
 				.push((y, right - 1));
 		}
 	}
+	#[allow(clippy::needless_range_loop)]
 	for y in inner_top..=inner_bottom {
 		if grid[y][inner_left] != ' ' {
 			positions
@@ -135,8 +137,8 @@ fn parse(input: &str) -> anyhow::Result<Map> {
 	//println!("{:?}->{:?}", aa, zz);
 	let mut portals: fnv::FnvHashMap<(usize, usize), (usize, usize)> = Default::default();
 	for ends in positions.values() {
-		let a = ends.iter().nth(0).none_err()?;
-		let b = ends.iter().nth(1).none_err()?;
+		let a = ends.get(0).none_err()?;
+		let b = ends.get(1).none_err()?;
 		portals.insert(a.clone(), b.clone());
 		portals.insert(b.clone(), a.clone());
 	}
@@ -198,7 +200,7 @@ fn part2(map: &Map) -> anyhow::Result<usize> {
 	//println!("{:?}", out_in);
 	//println!("{:?}", in_out);
 	Ok(pathfinding::prelude::dijkstra(
-		&(0 as usize, map.aa.clone()),
+		&(0 as usize, map.aa),
 		|node| {
 			let level = node.0;
 			let n = node.1;

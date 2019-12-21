@@ -117,13 +117,13 @@ fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Typ
 			ry = new_y;
 		} else {
 			println!("{:?}", commands);
-			[
+			/*
 				"R", "10", "L", "8", "R", "10", "R", "4", "L", "6", "L", "6", "R", "10", "R", "10",
 				"L", "8", "R", "10", "R", "4", "L", "6", "R", "12", "R", "12", "R", "10", "L", "6",
 				"L", "6", "R", "10", "L", "6", "R", "12", "R", "12", "R", "10", "R", "10", "L",
 				"8", "R", "10", "R", "4", "L", "6", "L", "6", "R", "10", "R", "10", "L", "8", "R",
 				"10", "R", "4", "L", "6", "R", "12", "R", "12", "R", "10",
-			];
+			*/
 			for line in grid {
 				println!("{}", line.into_iter().collect::<String>());
 			}

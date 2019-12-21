@@ -17,7 +17,7 @@ fn part1(input: &str) -> anyhow::Result<String> {
 							itertools::repeat_n(0, i + 1).chain(itertools::repeat_n(-1, i + 1)),
 						))
 						.collect();
-				let pattern = std::iter::repeat(&pattern).flat_map(|x| x).skip(1);
+				let pattern = std::iter::repeat(&pattern).flatten().skip(1);
 				let sum: i32 = itertools::zip(previous, pattern).map(|(c, p)| c * p).sum();
 				(sum % 10).abs()
 			})
