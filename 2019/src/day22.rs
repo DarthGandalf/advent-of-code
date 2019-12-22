@@ -55,6 +55,37 @@ fn part1(shuffle: &Shuffle) -> i32 {
 	track_card(shuffle, 10007, 2019)
 }
 
+fn inverse(x: num::BigInt, size: &num::BigInt) -> num::BigInt {
+	x.modpow(&(size - num::BigInt::from(2)), size)
+}
+
+#[aoc(day22, part2)]
+fn part2(shuffle: &Shuffle) -> num::BigInt {
+	let size: &num::BigInt = &119_315_717_514_047_i64.into();
+	let times: &num::BigInt = &101_741_582_076_661_i64.into();
+	use num::traits::identities::One;
+	let mut off = num::BigInt::default();
+	let mut inc = num::BigInt::one();
+
+	for step in shuffle.0.iter() {
+		match step {
+			Step::New => {
+				inc = -inc;
+				off += &inc;
+			}
+			Step::Cut(num) => {
+				off += &inc * num::BigInt::from(*num) % size;
+			}
+			Step::Increment(num) => {
+				inc *= inverse(num::BigInt::from(*num), size);
+			}
+		}
+	}
+	let incr = inc.modpow(&times, size);
+	let offs = off * (num::BigInt::one() - &incr) * inverse(num::BigInt::one() - inc, size);
+	(offs + incr * 2020) % size
+}
+
 #[cfg(test)]
 mod tests {
 	use super::*;
@@ -126,6 +157,6 @@ cut -1",
 	fn answers() {
 		let input = parse(include_str!("../input/2019/day22.txt")).unwrap();
 		assert_eq!(part1(&input), 1510);
-		//assert_eq!(part2(&input), 1670299);
+		assert_eq!(part2(&input), 10307144922975i64.into());
 	}
 }
