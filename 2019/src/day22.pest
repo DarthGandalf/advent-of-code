@@ -1,0 +1,6 @@
+number = { "-"? ~ ASCII_DIGIT+ }
+new = { "deal into new stack" }
+cut = { "cut " ~ number }
+increment = { "deal with increment " ~ number }
+step = { ( new | cut | increment ) }
+input = { SOI ~ step ~ (NEWLINE ~ step)* ~ EOI }
