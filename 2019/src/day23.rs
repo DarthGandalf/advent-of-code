@@ -64,6 +64,33 @@ fn part1(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Typ
 	anyhow::bail!("no result");
 }
 
+#[aoc(day23, part2)]
+fn part2(program: &[crate::intcode::Type]) -> anyhow::Result<crate::intcode::Type> {
+	let (bust, busr) = crossbeam::channel::unbounded();
+	let inputs: Vec<_> = (0..50)
+		.map(|i| NIC::new(program, i, bust.clone()))
+		.collect();
+	let mut last = None;
+	let mut sent = None;
+	loop {
+		if let Ok((receiver, x, y)) = busr.recv_timeout(std::time::Duration::from_millis(100)) {
+			println!("{} {} {}", receiver, x, y);
+			if receiver == 255 {
+				last = Some((x, y));
+			} else {
+				inputs[receiver as usize].input.send((x, y))?;
+			}
+		} else {
+			println!("NAT, {:?}", sent);
+			if sent == last {
+				return Ok(last.unwrap_or_default().1);
+			}
+			inputs[0].input.send(last.unwrap_or_default())?;
+			sent = last;
+		}
+	}
+}
+
 #[cfg(test)]
 mod tests {
 	use super::*;
@@ -72,5 +99,6 @@ mod tests {
 	fn answers() {
 		let input = parse(include_str!("../input/2019/day23.txt")).unwrap();
 		assert_eq!(part1(&input).unwrap(), 18513);
+		assert_eq!(part2(&input).unwrap(), 13286);
 	}
 }
