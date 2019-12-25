@@ -25,6 +25,7 @@ num = "0.2.0"
 num_enum = "0.4.2"
 linked-hash-map = "0.5.2"
 fnv = "1.0.6"
+rustyline = "5.0.5"
 
 [features]
 intcode_video = ["image", "gif"]
