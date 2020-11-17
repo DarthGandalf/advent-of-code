@@ -9,6 +9,7 @@ defmodule CLI do
 
     {part1, part2} = case day do
       1 -> {&Day1.part1/1, &Day1.part2/1}
+      2 -> {&Day2.part1/1, &Day2.part2/1}
     end
 
     IO.puts("part1: " <> to_string(part1.(input)))
