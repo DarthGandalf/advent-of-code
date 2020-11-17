@@ -4,7 +4,7 @@ defmodule CLI do
       [day] -> day
       _ -> raise("Usage: ./aoc2017 <day>")
     end
-    {:ok, input} = File.read("input/2017/day" <> day <> ".txt")
+    input = File.read!("input/2017/day" <> day <> ".txt")
     {day, ""} = Integer.parse(day)
 
     {part1, part2} = case day do
