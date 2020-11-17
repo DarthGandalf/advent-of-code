@@ -13,4 +13,8 @@ defmodule Day2Test do
 9 4 7 3
 3 8 6 5") == 9
   end
+
+  test "result" do
+    assert CLI.main(["2"]) == {47136, 250}
+  end
 end

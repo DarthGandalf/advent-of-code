@@ -1,4 +1,6 @@
 defmodule Day2 do
+  @behaviour Day
+
   def parse(input) do
     input
     |> String.split("\n")
@@ -12,6 +14,7 @@ defmodule Day2 do
     |> Stream.filter(fn line -> line != [] end)
   end
 
+  @impl Day
   def part1(input) do
     input
     |> parse
@@ -22,6 +25,7 @@ defmodule Day2 do
     |> Enum.reduce(0, &+/2)
   end
 
+  @impl Day
   def part2(input) do
     input
     |> parse

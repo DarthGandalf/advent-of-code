@@ -20,4 +20,8 @@ defmodule Day1Test do
     assert Day1.part2("123123") == 12
     assert Day1.part2("12131415") == 4
   end
+
+  test "result" do
+    assert CLI.main(["1"]) == {995, 1130}
+  end
 end
