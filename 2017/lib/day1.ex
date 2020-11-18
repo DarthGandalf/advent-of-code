@@ -17,7 +17,7 @@ defmodule Day1 do
     :world
   end
 
-  def digits(input) do
+  defp digits(input) do
     input |> Stream.unfold(&String.next_codepoint/1) |> Stream.map(fn <<x>> -> x-0x30 end) |> Stream.filter(fn x -> x >= 0 end) |> Enum.to_list()
   end
 

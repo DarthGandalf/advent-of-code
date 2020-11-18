@@ -5,6 +5,13 @@ end
 
 defmodule CLI do
   def main(args \\ []) do
+    {out1, out2} = solve(args)
+
+    IO.puts("part1: " <> to_string(out1))
+    IO.puts("part2: " <> to_string(out2))
+  end
+
+  def solve(args \\ []) do
     day = case args do
       [day] -> day
       _ -> raise("Usage: ./aoc2017 <day>")
@@ -18,9 +25,7 @@ defmodule CLI do
     end
 
     out1 = day.part1(input)
-    IO.puts("part1: " <> to_string(out1))
     out2 = day.part2(input)
-    IO.puts("part2: " <> to_string(out2))
 
     {out1, out2}
   end

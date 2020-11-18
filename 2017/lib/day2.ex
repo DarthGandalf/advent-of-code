@@ -1,7 +1,7 @@
 defmodule Day2 do
   @behaviour Day
 
-  def parse(input) do
+  defp parse(input) do
     input
     |> String.split("\n")
     |> Stream.map(fn line ->
