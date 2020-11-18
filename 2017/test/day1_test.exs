@@ -22,6 +22,6 @@ defmodule Day1Test do
   end
 
   test "result" do
-    assert CLI.solve(["1"]) == {995, 1130}
+    assert CLI.solve_test(["1"]) == {995, 1130}
   end
 end

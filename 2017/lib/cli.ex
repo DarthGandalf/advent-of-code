@@ -5,10 +5,12 @@ end
 
 defmodule CLI do
   def main(args \\ []) do
-    {out1, out2} = solve(args)
+    {out1, out2, time1, time2} = solve(args)
 
     IO.puts("part1: " <> to_string(out1))
+    IO.puts("took " <> to_string(time1) <> "ms")
     IO.puts("part2: " <> to_string(out2))
+    IO.puts("took " <> to_string(time2) <> "ms")
   end
 
   def solve(args \\ []) do
@@ -24,9 +26,14 @@ defmodule CLI do
       2 -> Day2
     end
 
-    out1 = day.part1(input)
-    out2 = day.part2(input)
+    {time1, out1} = :timer.tc(day, :part1, [input])
+    {time2, out2} = :timer.tc(day, :part2, [input])
 
+    {out1, out2, time1/1000, time2/1000}
+  end
+
+  def solve_test(args \\ []) do
+    {out1, out2, _, _} = solve(args)
     {out1, out2}
   end
 end
