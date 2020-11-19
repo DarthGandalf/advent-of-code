@@ -26,6 +26,7 @@ defmodule CLI do
       2 -> Day2
       3 -> Day3
       4 -> Day4
+      5 -> Day5
     end
 
     {time1, out1} = :timer.tc(day, :part1, [input])
