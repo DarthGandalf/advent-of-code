@@ -4,6 +4,8 @@ project(AoC2020 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED yes)
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+enable_testing()
+list(APPEND CMAKE_CTEST_ARGUMENTS "--output-on-failure")
 
 function(aoc_executable name)
 	add_library(${name}_lib ${name}.cpp)
@@ -21,6 +23,7 @@ function(aoc_executable name)
 		target_link_libraries(${name}_lib SDL2::SDL2
 			PkgConfig::SDL2IMAGE
 			PkgConfig::SDL2TTF)
+		add_test(${name}_test bash -c "diff -u <(cat ${CMAKE_SOURCE_DIR}/answers/${name}.txt) <(${CMAKE_BINARY_DIR}/${name})")
 	endif()
 endfunction()
 
@@ -55,7 +58,6 @@ else()
 	include(CMakeRC)
 endif()
 
-aoc_executable(day00)
 aoc_executable(day1)
 set(last_day 1)
 
