@@ -56,6 +56,8 @@ else()
 endif()
 
 aoc_executable(day00)
+aoc_executable(day1)
+set(last_day 1)
 
 if(NOT EMSCRIPTEN)
 	file(GLOB input_files
@@ -65,5 +67,5 @@ if(NOT EMSCRIPTEN)
 	target_link_libraries(common inputs)
 
 	add_executable(example_test example_test.cpp common.cpp)
-	target_link_libraries(example_test day00_lib)
+	target_link_libraries(example_test day${last_day}_lib)
 endif()

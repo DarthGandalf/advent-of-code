@@ -19,8 +19,12 @@ static std::string get_input() {
 static EM_BOOL run_clicked(int eventType, const EmscriptenMouseEvent* mouseEvent, void* userData) {
 	aoc2020::Solver* solver = reinterpret_cast<aoc2020::Solver*>(userData);
 	val::global("document").call<val>("getElementById", val("run")).set("disabled", "disabled");
-	solver->part1(get_input());
-	solver->part2(get_input());
+	auto input = get_input();
+	std::cout << "part1: ";
+	solver->part1(input);
+	std::cout << "\npart2: ";
+	solver->part2(input);
+	std::cout << '\n';
 	val::global("document").call<val>("getElementById", val("run")).set("disabled", "");
 	return true;
 }

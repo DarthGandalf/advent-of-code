@@ -15,5 +15,11 @@ namespace aoc2020 {
 
 int main() {
 	aoc2020::Solver solver;
-	solver.part1("kuku");
+	solver.part2(R"(
+	1721
+979
+366
+299
+675
+1456)");
 }

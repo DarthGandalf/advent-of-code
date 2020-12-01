@@ -5,7 +5,7 @@ export LDFLAGS="-flto"
 
 mkdir build-native
 cd build-native && \
-cmake .. -DCMAKE_BUILD_TYPE=Release && \
+CXX=clang++ CXXFLAGS="${CXXFLAGS} -stdlib=libc++" cmake .. -DCMAKE_BUILD_TYPE=Release && \
 make
 cd ..
 

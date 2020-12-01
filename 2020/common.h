@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <span>
+#include <vector>
 #include <string_view>
 #include <optional>
 #include "sdlpp.hpp"
@@ -49,4 +51,11 @@ namespace aoc2020 {
 	private:
 		sdl::Surface& m_s;
 	};
+
+	std::vector<int> ints(std::string_view input);
+
+	template<typename It>
+	constexpr auto make_span(It begin, It end) {
+		return std::span<std::remove_pointer_t<typename It::pointer>>(&(*begin), std::distance(begin, end));
+	}
 }
