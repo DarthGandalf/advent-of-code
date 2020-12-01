@@ -2,6 +2,7 @@
 #include "common.h"
 #include "sdlpp.hpp"
 #include <SDL_ttf.h>
+#include <system_error>
 
 namespace aoc2020 {
 	Visualizer::Visualizer(int width, int height) :
@@ -36,7 +37,7 @@ namespace aoc2020 {
 			int i;
 			auto [next, err] = std::from_chars(b, e, i);
 			if (err != std::errc{}) {
-				throw std::make_error_code(err);
+				throw std::system_error(std::make_error_code(err));
 			}
 			b = next;
 			numbers.push_back(i);
