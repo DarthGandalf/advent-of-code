@@ -13,17 +13,17 @@
 using emscripten::val;
 
 static std::string get_input() {
-	using emscripten::val;
 	return val::global("document").call<val>("getElementById", val("input"))["value"].as<std::string>();
 }
 
 static EM_BOOL run_clicked(int eventType, const EmscriptenMouseEvent* mouseEvent, void* userData) {
 	aoc2020::Solver* solver = reinterpret_cast<aoc2020::Solver*>(userData);
-	auto button = val::global("document").call<val>("getElementById", val("run"));
+	auto document = val::global("document");
+	auto button = document.call<val>("getElementById", val("run"));
 	button.set("disabled", "disabled");
-	auto out1 = val::global("document").call<val>("getElementById", val("output1"));
+	auto out1 = document.call<val>("getElementById", val("output1"));
 	out1.set("value", "");
-	auto out2 = val::global("document").call<val>("getElementById", val("output2"));
+	auto out2 = document.call<val>("getElementById", val("output2"));
 	out2.set("value", "");
 	auto input = get_input();
 	std::ostringstream str1, str2;
@@ -37,15 +37,16 @@ static EM_BOOL run_clicked(int eventType, const EmscriptenMouseEvent* mouseEvent
 
 int main(int argc, char* argv[]) {
 	aoc2020::Solver solver;
+	auto document = val::global("document");
 
 	{
 		std::ifstream f("input.txt");
 		std::string str(std::istreambuf_iterator<char>{f}, {});
-		val::global("document").call<val>("getElementById", val("input")).set("value", str);
+		document.call<val>("getElementById", val("input")).set("value", str);
 	}
-	val::global("document").call<val>("getElementById", val("output1")).set("value", "");
-	val::global("document").call<val>("getElementById", val("output2")).set("value", "");
-	val::global("document").call<val>("getElementById", val("run")).set("disabled", "");
+	document.call<val>("getElementById", val("output1")).set("value", "");
+	document.call<val>("getElementById", val("output2")).set("value", "");
+	document.call<val>("getElementById", val("run")).set("disabled", "");
 	emscripten_set_click_callback("#run", &solver, false, &run_clicked);
 
 	// Just prevent solver to be destructed
