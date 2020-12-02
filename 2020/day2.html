@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AoC 2020 day2</title>
+</head>
+
+<body>
+	<a href="index.html">List of days</a><br/>
+
+	<label for="input">Input:</label>
+	<textarea id="input"></textarea><br/>
+
+	<canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas><br/>
+
+	<button id="run" disabled>Run</button><br/>
+
+	<label for="output">Output:</label>
+	<textarea id="output"></textarea><br/>
+
+	<script type='text/javascript'>
+		var Module = {
+			canvas: (function() { return document.getElementById('canvas'); })(),
+			print: (function() {
+				let element = document.getElementById('output');
+				if (element) element.value = ''; // clear browser cache
+				return function(text) {
+					if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+					console.log(text);
+					if (element) {
+						element.value += text + "\n";
+						element.scrollTop = element.scrollHeight; // focus on bottom
+					}
+				};
+			})(),
+		};
+		Module.printErr = Module.print;
+	</script>
+	<script src="day2.js"></script>
+</body>
+</html>
