@@ -59,7 +59,8 @@ else()
 endif()
 
 aoc_executable(day1)
-set(last_day 1)
+aoc_executable(day2)
+set(last_day 2)
 
 if(NOT EMSCRIPTEN)
 	file(GLOB input_files

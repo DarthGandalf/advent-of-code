@@ -15,11 +15,7 @@ namespace aoc2020 {
 
 int main() {
 	aoc2020::Solver solver;
-	solver.part2(R"(
-	1721
-979
-366
-299
-675
-1456)");
+	solver.part2(R"(1-3 a: abcde
+1-3 b: cdefg
+2-9 c: ccccccccc)");
 }
