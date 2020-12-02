@@ -18,9 +18,9 @@ int main(int argc, char* argv[]) {
 	auto file = fs.open("input/2020/" + self.stem().string() + ".txt");
 	std::string_view input(file.begin(), file.end() - file.begin());
 	std::cout << "part1: ";
-	solver.part1(input);
+	solver.part1(input, std::cout);
 	std::cout << "\npart2: ";
-	solver.part2(input);
+	solver.part2(input, std::cout);
 	std::cout << '\n';
 }
 

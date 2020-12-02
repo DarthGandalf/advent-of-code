@@ -6,6 +6,7 @@
 #include <emscripten/html5.h>
 #include <emscripten/val.h>
 #include <SDL2/SDL_image.h>
+#include <sstream>
 
 #include "common.h"
 
@@ -18,14 +19,19 @@ static std::string get_input() {
 
 static EM_BOOL run_clicked(int eventType, const EmscriptenMouseEvent* mouseEvent, void* userData) {
 	aoc2020::Solver* solver = reinterpret_cast<aoc2020::Solver*>(userData);
-	val::global("document").call<val>("getElementById", val("run")).set("disabled", "disabled");
+	auto button = val::global("document").call<val>("getElementById", val("run"));
+	button.set("disabled", "disabled");
+	auto out1 = val::global("document").call<val>("getElementById", val("output1"));
+	out1.set("value", "");
+	auto out2 = val::global("document").call<val>("getElementById", val("output2"));
+	out2.set("value", "");
 	auto input = get_input();
-	std::cout << "part1: ";
-	solver->part1(input);
-	std::cout << "\npart2: ";
-	solver->part2(input);
-	std::cout << '\n';
-	val::global("document").call<val>("getElementById", val("run")).set("disabled", "");
+	std::ostringstream str1, str2;
+	solver->part1(input, str1);
+	out1.set("value", str1.str());
+	solver->part2(input, str2);
+	out2.set("value", str2.str());
+	button.set("disabled", "");
 	return true;
 }
 
@@ -37,6 +43,8 @@ int main(int argc, char* argv[]) {
 		std::string str(std::istreambuf_iterator<char>{f}, {});
 		val::global("document").call<val>("getElementById", val("input")).set("value", str);
 	}
+	val::global("document").call<val>("getElementById", val("output1")).set("value", "");
+	val::global("document").call<val>("getElementById", val("output2")).set("value", "");
 	val::global("document").call<val>("getElementById", val("run")).set("disabled", "");
 	emscripten_set_click_callback("#run", &solver, false, &run_clicked);
 

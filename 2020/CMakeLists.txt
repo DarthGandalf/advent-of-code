@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED yes)
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 enable_testing()
 list(APPEND CMAKE_CTEST_ARGUMENTS "--output-on-failure")
+set(index_list "")
 
 function(aoc_executable name)
 	add_library(${name}_lib ${name}.cpp)
@@ -19,6 +20,7 @@ function(aoc_executable name)
 		target_compile_options(${name}_lib PUBLIC "-sUSE_SDL=2")
 		target_compile_options(${name}_lib PUBLIC "-sUSE_SDL_TTF=2")
 		target_compile_options(${name}_lib PUBLIC "-sUSE_SDL_IMAGE=2")
+		set(index_list "${index_list}\n<li><a href=${name}.html>${name}</a></li>" PARENT_SCOPE)
 	else()
 		target_link_libraries(${name}_lib SDL2::SDL2
 			PkgConfig::SDL2IMAGE
@@ -62,7 +64,9 @@ aoc_executable(day1)
 aoc_executable(day2)
 set(last_day 2)
 
-if(NOT EMSCRIPTEN)
+if(EMSCRIPTEN)
+	configure_file(index.html index.html)
+else()
 	file(GLOB input_files
 		"${CMAKE_SOURCE_DIR}/sprites/*.png"
 		"${CMAKE_SOURCE_DIR}/input/2020/*.txt")

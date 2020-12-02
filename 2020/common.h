@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ostream>
 #include <string>
 #include <span>
 #include <vector>
@@ -30,8 +31,8 @@ namespace aoc2020 {
 	public:
 		Solver();
 
-		void part1(std::string_view input);
-		void part2(std::string_view input);
+		void part1(std::string_view input, std::ostream& ostr);
+		void part2(std::string_view input, std::ostream& ostr);
 	private:
 		std::optional<Visualizer> m_vis;
 	};

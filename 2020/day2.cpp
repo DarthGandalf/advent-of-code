@@ -1,4 +1,3 @@
-#include <iostream>
 #include <charconv>
 #include <range/v3/iterator/operations.hpp>
 #include <regex>
@@ -29,8 +28,8 @@ namespace aoc2020 {
 		});
 	}
 
-	void Solver::part1(std::string_view input) {
-		std::cout << ranges::distance(input | ranges::views::split('\n') | ranges::views::filter(goodpass));
+	void Solver::part1(std::string_view input, std::ostream& ostr) {
+		ostr << ranges::distance(input | ranges::views::split('\n') | ranges::views::filter(goodpass));
 	}
 
 	static bool goodpass2(const std::string& line) {
@@ -39,7 +38,7 @@ namespace aoc2020 {
 		});
 	}
 
-	void Solver::part2(std::string_view input) {
-		std::cout << ranges::distance(input | ranges::views::split('\n') | ranges::views::filter(goodpass2));
+	void Solver::part2(std::string_view input, std::ostream& ostr) {
+		ostr << ranges::distance(input | ranges::views::split('\n') | ranges::views::filter(goodpass2));
 	}
 }

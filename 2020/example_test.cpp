@@ -1,3 +1,4 @@
+#include <iostream>
 #include "common.h"
 #include "sdlpp.hpp"
 #include <SDL_ttf.h>
@@ -17,5 +18,5 @@ int main() {
 	aoc2020::Solver solver;
 	solver.part2(R"(1-3 a: abcde
 1-3 b: cdefg
-2-9 c: ccccccccc)");
+2-9 c: ccccccccc)", std::cout);
 }
