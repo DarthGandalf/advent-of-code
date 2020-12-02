@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8"/>
 	<title>AoC 2020 day2</title>
 </head>
 
@@ -14,26 +15,16 @@
 
 	<button id="run" disabled>Run</button><br/>
 
-	<label for="output">Output:</label>
-	<textarea id="output"></textarea><br/>
+	<label for="output1">Part 1:</label>
+	<textarea id="output1"></textarea><br/>
 
-	<script type='text/javascript'>
+	<label for="output2">Part 2:</label>
+	<textarea id="output2"></textarea><br/>
+
+	<script>
 		var Module = {
 			canvas: (function() { return document.getElementById('canvas'); })(),
-			print: (function() {
-				let element = document.getElementById('output');
-				if (element) element.value = ''; // clear browser cache
-				return function(text) {
-					if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-					console.log(text);
-					if (element) {
-						element.value += text + "\n";
-						element.scrollTop = element.scrollHeight; // focus on bottom
-					}
-				};
-			})(),
 		};
-		Module.printErr = Module.print;
 	</script>
 	<script src="day2.js"></script>
 </body>
