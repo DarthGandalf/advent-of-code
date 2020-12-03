@@ -1,0 +1,12 @@
+---
+BasedOnStyle: Google
+Standard: Latest
+
+IndentWidth: 4
+TabWidth: 4
+AccessModifierOffset: -2
+UseTab: AlignWithSpaces
+
+DerivePointerAlignment: false
+PointerAlignment: Left
+...

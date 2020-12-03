@@ -1,22 +1,27 @@
-#include <iostream>
-#include "common.h"
-#include "sdlpp.hpp"
 #include <SDL_ttf.h>
 
-namespace aoc2020 {
-	void yield() {}
+#include <iostream>
 
-	sdl::Surface open_sprite(std::string_view filename) {
-		TTF_Font* font = TTF_OpenFont("/usr/share/fonts/hack/Hack-Regular.ttf", 30);
-		SDL_Surface* surface = TTF_RenderText_Shaded(font, std::string(filename).c_str(), SDL_Color{255, 255, 255, 255}, SDL_Color{0, 0, 0, 0});
-		TTF_CloseFont(font);
-		return sdl::Surface(surface);
-	}
+#include "common.h"
+#include "sdlpp.hpp"
+
+namespace aoc2020 {
+void yield() {}
+
+sdl::Surface open_sprite(std::string_view filename) {
+	TTF_Font* font = TTF_OpenFont("/usr/share/fonts/hack/Hack-Regular.ttf", 30);
+	SDL_Surface* surface = TTF_RenderText_Shaded(
+		font, std::string(filename).c_str(), SDL_Color{255, 255, 255, 255},
+		SDL_Color{0, 0, 0, 0});
+	TTF_CloseFont(font);
+	return sdl::Surface(surface);
 }
+}  // namespace aoc2020
 
 int main() {
 	auto solver = aoc2020::AbstractSolver::Create();
 	solver->part2(R"(1-3 a: abcde
 1-3 b: cdefg
-2-9 c: ccccccccc)", std::cout);
+2-9 c: ccccccccc)",
+	              std::cout);
 }

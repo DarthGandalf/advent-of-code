@@ -1,11 +1,11 @@
-#include <fstream>
-#include <iostream>
-#include <memory>
-
+#include <SDL2/SDL_image.h>
 #include <emscripten.h>
 #include <emscripten/html5.h>
 #include <emscripten/val.h>
-#include <SDL2/SDL_image.h>
+
+#include <fstream>
+#include <iostream>
+#include <memory>
 #include <sstream>
 
 #include "common.h"
@@ -13,11 +13,16 @@
 using emscripten::val;
 
 static std::string get_input() {
-	return val::global("document").call<val>("getElementById", val("input"))["value"].as<std::string>();
+	return val::global("document")
+		.call<val>("getElementById", val("input"))["value"]
+		.as<std::string>();
 }
 
-static EM_BOOL run_clicked(int eventType, const EmscriptenMouseEvent* mouseEvent, void* userData) {
-	aoc2020::AbstractSolver* solver = reinterpret_cast<aoc2020::AbstractSolver*>(userData);
+static EM_BOOL run_clicked(int eventType,
+                           const EmscriptenMouseEvent* mouseEvent,
+                           void* userData) {
+	aoc2020::AbstractSolver* solver =
+		reinterpret_cast<aoc2020::AbstractSolver*>(userData);
 	auto document = val::global("document");
 	auto button = document.call<val>("getElementById", val("run"));
 	button.set("disabled", "disabled");
@@ -50,21 +55,21 @@ int main(int argc, char* argv[]) {
 	emscripten_set_click_callback("#run", solver.get(), false, &run_clicked);
 
 	// Just prevent solver from being destructed
-	emscripten_set_main_loop(+[] {}, /* fps = */ 1, /* simulate_infinite_loop = */ 1);
+	emscripten_set_main_loop(
+		+[] {}, /* fps = */ 1, /* simulate_infinite_loop = */ 1);
 }
 
 namespace aoc2020 {
-	void yield() {
-		emscripten_sleep(0);
-	}
+void yield() { emscripten_sleep(0); }
 
-	sdl::Surface open_sprite(std::string_view filename) {
-		SDL_Surface* result = IMG_Load(("sprites/" + std::string(filename) + ".png").c_str());
-		if (!result) {
-			std::ostringstream strm;
-			strm << "IMG_Load(): " << IMG_GetError();
-			throw sdl::Error(strm.str());
-		}
-		return sdl::Surface(result);
+sdl::Surface open_sprite(std::string_view filename) {
+	SDL_Surface* result =
+		IMG_Load(("sprites/" + std::string(filename) + ".png").c_str());
+	if (!result) {
+		std::ostringstream strm;
+		strm << "IMG_Load(): " << IMG_GetError();
+		throw sdl::Error(strm.str());
 	}
+	return sdl::Surface(result);
 }
+}  // namespace aoc2020
