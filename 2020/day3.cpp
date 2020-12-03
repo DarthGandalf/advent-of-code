@@ -77,6 +77,11 @@ struct Solver : AbstractSolver {
 		m_vis->m_renderer.setDrawColor(255, 255, 255, 255);
 		int current_x = 0;
 		int current_y = 0;
+		SDL_Rect center;
+		center.h = 13;
+		center.w = 12;
+		center.x = 200;
+		center.y = 200;
 		while (current_y < m_map.height()) {
 			current_x += xoff;
 			current_y += yoff;
@@ -84,11 +89,6 @@ struct Solver : AbstractSolver {
 				float subx = i * xoff / 4.0f;
 				float suby = i * yoff / 4.0f;
 				m_vis->m_renderer.clear();
-				SDL_Rect center;
-				center.h = 13;
-				center.w = 12;
-				center.x = 200;
-				center.y = 200;
 				for (int y :
 				     ranges::views::iota(current_y - 20, current_y + 30)) {
 					for (int x :
@@ -97,9 +97,9 @@ struct Solver : AbstractSolver {
 						SDL_Rect dest;
 						dest.h = 13;
 						dest.w = 12;
-						dest.x = center.x + (x + 1 - current_x - subx) * 12;
-						dest.y = center.y + (y + 1 - current_y - suby) * 13;
-						if (x < current_x && y < current_y &&
+						dest.x = center.x + (x - current_x - subx) * 12;
+						dest.y = center.y + (y - current_y - suby) * 13;
+						if (x <= current_x && y <= current_y &&
 						    (current_x - x) * yoff == (current_y - y) * xoff) {
 							m_vis->m_renderer.copy(pine2.get(), nullptr, &dest);
 						} else {
@@ -107,15 +107,15 @@ struct Solver : AbstractSolver {
 						}
 					}
 				}
-				m_vis->m_renderer.copy(
-					m_map.tree(current_y, current_x) && i == 3 ? crash.get()
-															   : toboggan.get(),
-					nullptr, &center);
-				m_vis->m_renderer.present();
-				yield(visual_delay());
-			}
-			if (m_map.tree(current_y, current_x)) {
-				yield(visual_delay() * 4);
+				if (m_map.tree(current_y, current_x) && i == 0) {
+					m_vis->m_renderer.copy(crash.get(), nullptr, &center);
+					m_vis->m_renderer.present();
+					yield(visual_delay() * 5);
+				} else {
+					m_vis->m_renderer.copy(toboggan.get(), nullptr, &center);
+					m_vis->m_renderer.present();
+					yield(visual_delay());
+				}
 			}
 			if (!visual_enabled()) return;
 		}
