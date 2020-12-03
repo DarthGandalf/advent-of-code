@@ -6,6 +6,7 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <range/v3/all.hpp>
 
 #include "sdlpp.hpp"
 
@@ -58,5 +59,11 @@ template <typename It>
 constexpr auto make_span(It begin, It end) {
 	return std::span<std::remove_pointer_t<typename It::pointer>>(
 		&(*begin), std::distance(begin, end));
+}
+
+inline auto to_string_view() {
+	return ranges::views::transform([](auto&& range) {
+		return std::string_view(&*range.begin(), ranges::distance(range));
+	});
 }
 }  // namespace aoc2020

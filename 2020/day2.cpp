@@ -13,12 +13,6 @@
 namespace aoc2020 {
 namespace {
 
-auto to_string_view() {
-	return ranges::views::transform([](auto&& range) {
-		return std::string_view(&*range.begin(), ranges::distance(range));
-	});
-}
-
 static std::regex re("(\\d+)-(\\d+) (.): (.+)");
 template <typename Pred>
 static bool handleline(std::string_view line, Pred&& pred) {

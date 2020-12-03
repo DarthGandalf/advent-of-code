@@ -20,8 +20,17 @@ sdl::Surface open_sprite(std::string_view filename) {
 
 int main() {
 	auto solver = aoc2020::AbstractSolver::Create();
-	solver->parse(R"(1-3 a: abcde
-1-3 b: cdefg
-2-9 c: ccccccccc)");
+	solver->parse(R"(..##.......
+#...#...#..
+.#....#..#.
+..#.#...#.#
+.#...##..#.
+..#.##.....
+.#.#.#....#
+.#........#
+#.##...#...
+#...##....#
+.#..#...#.#
+)");
 	solver->part2(std::cout);
 }

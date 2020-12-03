@@ -62,7 +62,8 @@ endif()
 
 aoc_executable(day1)
 aoc_executable(day2)
-set(last_day 2)
+aoc_executable(day3)
+set(last_day 3)
 
 if(EMSCRIPTEN)
 	configure_file(index.html index.html)
