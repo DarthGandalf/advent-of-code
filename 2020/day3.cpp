@@ -25,9 +25,11 @@ struct Map {
 };
 
 struct Solver : AbstractSolver {
-	Solver() : m_vis(512, 512) {}
+	Solver() {
+		m_vis.emplace(512, 512);
+	}
 
-	Visualizer m_vis;
+	std::optional<Visualizer> m_vis;
 	Map m_map;
 
 	void parse(std::string_view input) override {
@@ -62,14 +64,14 @@ struct Solver : AbstractSolver {
 
 	void draw(int xoff, int yoff) {
 		using namespace std::chrono_literals;
-		sdl::Texture pine(m_vis.m_renderer.get(),
+		sdl::Texture pine(m_vis->m_renderer.get(),
 		                  open_sprite("pinetree").get());
-		sdl::Texture pine2(m_vis.m_renderer.get(),
+		sdl::Texture pine2(m_vis->m_renderer.get(),
 		                   open_sprite("pinetree-dead").get());
-		sdl::Texture crash(m_vis.m_renderer.get(), open_sprite("crash").get());
-		sdl::Texture toboggan(m_vis.m_renderer.get(),
+		sdl::Texture crash(m_vis->m_renderer.get(), open_sprite("crash").get());
+		sdl::Texture toboggan(m_vis->m_renderer.get(),
 		                      open_sprite("toboggan").get());
-		m_vis.m_renderer.setDrawColor(255, 255, 255, 255);
+		m_vis->m_renderer.setDrawColor(255, 255, 255, 255);
 		int current_x = 0;
 		int current_y = 0;
 		while (current_y < m_map.height()) {
@@ -78,7 +80,7 @@ struct Solver : AbstractSolver {
 			for (int i = 0; i < 4; ++i) {
 				float subx = i * xoff / 4.0f;
 				float suby = i * yoff / 4.0f;
-				m_vis.m_renderer.clear();
+				m_vis->m_renderer.clear();
 				SDL_Rect center;
 				center.h = 13;
 				center.w = 12;
@@ -95,18 +97,18 @@ struct Solver : AbstractSolver {
 						dest.x = center.x + (x - current_x - subx) * 12;
 						dest.y = center.y + (y - current_y - suby) * 13;
 						if (x < current_x && y < current_y &&
-						    (current_x - x) / xoff == (current_y - y) / yoff) {
-							m_vis.m_renderer.copy(pine2.get(), nullptr, &dest);
+						    (current_x - x) * yoff == (current_y - y) * xoff) {
+							m_vis->m_renderer.copy(pine2.get(), nullptr, &dest);
 						} else {
-							m_vis.m_renderer.copy(pine.get(), nullptr, &dest);
+							m_vis->m_renderer.copy(pine.get(), nullptr, &dest);
 						}
 					}
 				}
-				m_vis.m_renderer.copy(m_map.tree(current_y, current_x) && i == 3
+				m_vis->m_renderer.copy(m_map.tree(current_y, current_x) && i == 3
 				                          ? crash.get()
 				                          : toboggan.get(),
 				                      nullptr, &center);
-				m_vis.m_renderer.present();
+				m_vis->m_renderer.present();
 				yield(10ms);
 			}
 			if (m_map.tree(current_y, current_x)) {
