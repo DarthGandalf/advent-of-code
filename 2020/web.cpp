@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 }
 
 namespace aoc2020 {
-void yield() { emscripten_sleep(0); }
+void yield(std::chrono::milliseconds delay) { emscripten_sleep(delay.count()); }
 
 sdl::Surface open_sprite(std::string_view filename) {
 	SDL_Surface* result =

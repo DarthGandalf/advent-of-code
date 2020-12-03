@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <optional>
 #include <ostream>
 #include <span>
@@ -12,7 +13,7 @@
 
 namespace aoc2020 {
 // Call this during long loops from time to time
-void yield();
+void yield(std::chrono::milliseconds delay);
 
 struct TtfInit {
 	TtfInit();

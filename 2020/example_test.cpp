@@ -6,7 +6,7 @@
 #include "sdlpp.hpp"
 
 namespace aoc2020 {
-void yield() {}
+void yield(std::chrono::milliseconds delay) {}
 
 sdl::Surface open_sprite(std::string_view filename) {
 	TTF_Font* font = TTF_OpenFont("/usr/share/fonts/hack/Hack-Regular.ttf", 30);

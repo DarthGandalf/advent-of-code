@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
 }
 
 namespace aoc2020 {
-void yield() {}
+void yield(std::chrono::milliseconds delay) { SDL_Delay(delay.count()); }
 
 sdl::Surface open_sprite(std::string_view filename) {
 	auto fs = cmrc::inputs::get_filesystem();
