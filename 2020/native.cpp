@@ -1,3 +1,5 @@
+#include <fmt/core.h>
+
 #include <charconv>
 #include <cmrc/cmrc.hpp>
 #include <cstdlib>
@@ -36,9 +38,7 @@ sdl::Surface open_sprite(std::string_view filename) {
 	SDL_Surface* result =
 		IMG_Load_RW(SDL_RWFromConstMem(data.data(), data.length()), 1);
 	if (!result) {
-		std::ostringstream strm;
-		strm << "IMG_Load_RW(): " << IMG_GetError();
-		throw sdl::Error(strm.str());
+		throw sdl::Error(fmt::format("IMG_Load_RW(): {}", IMG_GetError()));
 	}
 	return sdl::Surface(result);
 }
@@ -50,9 +50,7 @@ std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)> open_font(int size) {
 	TTF_Font* result =
 		TTF_OpenFontRW(SDL_RWFromConstMem(data.data(), data.length()), 1, size);
 	if (!result) {
-		std::ostringstream strm;
-		strm << "TTF_OpenFontRW(): " << TTF_GetError();
-		throw sdl::Error(strm.str());
+		throw sdl::Error(fmt::format("TTF_OpenFontRW(): {}", TTF_GetError()));
 	}
 	return std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)>(result,
 	                                                           &TTF_CloseFont);

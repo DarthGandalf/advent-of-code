@@ -1,6 +1,7 @@
 #include "common.h"
 
 #include <SDL_ttf.h>
+#include <fmt/core.h>
 
 #include <charconv>
 #include <system_error>
@@ -16,9 +17,8 @@ Visualizer::Visualizer(int width, int height)
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	if (SDL_CreateWindowAndRenderer(width, height, 0, &window, &renderer) < 0) {
-		std::ostringstream strm;
-		strm << "SDL_CreateWindowAndRenderer(): " << SDL_GetError();
-		throw sdl::Error(strm.str());
+		throw sdl::Error(
+			fmt::format("SDL_CreateWindowAndRenderer(): {}", SDL_GetError()));
 	}
 	m_window = sdl::Window(window);
 	m_renderer = sdl::Renderer(renderer);

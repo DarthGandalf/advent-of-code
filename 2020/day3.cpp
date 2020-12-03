@@ -1,11 +1,11 @@
 #include <SDL_ttf.h>
+#include <fmt/core.h>
 
 #include <iostream>
 #include <range/v3/algorithm/count_if.hpp>
 #include <range/v3/all.hpp>
 #include <range/v3/numeric/iota.hpp>
 #include <range/v3/view/transform.hpp>
-#include <sstream>
 
 #include "common.h"
 #include "sdlpp.hpp"
@@ -125,9 +125,8 @@ struct Solver : AbstractSolver {
 				} else {
 					m_vis->m_renderer.copy(toboggan.get(), nullptr, &center);
 				}
-				std::ostringstream s;
-				s << "Trees destroyed: " << counter;
-				sdl::Surface surftext = render_text(font.get(), s.str());
+				sdl::Surface surftext = render_text(
+					font.get(), fmt::format("Trees collected: {}", counter));
 				sdl::Texture texttext(m_vis->m_renderer.get(), surftext.get());
 				SDL_Rect textrect;
 				textrect.h = surftext.get()->h;
