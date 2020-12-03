@@ -47,6 +47,9 @@ int main(int argc, char* argv[]) {
 
 	auto solver = aoc2020::AbstractSolver::Create();
 
+	if (solver->supports_visual()) {
+		document.call<val>("getElementById", val("visual_control"))["style"].set("display", "block");
+	}
 	{
 		std::ifstream f("input.txt");
 		std::string str(std::istreambuf_iterator<char>{f}, {});

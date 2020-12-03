@@ -15,9 +15,11 @@
 
 	<button id="run" disabled>Run</button><br/>
 
-	<label for="visual_delay">Speed</label>
-	<input type="checkbox" id="visual_enabled" checked/>
-	<input type="range" id="visual_delay" min="0" max="100" value="10"/><br/>
+	<div id="visual_control" style="display: none;">
+		<label for="visual_delay">Speed</label>
+		<input type="checkbox" id="visual_enabled" checked/>
+		<input type="range" id="visual_delay" min="0" max="100" value="10"/><br/>
+	</div>
 
 	<label for="output1">Part 1:</label>
 	<textarea id="output1"></textarea><br/>

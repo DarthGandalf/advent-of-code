@@ -12,7 +12,7 @@ namespace {
 struct Map {
 	std::vector<std::vector<bool>> m_rows;
 
-	bool tree(int row, int column) {
+	bool tree(int row, int column) const {
 		if (row < 0 || column < 0 || row >= m_rows.size()) {
 			return false;
 		}
@@ -21,7 +21,7 @@ struct Map {
 		return rrow[ccolumn];
 	}
 
-	int height() { return m_rows.size(); }
+	int height() const { return m_rows.size(); }
 };
 
 struct Solver : AbstractSolver {
@@ -29,7 +29,11 @@ struct Solver : AbstractSolver {
 		if (visual_enabled()) m_vis.emplace(512, 512);
 	}
 
-	std::optional<Visualizer> m_vis;
+	bool supports_visual() const override {
+		return true;
+	}
+
+	mutable std::optional<Visualizer> m_vis;
 	Map m_map;
 
 	void parse(std::string_view input) override {
@@ -43,13 +47,13 @@ struct Solver : AbstractSolver {
 					   ranges::to<std::vector<std::vector<bool>>>();
 	}
 
-	void part1(std::ostream& ostr) override {
+	void part1(std::ostream& ostr) const override {
 		ostr << ranges::count_if(
 			ranges::views::iota(0, m_map.height()),
 			[&](int row) { return m_map.tree(row, row * 3); });
 	}
 
-	std::int64_t trees(int xoff, int yoff) {
+	std::int64_t trees(int xoff, int yoff) const {
 		draw(xoff, yoff);
 		return ranges::count_if(
 			ranges::views::iota(0, m_map.height()) |
@@ -57,12 +61,12 @@ struct Solver : AbstractSolver {
 			[&](int row) { return m_map.tree(row, row * xoff / yoff); });
 	}
 
-	void part2(std::ostream& ostr) override {
+	void part2(std::ostream& ostr) const override {
 		ostr << trees(1, 1) * trees(3, 1) * trees(5, 1) * trees(7, 1) *
 					trees(1, 2);
 	}
 
-	void draw(int xoff, int yoff) {
+	void draw(int xoff, int yoff) const {
 		if (!visual_enabled()) return;
 
 		sdl::Texture pine(m_vis->m_renderer.get(),

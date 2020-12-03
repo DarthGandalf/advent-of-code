@@ -11,11 +11,11 @@
 namespace aoc2020 {
 namespace {
 struct Solver : AbstractSolver {
-	std::vector<int> m_numbers;
+	mutable std::vector<int> m_numbers;
 
 	void parse(std::string_view input) override { m_numbers = ints(input); }
 
-	void part1(std::ostream& ostr) override {
+	void part1(std::ostream& ostr) const override {
 		auto middle = std::partition(m_numbers.begin(), m_numbers.end(),
 		                             [](int i) { return i < 1010; });
 		std::span<int> small = make_span(m_numbers.begin(), middle);
@@ -30,7 +30,7 @@ struct Solver : AbstractSolver {
 		ostr << "not found";
 	}
 
-	void part2(std::ostream& ostr) override {
+	void part2(std::ostream& ostr) const override {
 		m_numbers |= ranges::actions::sort;
 		for (auto it_1 = m_numbers.begin(); it_1 + 2 != m_numbers.end();
 		     ++it_1) {

@@ -33,10 +33,11 @@ struct Visualizer {
 class AbstractSolver {
   public:
 	static std::unique_ptr<AbstractSolver> Create();
+	virtual bool supports_visual() const { return false; }
 	virtual ~AbstractSolver() = default;
 	virtual void parse(std::string_view input) = 0;
-	virtual void part1(std::ostream& ostr) = 0;
-	virtual void part2(std::ostream& ostr) = 0;
+	virtual void part1(std::ostream& ostr) const = 0;
+	virtual void part2(std::ostream& ostr) const = 0;
 };
 
 sdl::Surface open_sprite(std::string_view filename);
