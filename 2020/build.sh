@@ -11,6 +11,6 @@ cd ..
 
 mkdir build-web
 cd build-web && \
-emcmake cmake .. -DCMAKE_BUILD_TYPE=Release && \
+emcmake cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=yes && \
 emmake make
 cd ..

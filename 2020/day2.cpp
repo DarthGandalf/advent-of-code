@@ -1,19 +1,30 @@
 #include <charconv>
+#include <iterator>
 #include <memory>
 #include <range/v3/all.hpp>
 #include <range/v3/iterator/operations.hpp>
+#include <range/v3/view/transform.hpp>
 #include <regex>
 #include <string>
+#include <string_view>
 
 #include "common.h"
 
 namespace aoc2020 {
 namespace {
+
+auto to_string_view() {
+	return ranges::views::transform([](auto&& range) {
+		return std::string_view(&*range.begin(), ranges::distance(range));
+	});
+}
+
 static std::regex re("(\\d+)-(\\d+) (.): (.+)");
 template <typename Pred>
-static bool handleline(const std::string& line, Pred&& pred) {
+static bool handleline(std::string_view line, Pred&& pred) {
 	std::smatch m;
-	std::regex_match(line, m, re);
+	std::string s(line);
+	std::regex_match(s, m, re);
 	int min, max;
 	std::from_chars(&*m[1].first, &*m[1].second, min);
 	std::from_chars(&*m[2].first, &*m[2].second, max);
@@ -22,7 +33,7 @@ static bool handleline(const std::string& line, Pred&& pred) {
 	return pred(min, max, c, pass);
 }
 
-static bool goodpass(const std::string& line) {
+static bool goodpass(std::string_view line) {
 	return handleline(
 		line, [](int min, int max, char c, std::string_view pass) {
 			int got = ranges::distance(
@@ -31,7 +42,7 @@ static bool goodpass(const std::string& line) {
 		});
 }
 
-static bool goodpass2(const std::string& line) {
+static bool goodpass2(std::string_view line) {
 	return handleline(line,
 	                  [](int one, int two, char c, std::string_view pass) {
 						  return (pass[one - 1] == c) ^ (pass[two - 1] == c);
@@ -43,10 +54,12 @@ struct Solver : AbstractSolver {
 	void parse(std::string_view input) override { m_input = input; }
 	void part1(std::ostream& ostr) override {
 		ostr << ranges::distance(m_input | ranges::views::split('\n') |
+		                         to_string_view() |
 		                         ranges::views::filter(goodpass));
 	}
 	void part2(std::ostream& ostr) override {
 		ostr << ranges::distance(m_input | ranges::views::split('\n') |
+		                         to_string_view() |
 		                         ranges::views::filter(goodpass2));
 	}
 };
