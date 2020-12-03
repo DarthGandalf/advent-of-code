@@ -29,9 +29,7 @@ struct Solver : AbstractSolver {
 		if (visual_enabled()) m_vis.emplace(512, 512);
 	}
 
-	bool supports_visual() const override {
-		return true;
-	}
+	bool supports_visual() const override { return true; }
 
 	mutable std::optional<Visualizer> m_vis;
 	Map m_map;
@@ -99,8 +97,8 @@ struct Solver : AbstractSolver {
 						SDL_Rect dest;
 						dest.h = 13;
 						dest.w = 12;
-						dest.x = center.x + (x - current_x - subx) * 12;
-						dest.y = center.y + (y - current_y - suby) * 13;
+						dest.x = center.x + (x + 1 - current_x - subx) * 12;
+						dest.y = center.y + (y + 1 - current_y - suby) * 13;
 						if (x < current_x && y < current_y &&
 						    (current_x - x) * yoff == (current_y - y) * xoff) {
 							m_vis->m_renderer.copy(pine2.get(), nullptr, &dest);
