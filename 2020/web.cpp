@@ -90,4 +90,17 @@ sdl::Surface open_sprite(std::string_view filename) {
 	}
 	return sdl::Surface(result);
 }
+
+std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)> open_font(int size) {
+	TTF_Font* result =
+		TTF_OpenFont("SynchronizerNbpRegular-Zgpz.ttf", size);
+	if (!result) {
+		std::ostringstream strm;
+		strm << "TTF_OpenFontRW(): " << TTF_GetError();
+		throw sdl::Error(strm.str());
+	}
+	return std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)>(result,
+	                                                           &TTF_CloseFont);
+}
+
 }  // namespace aoc2020

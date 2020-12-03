@@ -43,6 +43,21 @@ sdl::Surface open_sprite(std::string_view filename) {
 	return sdl::Surface(result);
 }
 
+std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)> open_font(int size) {
+	auto fs = cmrc::inputs::get_filesystem();
+	auto file = fs.open("SynchronizerNbpRegular-Zgpz.ttf");
+	std::string_view data(file.begin(), file.end() - file.begin());
+	TTF_Font* result =
+		TTF_OpenFontRW(SDL_RWFromConstMem(data.data(), data.length()), 1, size);
+	if (!result) {
+		std::ostringstream strm;
+		strm << "TTF_OpenFontRW(): " << TTF_GetError();
+		throw sdl::Error(strm.str());
+	}
+	return std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)>(result,
+	                                                           &TTF_CloseFont);
+}
+
 bool visual_enabled() {
 	char* e = std::getenv("VISUAL_DELAY");
 	if (!e) return true;

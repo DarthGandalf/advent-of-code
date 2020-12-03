@@ -1,13 +1,23 @@
+#include <SDL_ttf.h>
+
 #include <iostream>
 #include <range/v3/algorithm/count_if.hpp>
 #include <range/v3/all.hpp>
 #include <range/v3/numeric/iota.hpp>
 #include <range/v3/view/transform.hpp>
+#include <sstream>
 
 #include "common.h"
+#include "sdlpp.hpp"
 
 namespace aoc2020 {
 namespace {
+
+sdl::Surface render_text(TTF_Font* font, const std::string& text) {
+	SDL_Surface* surface =
+		TTF_RenderText_Blended(font, text.c_str(), SDL_Color{0, 0, 0, 0});
+	return sdl::Surface(surface);
+}
 
 struct Map {
 	std::vector<std::vector<bool>> m_rows;
@@ -74,6 +84,7 @@ struct Solver : AbstractSolver {
 		sdl::Texture crash(m_vis->m_renderer.get(), open_sprite("crash").get());
 		sdl::Texture toboggan(m_vis->m_renderer.get(),
 		                      open_sprite("toboggan").get());
+		auto font = open_font(12);
 		m_vis->m_renderer.setDrawColor(255, 255, 255, 255);
 		int current_x = 0;
 		int current_y = 0;
@@ -82,6 +93,7 @@ struct Solver : AbstractSolver {
 		center.w = 12;
 		center.x = 200;
 		center.y = 200;
+		int counter = 0;
 		while (current_y < m_map.height()) {
 			current_x += xoff;
 			current_y += yoff;
@@ -109,11 +121,24 @@ struct Solver : AbstractSolver {
 				}
 				if (m_map.tree(current_y, current_x) && i == 0) {
 					m_vis->m_renderer.copy(crash.get(), nullptr, &center);
-					m_vis->m_renderer.present();
-					yield(visual_delay() * 5);
+					counter++;
 				} else {
 					m_vis->m_renderer.copy(toboggan.get(), nullptr, &center);
-					m_vis->m_renderer.present();
+				}
+				std::ostringstream s;
+				s << "Trees destroyed: " << counter;
+				sdl::Surface surftext = render_text(font.get(), s.str());
+				sdl::Texture texttext(m_vis->m_renderer.get(), surftext.get());
+				SDL_Rect textrect;
+				textrect.h = surftext.get()->h;
+				textrect.w = surftext.get()->w;
+				textrect.x = 100;
+				textrect.y = 0;
+				m_vis->m_renderer.copy(texttext.get(), nullptr, &textrect);
+				m_vis->m_renderer.present();
+				if (m_map.tree(current_y, current_x) && i == 0) {
+					yield(visual_delay() * 5);
+				} else {
 					yield(visual_delay());
 				}
 			}

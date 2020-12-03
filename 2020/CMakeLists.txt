@@ -16,6 +16,7 @@ function(aoc_executable name)
 	if(EMSCRIPTEN)
 		target_link_libraries(${name} "--preload-file ${CMAKE_SOURCE_DIR}/input/2020/${name}.txt@input.txt")
 		target_link_libraries(${name} "--preload-file ${CMAKE_SOURCE_DIR}/sprites@sprites")
+		target_link_libraries(${name} "--preload-file ${CMAKE_SOURCE_DIR}/SynchronizerNbpRegular-Zgpz.ttf@SynchronizerNbpRegular-Zgpz.ttf")
 		configure_file(day.html ${name}.html)
 		target_compile_options(${name}_lib PUBLIC "-sUSE_SDL=2")
 		target_compile_options(${name}_lib PUBLIC "-sUSE_SDL_TTF=2")
@@ -70,7 +71,8 @@ if(EMSCRIPTEN)
 else()
 	file(GLOB input_files
 		"${CMAKE_SOURCE_DIR}/sprites/*.png"
-		"${CMAKE_SOURCE_DIR}/input/2020/*.txt")
+		"${CMAKE_SOURCE_DIR}/input/2020/*.txt"
+		"${CMAKE_SOURCE_DIR}/SynchronizerNbpRegular-Zgpz.ttf")
 	cmrc_add_resource_library(inputs ${input_files})
 	target_link_libraries(common inputs)
 

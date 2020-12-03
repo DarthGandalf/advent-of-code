@@ -1,12 +1,14 @@
 #pragma once
 
 #include <chrono>
+#include <memory>
 #include <optional>
 #include <ostream>
 #include <span>
 #include <string>
 #include <string_view>
 #include <vector>
+#include <SDL_ttf.h>
 #include <range/v3/all.hpp>
 
 #include "sdlpp.hpp"
@@ -41,6 +43,7 @@ class AbstractSolver {
 };
 
 sdl::Surface open_sprite(std::string_view filename);
+std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)> open_font(int size);
 
 bool visual_enabled();
 std::chrono::milliseconds visual_delay();
