@@ -27,14 +27,12 @@ namespace aoc2020 {
 		sdl::Surface m_surface;
 	};
 
-	class Solver {
+	class AbstractSolver {
 	public:
-		Solver();
-
-		void part1(std::string_view input, std::ostream& ostr);
-		void part2(std::string_view input, std::ostream& ostr);
-	private:
-		std::optional<Visualizer> m_vis;
+		static std::unique_ptr<AbstractSolver> Create();
+		virtual ~AbstractSolver() = default;
+		virtual void part1(std::string_view input, std::ostream& ostr) = 0;
+		virtual void part2(std::string_view input, std::ostream& ostr) = 0;
 	};
 
 	sdl::Surface open_sprite(std::string_view filename);

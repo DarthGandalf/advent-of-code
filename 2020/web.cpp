@@ -17,7 +17,7 @@ static std::string get_input() {
 }
 
 static EM_BOOL run_clicked(int eventType, const EmscriptenMouseEvent* mouseEvent, void* userData) {
-	aoc2020::Solver* solver = reinterpret_cast<aoc2020::Solver*>(userData);
+	aoc2020::AbstractSolver* solver = reinterpret_cast<aoc2020::AbstractSolver*>(userData);
 	auto document = val::global("document");
 	auto button = document.call<val>("getElementById", val("run"));
 	button.set("disabled", "disabled");
@@ -36,7 +36,7 @@ static EM_BOOL run_clicked(int eventType, const EmscriptenMouseEvent* mouseEvent
 }
 
 int main(int argc, char* argv[]) {
-	aoc2020::Solver solver;
+	auto solver = aoc2020::AbstractSolver::Create();
 	auto document = val::global("document");
 
 	{
@@ -47,9 +47,9 @@ int main(int argc, char* argv[]) {
 	document.call<val>("getElementById", val("output1")).set("value", "");
 	document.call<val>("getElementById", val("output2")).set("value", "");
 	document.call<val>("getElementById", val("run")).set("disabled", "");
-	emscripten_set_click_callback("#run", &solver, false, &run_clicked);
+	emscripten_set_click_callback("#run", solver.get(), false, &run_clicked);
 
-	// Just prevent solver to be destructed
+	// Just prevent solver from being destructed
 	emscripten_set_main_loop(+[] {}, /* fps = */ 1, /* simulate_infinite_loop = */ 1);
 }
 

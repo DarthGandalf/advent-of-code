@@ -8,9 +8,9 @@
 #include "common.h"
 
 namespace aoc2020 {
-	Solver::Solver() {}
-
-	void Solver::part1(std::string_view input, std::ostream& ostr) {
+	namespace{
+	struct Solver : AbstractSolver {
+	void part1(std::string_view input, std::ostream& ostr) override {
 		std::vector<int> numbers = ints(input);
 		auto middle = std::partition(numbers.begin(), numbers.end(), [](int i) { return i < 1010; });
 		std::span<int> small = make_span(numbers.begin(), middle);
@@ -25,7 +25,7 @@ namespace aoc2020 {
 		ostr << "not found";
 	}
 
-	void Solver::part2(std::string_view input, std::ostream& ostr) {
+	void part2(std::string_view input, std::ostream& ostr) override {
 		std::vector<int> numbers = ints(input);
 		numbers |= ranges::actions::sort;
 		for (auto it_1 = numbers.begin(); it_1 + 2 != numbers.end(); ++it_1) {
@@ -38,5 +38,12 @@ namespace aoc2020 {
 			}
 		}
 		ostr << "not found";
+	}
+	
+	};
+	}
+
+	std::unique_ptr<AbstractSolver> AbstractSolver::Create() {
+		return std::make_unique<Solver>();
 	}
 }

@@ -10,7 +10,7 @@ CMRC_DECLARE(inputs);
 #include "common.h"
 
 int main(int argc, char* argv[]) {
-	aoc2020::Solver solver;
+	auto solver = aoc2020::AbstractSolver::Create();
 
 	// Use the correct input. All of them are compiled in.
 	std::filesystem::path self(argv[0]);
@@ -18,9 +18,9 @@ int main(int argc, char* argv[]) {
 	auto file = fs.open("input/2020/" + self.stem().string() + ".txt");
 	std::string_view input(file.begin(), file.end() - file.begin());
 	std::cout << "part1: ";
-	solver.part1(input, std::cout);
+	solver->part1(input, std::cout);
 	std::cout << "\npart2: ";
-	solver.part2(input, std::cout);
+	solver->part2(input, std::cout);
 	std::cout << '\n';
 }
 

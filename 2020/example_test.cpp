@@ -15,8 +15,8 @@ namespace aoc2020 {
 }
 
 int main() {
-	aoc2020::Solver solver;
-	solver.part2(R"(1-3 a: abcde
+	auto solver = aoc2020::AbstractSolver::Create();
+	solver->part2(R"(1-3 a: abcde
 1-3 b: cdefg
 2-9 c: ccccccccc)", std::cout);
 }

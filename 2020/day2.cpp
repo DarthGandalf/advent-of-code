@@ -1,4 +1,5 @@
 #include <charconv>
+#include <memory>
 #include <range/v3/iterator/operations.hpp>
 #include <regex>
 #include <string>
@@ -6,8 +7,7 @@
 #include "common.h"
 
 namespace aoc2020 {
-	Solver::Solver() {}
-
+namespace {
 	static std::regex re("(\\d+)-(\\d+) (.): (.+)");
 	template<typename Pred>
 	static bool handleline(const std::string& line, Pred&& pred) {
@@ -28,17 +28,23 @@ namespace aoc2020 {
 		});
 	}
 
-	void Solver::part1(std::string_view input, std::ostream& ostr) {
-		ostr << ranges::distance(input | ranges::views::split('\n') | ranges::views::filter(goodpass));
-	}
-
 	static bool goodpass2(const std::string& line) {
 		return handleline(line, [](int one, int two, char c, std::string_view pass) {
 			return (pass[one-1] == c) ^ (pass[two-1] == c);
 		});
 	}
 
-	void Solver::part2(std::string_view input, std::ostream& ostr) {
-		ostr << ranges::distance(input | ranges::views::split('\n') | ranges::views::filter(goodpass2));
+	struct Solver : AbstractSolver {
+		void part1(std::string_view input, std::ostream& ostr) override {
+			ostr << ranges::distance(input | ranges::views::split('\n') | ranges::views::filter(goodpass));
+		}
+		void part2(std::string_view input, std::ostream& ostr) override {
+			ostr << ranges::distance(input | ranges::views::split('\n') | ranges::views::filter(goodpass2));
+		}
+	};
+}
+
+	std::unique_ptr<AbstractSolver> AbstractSolver::Create() {
+		return std::make_unique<Solver>();
 	}
 }
