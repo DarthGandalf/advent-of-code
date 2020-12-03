@@ -1,5 +1,6 @@
 #include <SDL_ttf.h>
 
+#include <chrono>
 #include <iostream>
 
 #include "common.h"
@@ -7,6 +8,8 @@
 
 namespace aoc2020 {
 void yield(std::chrono::milliseconds delay) {}
+bool visual_enabled() { return false; }
+std::chrono::milliseconds visual_delay() { return std::chrono::milliseconds(0); }
 
 sdl::Surface open_sprite(std::string_view filename) {
 	TTF_Font* font = TTF_OpenFont("/usr/share/fonts/hack/Hack-Regular.ttf", 30);

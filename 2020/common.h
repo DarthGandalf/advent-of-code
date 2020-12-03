@@ -41,6 +41,9 @@ class AbstractSolver {
 
 sdl::Surface open_sprite(std::string_view filename);
 
+bool visual_enabled();
+std::chrono::milliseconds visual_delay();
+
 class SurfaceLock {
   public:
 	explicit SurfaceLock(sdl::Surface& s) : m_s(s) {

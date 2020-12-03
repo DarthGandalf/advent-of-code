@@ -26,7 +26,7 @@ struct Map {
 
 struct Solver : AbstractSolver {
 	Solver() {
-		m_vis.emplace(512, 512);
+		if (visual_enabled()) m_vis.emplace(512, 512);
 	}
 
 	std::optional<Visualizer> m_vis;
@@ -49,7 +49,7 @@ struct Solver : AbstractSolver {
 			[&](int row) { return m_map.tree(row, row * 3); });
 	}
 
-	long int trees(int xoff, int yoff) {
+	std::int64_t trees(int xoff, int yoff) {
 		draw(xoff, yoff);
 		return ranges::count_if(
 			ranges::views::iota(0, m_map.height()) |
@@ -63,7 +63,8 @@ struct Solver : AbstractSolver {
 	}
 
 	void draw(int xoff, int yoff) {
-		using namespace std::chrono_literals;
+		if (!visual_enabled()) return;
+
 		sdl::Texture pine(m_vis->m_renderer.get(),
 		                  open_sprite("pinetree").get());
 		sdl::Texture pine2(m_vis->m_renderer.get(),
@@ -104,16 +105,17 @@ struct Solver : AbstractSolver {
 						}
 					}
 				}
-				m_vis->m_renderer.copy(m_map.tree(current_y, current_x) && i == 3
-				                          ? crash.get()
-				                          : toboggan.get(),
-				                      nullptr, &center);
+				m_vis->m_renderer.copy(
+					m_map.tree(current_y, current_x) && i == 3 ? crash.get()
+															   : toboggan.get(),
+					nullptr, &center);
 				m_vis->m_renderer.present();
-				yield(10ms);
+				yield(visual_delay());
 			}
 			if (m_map.tree(current_y, current_x)) {
-				yield(40ms);
+				yield(visual_delay() * 4);
 			}
+			if (!visual_enabled()) return;
 		}
 	}
 };

@@ -42,8 +42,10 @@ static EM_BOOL run_clicked(int eventType,
 }
 
 int main(int argc, char* argv[]) {
-	auto solver = aoc2020::AbstractSolver::Create();
 	auto document = val::global("document");
+	document.call<val>("getElementById", val("visual_enabled")).set("checked", "checked");
+
+	auto solver = aoc2020::AbstractSolver::Create();
 
 	{
 		std::ifstream f("input.txt");
@@ -62,6 +64,18 @@ int main(int argc, char* argv[]) {
 
 namespace aoc2020 {
 void yield(std::chrono::milliseconds delay) { emscripten_sleep(delay.count()); }
+bool visual_enabled() {
+	return val::global("document")
+		.call<val>("getElementById", val("visual_enabled"))["checked"]
+		.as<bool>();
+}
+std::chrono::milliseconds visual_delay() {
+	int delay =
+		std::stoi(val::global("document")
+	                  .call<val>("getElementById", val("visual_delay"))["value"]
+	                  .as<std::string>());
+	return std::chrono::milliseconds(delay);
+}
 
 sdl::Surface open_sprite(std::string_view filename) {
 	SDL_Surface* result =

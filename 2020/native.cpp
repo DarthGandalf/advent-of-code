@@ -1,4 +1,6 @@
+#include <charconv>
 #include <cmrc/cmrc.hpp>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -39,5 +41,22 @@ sdl::Surface open_sprite(std::string_view filename) {
 		throw sdl::Error(strm.str());
 	}
 	return sdl::Surface(result);
+}
+
+bool visual_enabled() {
+	char* e = std::getenv("VISUAL_DELAY");
+	if (!e) return true;
+	if (*e == '-') return false;
+	return true;
+}
+std::chrono::milliseconds visual_delay() {
+	using namespace std::chrono_literals;
+	char* e = std::getenv("VISUAL_DELAY");
+	if (!e) return 10ms;
+	if (*e == '-') return 0ms;
+	std::string_view s(e);
+	int i;
+	std::from_chars(s.begin(), s.end(), i);
+	return std::chrono::milliseconds(i);
 }
 }  // namespace aoc2020
