@@ -16,10 +16,11 @@ int main(int argc, char* argv[]) {
 	auto fs = cmrc::inputs::get_filesystem();
 	auto file = fs.open("input/2020/" + self.stem().string() + ".txt");
 	std::string_view input(file.begin(), file.end() - file.begin());
+	solver->parse(input);
 	std::cout << "part1: ";
-	solver->part1(input, std::cout);
+	solver->part1(std::cout);
 	std::cout << "\npart2: ";
-	solver->part2(input, std::cout);
+	solver->part2(std::cout);
 	std::cout << '\n';
 }
 

@@ -39,12 +39,14 @@ static bool goodpass2(const std::string& line) {
 }
 
 struct Solver : AbstractSolver {
-	void part1(std::string_view input, std::ostream& ostr) override {
-		ostr << ranges::distance(input | ranges::views::split('\n') |
+	std::string_view m_input;
+	void parse(std::string_view input) override { m_input = input; }
+	void part1(std::ostream& ostr) override {
+		ostr << ranges::distance(m_input | ranges::views::split('\n') |
 		                         ranges::views::filter(goodpass));
 	}
-	void part2(std::string_view input, std::ostream& ostr) override {
-		ostr << ranges::distance(input | ranges::views::split('\n') |
+	void part2(std::ostream& ostr) override {
+		ostr << ranges::distance(m_input | ranges::views::split('\n') |
 		                         ranges::views::filter(goodpass2));
 	}
 };

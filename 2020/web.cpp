@@ -31,10 +31,11 @@ static EM_BOOL run_clicked(int eventType,
 	auto out2 = document.call<val>("getElementById", val("output2"));
 	out2.set("value", "");
 	auto input = get_input();
+	solver->parse(input);
 	std::ostringstream str1, str2;
-	solver->part1(input, str1);
+	solver->part1(str1);
 	out1.set("value", str1.str());
-	solver->part2(input, str2);
+	solver->part2(str2);
 	out2.set("value", str2.str());
 	button.set("disabled", "");
 	return true;

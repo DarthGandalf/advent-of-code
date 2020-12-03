@@ -32,8 +32,9 @@ class AbstractSolver {
   public:
 	static std::unique_ptr<AbstractSolver> Create();
 	virtual ~AbstractSolver() = default;
-	virtual void part1(std::string_view input, std::ostream& ostr) = 0;
-	virtual void part2(std::string_view input, std::ostream& ostr) = 0;
+	virtual void parse(std::string_view input) = 0;
+	virtual void part1(std::ostream& ostr) = 0;
+	virtual void part2(std::ostream& ostr) = 0;
 };
 
 sdl::Surface open_sprite(std::string_view filename);
