@@ -8,9 +8,9 @@ namespace {
 struct Solver : AbstractSolver {
 	std::string_view m_input;
 	void parse(std::string_view input) override { m_input = input; }
-	void part1(std::ostream& ostr) override {
+	void part1(std::ostream& ostr) const override {
 	}
-	void part2(std::ostream& ostr) override {
+	void part2(std::ostream& ostr) const override {
 	}
 };
 }  // namespace
