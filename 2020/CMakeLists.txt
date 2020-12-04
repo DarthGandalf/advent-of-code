@@ -71,6 +71,8 @@ set(last_day 4)
 
 if(EMSCRIPTEN)
 	configure_file(index.html index.html)
+	target_compile_options(day4_lib PRIVATE "-sDISABLE_EXCEPTION_CATCHING=0")
+	target_link_libraries(day4_lib "-s DISABLE_EXCEPTION_CATCHING=0")
 else()
 	file(GLOB input_files
 		"${CMAKE_SOURCE_DIR}/sprites/*.png"
