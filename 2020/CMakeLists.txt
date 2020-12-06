@@ -70,6 +70,7 @@ aoc_executable(day2)
 aoc_executable(day3)
 aoc_executable(day4)
 aoc_executable(day5)
+aoc_executable(day6)
 
 if(EMSCRIPTEN)
 	configure_file(index.html index.html)
