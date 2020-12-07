@@ -8,6 +8,7 @@
 #include <range/v3/view/transform.hpp>
 #include <set>
 #include <stdexcept>
+#include <string_view>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -79,33 +80,44 @@ struct Solver : AbstractSolver {
 		ostr << vis.size() - 1;
 	}
 	void part2(std::ostream& ostr) const override {
+		std::unordered_map<std::string_view,
+		                   std::unordered_set<std::string_view>>
+			reverse;
+		std::unordered_map<std::string_view, int> dependnum;
+		std::unordered_set<std::string_view> ready;
+		for (const auto& [outer, list] : m_data) {
+			for (const auto& [num, inner] : list) {
+				reverse[inner].insert(outer);
+			}
+			dependnum[outer] = list.size();
+			if (list.empty()) {
+				ready.insert(outer);
+			}
+		}
 		std::unordered_map<std::string_view, std::int64_t> results;
-		std::set<std::string_view> todo =
-			m_data | ranges::views::keys |
-			ranges::to<std::set<std::string_view>>();
-		while (true) {
-			if (auto i = results.find(init_bag); i != results.end()) {
-				ostr << i->second - 1;
+
+		while (!ready.empty()) {
+			std::string_view current = *ready.begin();
+			ready.erase(ready.begin());
+			std::int64_t r = ranges::accumulate(
+				m_data.at(current) | ranges::views::transform(
+										 [&](const auto& bag) -> std::int64_t {
+											 return bag.first *
+													results.at(bag.second);
+										 }),
+				1);
+			if (current == init_bag) {
+				ostr << r - 1;
 				return;
 			}
-			std::set<std::string_view> done;
-			for (const auto& x : todo) {
-				const auto& list = m_data.at(x);
-				try {
-					std::int64_t r = ranges::accumulate(
-						list | ranges::views::transform(
-								   [&](const auto& bag) -> std::int64_t {
-									   return bag.first *
-											  results.at(bag.second);
-								   }),
-						1);
-					done.insert(x);
-					results[x] = r;
-				} catch (const std::out_of_range&) {
+			results[current] = r;
+			for (std::string_view above : reverse[current]) {
+				auto& there = dependnum[above];
+				there--;
+				if (there == 0) {
+					ready.insert(above);
 				}
 			}
-			todo = ranges::views::set_difference(todo, done) |
-				   ranges::to<std::set<std::string_view>>();
 		}
 	}
 };
