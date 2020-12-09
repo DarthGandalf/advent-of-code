@@ -24,7 +24,7 @@ struct Solver : AbstractSolver {
 		if (auto result = ranges::find_if_not(
 				slider,
 				[](const auto& subrange) {
-					auto last = *(subrange | ranges::views::reverse).begin();
+					auto last = ranges::back(subrange);
 					// enumed+filter by index for the case if numbers in input
 			        // are not unique. Filtering by value would leave the
 			        // possibility for a number to be summed with itself.
@@ -48,7 +48,7 @@ struct Solver : AbstractSolver {
 						});
 				});
 		    result != slider.end()) {
-			return *(*result | ranges::views::reverse).begin();
+			return ranges::back(*result);
 		}
 		return 0;
 	}
