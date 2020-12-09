@@ -1,15 +1,18 @@
 #pragma once
 
+#include <SDL_ttf.h>
+
+#include <charconv>
 #include <chrono>
 #include <memory>
 #include <optional>
 #include <ostream>
+#include <range/v3/all.hpp>
 #include <span>
 #include <string>
 #include <string_view>
+#include <system_error>
 #include <vector>
-#include <SDL_ttf.h>
-#include <range/v3/all.hpp>
 
 #include "sdlpp.hpp"
 
@@ -61,7 +64,27 @@ class SurfaceLock {
 	sdl::Surface& m_s;
 };
 
-std::vector<int> ints(std::string_view input);
+template <typename Int>
+std::vector<Int> ints(std::string_view input) {
+	std::vector<Int> numbers;
+	const char* b = input.cbegin();
+	const char* const e = input.cend();
+	while (true) {
+		if (b >= e) break;
+		if (!std::isdigit(*b)) {
+			++b;
+			continue;
+		}
+		Int i{};
+		auto [next, err] = std::from_chars(b, e, i);
+		if (err != std::errc{}) {
+			throw std::system_error(std::make_error_code(err));
+		}
+		b = next;
+		numbers.push_back(i);
+	}
+	return numbers;
+}
 
 template <typename It>
 constexpr auto make_span(It begin, It end) {

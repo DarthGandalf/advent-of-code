@@ -23,14 +23,25 @@ sdl::Surface open_sprite(std::string_view filename) {
 
 int main() {
 	auto solver = aoc2020::AbstractSolver::Create();
-	solver->parse(R"(nop +0
-acc +1
-jmp +4
-acc +3
-jmp -3
-acc -99
-acc +1
-jmp -4
-acc +6)");
+	solver->parse(R"(35
+20
+15
+25
+47
+40
+62
+55
+65
+95
+102
+117
+150
+182
+127
+219
+299
+277
+309
+576)");
 	solver->part2(std::cout);
 }

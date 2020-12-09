@@ -13,7 +13,7 @@ namespace {
 struct Solver : AbstractSolver {
 	mutable std::vector<int> m_numbers;
 
-	void parse(std::string_view input) override { m_numbers = ints(input); }
+	void parse(std::string_view input) override { m_numbers = ints<int>(input); }
 
 	void part1(std::ostream& ostr) const override {
 		auto middle = std::partition(m_numbers.begin(), m_numbers.end(),
