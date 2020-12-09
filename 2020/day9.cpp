@@ -26,7 +26,7 @@ struct Solver : AbstractSolver {
 				[](const auto& subrange) {
 					auto last = ranges::back(subrange);
 					// enumed+filter by index for the case if numbers in input
-			        // are not unique. Filtering by value would leave the
+			        // are not unique. Filtering by value would leave out the
 			        // possibility for a number to be summed with itself.
 					auto enumed = subrange | ranges::views::take_exactly(N) |
 								  ranges::views::enumerate;
