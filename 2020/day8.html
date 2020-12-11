@@ -2,32 +2,31 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<title>AoC 2020 day8</title>
+	<title>AoC 2020 day 8</title>
+	<link href='https://fonts.googleapis.com/css?family=Source Code Pro' rel='stylesheet'>
+	<link href="main.css" rel="stylesheet">
+	<script>
+		var AOCDays = [
+			[1, 'Report Repair', 0],
+[2, 'Password Philosophy', 0],
+[3, 'Toboggan Trajectory', 1],
+[4, 'Passport Processing', 0],
+[5, 'Binary Boarding', 0],
+[6, 'Custom Customs', 0],
+[7, 'Handy Haversacks', 0],
+[8, 'Handheld Halting', 0],
+[9, 'Encoding Error', 0],
+[10, 'Adapter Array', 0],
+[11, 'Seating System', 0],
+
+		];
+		var AOCCurrentDay = 8;
+	</script>
 </head>
 
 <body>
-	<a href="index.html">List of days</a><br/>
-	Source code is <a href="https://github.com/DarthGandalf/advent-of-code/tree/master/2020">over here</a>.<br/>
-
-	<label for="input">Input:</label>
-	<textarea id="input"></textarea><br/>
-
-	<canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas><br/>
-
-	<button id="run" disabled>Run</button><br/>
-
-	<div id="visual_control" style="display: none;">
-		<label for="visual_delay">Speed</label>
-		<input type="checkbox" id="visual_enabled" checked/>
-		<input type="range" id="visual_delay" min="0" max="100" value="10"/><br/>
-	</div>
-
-	<label for="output1">Part 1:</label>
-	<textarea id="output1"></textarea><br/>
-
-	<label for="output2">Part 2:</label>
-	<textarea id="output2"></textarea><br/>
-
+	<div id=main></div>
+	<script src="main.js"></script>
 	<script>
 		var Module = {
 			canvas: (function() { return document.getElementById('canvas'); })(),
