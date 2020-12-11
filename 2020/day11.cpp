@@ -18,84 +18,35 @@ enum class Cell {
 
 struct Map {
 	std::vector<std::vector<Cell>> rows;
-	bool part2 = false;
+	int part2 = 0;
+	std::vector<std::vector<std::vector<std::pair<int, int>>>> deps;
 
-	Cell cell(int row, int col) const {
-		try {
-			return rows.at(row).at(col);
-		} catch (const std::out_of_range&) {
-			return Cell::Floor;
-		}
-	}
-
-	int occupied_near(int row, int col) const {
+	int occupied_for(int row, int col) const {
 		int result = 0;
-		for (int nrow : {row - 1, row, row + 1})
-			for (int ncol : {col - 1, col, col + 1})
-				if (nrow != row || ncol != col)
-					if (cell(nrow, ncol) == Cell::Busy) ++result;
-		return result;
-	}
-
-	int occupied_far(int row, int col) const {
-		int result = 0;
-		for (int drow : {-1, 0, 1})
-			for (int dcol : {-1, 0, 1})
-				if (drow || dcol) {
-					int lrow = row;
-					int lcol = col;
-					Cell found = Cell::Floor;
-					try {
-						while (true) {
-							lrow += drow;
-							lcol += dcol;
-							Cell here = rows.at(lrow).at(lcol);
-							if (here == Cell::Floor) continue;
-							found = here;
-							break;
-						}
-					} catch (const std::out_of_range&) {
-					}
-					if (found == Cell::Busy) ++result;
-				}
+		for (auto [frow, fcol] : deps[row][col])
+			if (rows[frow][fcol] == Cell::Busy) ++result;
 		return result;
 	}
 
 	Cell next_cell(int row, int col) const {
-		Cell now = cell(row, col);
-		if (part2) {
-			switch (now) {
-				case Cell::Floor:
-					return Cell::Floor;
-				case Cell::Empty:
-					return occupied_far(row, col) == 0 ? Cell::Busy
-													   : Cell::Empty;
-				case Cell::Busy:
-					return occupied_far(row, col) >= 5 ? Cell::Empty
-													   : Cell::Busy;
-			}
-		} else {
-			switch (now) {
-				case Cell::Floor:
-					return Cell::Floor;
-				case Cell::Empty:
-					return occupied_near(row, col) == 0 ? Cell::Busy
-														: Cell::Empty;
-				case Cell::Busy:
-					return occupied_near(row, col) >= 4 ? Cell::Empty
-														: Cell::Busy;
-			}
+		Cell now = rows[row][col];
+		switch (now) {
+			case Cell::Floor:
+				return Cell::Floor;
+			case Cell::Empty:
+				return occupied_for(row, col) == 0 ? Cell::Busy : Cell::Empty;
+			case Cell::Busy:
+				return occupied_for(row, col) >= 4 + part2 ? Cell::Empty
+														   : Cell::Busy;
 		}
 	}
 
-	Map next_step() const {
-		Map next = *this;
+	void next_step_out(std::vector<std::vector<Cell>>& result) const {
 		for (int row = 0; row < rows.size(); ++row) {
 			for (int col = 0; col < rows[row].size(); ++col) {
-				next.rows[row][col] = next_cell(row, col);
+				result[row][col] = next_cell(row, col);
 			}
 		}
-		return next;
 	}
 
 	friend std::ostream& operator<<(std::ostream& ostr, const Map& map) {
@@ -117,7 +68,6 @@ struct Map {
 		}
 		return ostr;
 	}
-	bool operator==(const Map& other) const = default;
 
 	int num_busy() const {
 		return ranges::count(
@@ -125,6 +75,17 @@ struct Map {
 				return ranges::yield_from(ranges::views::all(row));
 			}),
 			Cell::Busy);
+	}
+
+	int run() {
+		std::vector<std::vector<Cell>> next = rows;
+		while (true) {
+			next_step_out(next);
+			if (rows == next) {
+				return num_busy();
+			}
+			std::swap(rows, next);
+		}
 	}
 };
 
@@ -144,26 +105,58 @@ struct Solver : AbstractSolver {
 	}
 	void part1(std::ostream& ostr) const override {
 		Map map = m_map;
-		while (true) {
-			Map next_map = map.next_step();
-			if (map == next_map) {
-				ostr << map.num_busy();
-				return;
+		map.deps.resize(m_map.rows.size());
+		for (int row = 0; row < m_map.rows.size(); ++row) {
+			const auto& rrow = map.rows[row];
+			auto& rdep = map.deps[row];
+			rdep.resize(rrow.size());
+			for (int col = 0; col < rrow.size(); ++col) {
+				auto& deps = rdep[col];
+				for (int nrow : {row - 1, row, row + 1})
+					for (int ncol : {col - 1, col, col + 1})
+						if (nrow != row || ncol != col) {
+							try {
+								if (map.rows.at(nrow).at(ncol) != Cell::Floor) {
+									deps.push_back(std::pair{nrow, ncol});
+								}
+							} catch (const std::out_of_range&) {
+							}
+						}
 			}
-			map = std::move(next_map);
 		}
+		ostr << map.run();
 	}
 	void part2(std::ostream& ostr) const override {
 		Map map = m_map;
-		map.part2 = true;
-		while (true) {
-			Map next_map = map.next_step();
-			if (map == next_map) {
-				ostr << map.num_busy();
-				return;
+		map.part2 = 1;
+		map.deps.resize(m_map.rows.size());
+		for (int row = 0; row < m_map.rows.size(); ++row) {
+			const auto& rrow = map.rows[row];
+			auto& rdep = map.deps[row];
+			rdep.resize(rrow.size());
+			for (int col = 0; col < rrow.size(); ++col) {
+				if (rrow[col] == Cell::Floor) continue;
+				auto& deps = rdep[col];
+				for (int drow : {-1, 0, 1})
+					for (int dcol : {-1, 0, 1})
+						if (drow || dcol) {
+							int lrow = row;
+							int lcol = col;
+							try {
+								while (true) {
+									lrow += drow;
+									lcol += dcol;
+									Cell here = m_map.rows.at(lrow).at(lcol);
+									if (here == Cell::Floor) continue;
+									deps.push_back(std::pair{lrow, lcol});
+									break;
+								}
+							} catch (const std::out_of_range&) {
+							}
+						}
 			}
-			map = std::move(next_map);
 		}
+		ostr << map.run();
 	}
 };
 }  // namespace
