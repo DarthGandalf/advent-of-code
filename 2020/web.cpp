@@ -13,54 +13,42 @@
 
 using emscripten::val;
 
-static std::string get_input() {
-	return val::global("document")
-		.call<val>("getElementById", val("input"))["value"]
-		.as<std::string>();
-}
-
 static EM_BOOL run_clicked(int eventType,
                            const EmscriptenMouseEvent* mouseEvent,
                            void* userData) {
 	aoc2020::AbstractSolver* solver =
 		reinterpret_cast<aoc2020::AbstractSolver*>(userData);
-	auto document = val::global("document");
-	auto button = document.call<val>("getElementById", val("run"));
-	button.set("disabled", "disabled");
-	auto out1 = document.call<val>("getElementById", val("output1"));
-	out1.set("value", "");
-	auto out2 = document.call<val>("getElementById", val("output2"));
-	out2.set("value", "");
-	auto input = get_input();
+	auto vue = val::global("aocvue");
+	vue.call<void>("setInProgress", true);
+	vue.call<void>("setOutput1", val(""));
+	vue.call<void>("setOutput2", val(""));
+	std::string input = vue.call<std::string>("getInput");
 	solver->parse(input);
 	std::ostringstream str1, str2;
 	solver->part1(str1);
-	out1.set("value", str1.str());
+	vue.call<void>("setOutput1", str1.str());
 	solver->part2(str2);
-	out2.set("value", str2.str());
-	button.set("disabled", "");
+	vue.call<void>("setOutput2", str2.str());
+	vue.call<void>("setInProgress", false);
 	return true;
 }
 
 int main(int argc, char* argv[]) {
-	auto document = val::global("document");
-	document.call<val>("getElementById", val("visual_enabled"))
-		.set("checked", "checked");
+	auto vue = val::global("aocvue");
+	vue.call<void>("setLoaded");
 
 	auto solver = aoc2020::AbstractSolver::Create();
 
 	if (solver->supports_visual()) {
-		document.call<val>("getElementById", val("visual_control"))["style"]
-			.set("display", "block");
+		vue.call<void>("supportVisual");
 	}
 	{
 		std::ifstream f("input.txt");
 		std::string str(std::istreambuf_iterator<char>{f}, {});
-		document.call<val>("getElementById", val("input")).set("value", str);
+		vue.call<void>("setInput", str);
 	}
-	document.call<val>("getElementById", val("output1")).set("value", "");
-	document.call<val>("getElementById", val("output2")).set("value", "");
-	document.call<val>("getElementById", val("run")).set("disabled", "");
+	vue.call<void>("setOutput1", val(""));
+	vue.call<void>("setOutput2", val(""));
 	emscripten_set_click_callback("#run", solver.get(), false, &run_clicked);
 
 	// Just prevent solver from being destructed
@@ -71,16 +59,11 @@ int main(int argc, char* argv[]) {
 namespace aoc2020 {
 void yield(std::chrono::milliseconds delay) { emscripten_sleep(delay.count()); }
 bool visual_enabled() {
-	return val::global("document")
-		.call<val>("getElementById", val("visual_enabled"))["checked"]
-		.as<bool>();
+	return val::global("aocvue").call<bool>("visualEnabled");
 }
 std::chrono::milliseconds visual_delay() {
-	int delay =
-		std::stoi(val::global("document")
-	                  .call<val>("getElementById", val("visual_delay"))["value"]
-	                  .as<std::string>());
-	return std::chrono::milliseconds(delay);
+	int delay = val::global("aocvue").call<int>("visualSpeed");
+	return std::chrono::milliseconds(100 - delay);
 }
 
 sdl::Surface open_sprite(std::string_view filename) {
