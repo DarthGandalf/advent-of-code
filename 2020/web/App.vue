@@ -106,4 +106,7 @@ export default {
 .v-btn {
 	text-transform: none;
 }
+body {
+	background-color: #0f0f23;
+}
 </style>
