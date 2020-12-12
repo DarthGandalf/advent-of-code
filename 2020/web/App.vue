@@ -28,9 +28,10 @@
 				<v-card v-show="visual_supported">
 					<v-card-title>Visualization</v-card-title>
 					<v-card-text>
-						<v-checkbox v-model="visual_enabled" label="Enabled" @click="_unvis()"></v-checkbox>
+						<v-checkbox v-model="visual_enabled" label="Enabled"></v-checkbox>
 						<v-slider v-model="visual_speed" min=0 max=100 label="Speed"></v-slider>
-						<canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+						<canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas><br/>
+						<v-btn outlined id=stop class=ma-3 @click="_stop()" :disabled="!in_progress">Stop</v-btn>
 					</v-card-text>
 				</v-card>
 				Source code is <a href="https://github.com/DarthGandalf/advent-of-code/tree/master/2020">over here</a>.
@@ -61,6 +62,7 @@ export default {
 			visual_enabled: true,
 			visual_speed: 90,
 			in_progress: false,
+			should_stop: false,
 			mdiEye,
 			mdiArrowRightBold,
 		}
@@ -71,10 +73,8 @@ export default {
 				this.$vuetify.goTo('#canvas');
 			}
 		},
-		_unvis() {
-			if (!this.visual_enabled) {
-				this.finishVisual();
-			}
+		_stop() {
+			this.should_stop = true;
 		},
 		getInput() {
 			return this.input;
@@ -92,7 +92,7 @@ export default {
 			this.visual_supported = true;
 		},
 		visualEnabled() {
-			return this.visual_enabled;
+			return this.visual_enabled && !this.should_stop;
 		},
 		getVisualSpeed() {
 			return this.visual_speed;
@@ -105,6 +105,9 @@ export default {
 		},
 		setInProgress(in_progress) {
 			this.in_progress = in_progress;
+			if (in_progress) {
+				this.should_stop = false;
+			}
 		},
 		setLoaded() {
 			this.loading = false;
@@ -132,6 +135,13 @@ body {
 		}
 		a:hover, a:focus, button#run:hover {
 			color: #99ff99;
+		}
+		button#stop {
+			text-decoration: none;
+			color: #990000;
+		}
+		button#stop:hover {
+			color: #ff0000;
 		}
 	}
 }
