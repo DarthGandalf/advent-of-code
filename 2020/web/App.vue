@@ -108,12 +108,12 @@ export default {
 </script>
 
 <style lang="scss">
-.v-btn {
-	text-transform: none;
-}
 body {
 	background-color: #0f0f23;
 	#app {
+		.v-btn {
+			text-transform: none;
+		}
 		div {
 			color: #cccccc;
 			.aoc-em {
