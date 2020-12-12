@@ -51,6 +51,9 @@ window.aocvue = new Vue({
 		visualSpeed() {
 			return this.$children[0].visualSpeed();
 		},
+		finishVisual() {
+			this.$children[0].finishVisual();
+		},
 		setInProgress(in_progress) {
 			this.$children[0].setInProgress(in_progress);
 		},

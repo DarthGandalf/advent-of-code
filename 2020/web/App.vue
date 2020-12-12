@@ -73,7 +73,7 @@ export default {
 		},
 		_unvis() {
 			if (!this.visual_enabled) {
-				this.$vuetify.goTo(0);
+				this.finishVisual();
 			}
 		},
 		getInput() {
@@ -96,6 +96,9 @@ export default {
 		},
 		visualSpeed() {
 			return this.visual_speed;
+		},
+		finishVisual() {
+			this.$vuetify.goTo(0);
 		},
 		setInProgress(in_progress) {
 			this.in_progress = in_progress;

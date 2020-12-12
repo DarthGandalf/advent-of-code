@@ -30,6 +30,9 @@ static EM_BOOL run_clicked(int eventType,
 	solver->part2(str2);
 	vue.call<void>("setOutput2", str2.str());
 	vue.call<void>("setInProgress", false);
+	if (solver->supports_visual()) {
+		vue.call<void>("finishVisual", false);
+	}
 	return true;
 }
 
