@@ -1,10 +1,12 @@
+$aoc-background: #0f0f23;
+
 $material-dark: (
-	'background': #0f0f23
+	'background': $aoc-background
 );
 $material-dark-elevation-colors: (
-	'1': #0f0f23,
-	'4': #131330,
-	'16': #17173a,
+	'1': $aoc-background,
+	'4': $aoc-background,
+	'16': $aoc-background,
 );
 $body-font-family: 'Source Code Pro';
 $font-size-root: 14pt;
