@@ -30,6 +30,7 @@
     "webpack-cli": "^4.2.0"
   },
   "scripts": {
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

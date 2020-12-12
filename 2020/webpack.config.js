@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const postcssPresetEnv = require('postcss-preset-env');
 const cssnano = require('cssnano');
 
-const debug = false;
+const debug = process.env.npm_lifecycle_event !== 'build';
 
 const css_loader = [{
 	loader: debug ? 'style-loader' : MiniCssExtractPlugin.loader,
@@ -70,8 +70,7 @@ module.exports = {
 			}])
 		}]
 	},
-	plugins:[
-		new CleanWebpackPlugin(),
+	plugins: [
 		new webpack.ProgressPlugin(),
 		new VueLoaderPlugin(),
 		new VuetifyLoaderPlugin(),
@@ -81,7 +80,7 @@ module.exports = {
 				{ from: "build-web/day*", toType: "file", to({ absoluteFilename }) {return path.basename(absoluteFilename);}},
 			],
 		}),
-	],
+	].concat(debug ? [] : [new CleanWebpackPlugin()]),
 	devtool: debug ? 'inline-source-map' : 'source-map',
 	optimization: {
 		splitChunks: {

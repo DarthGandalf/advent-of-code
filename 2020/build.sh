@@ -16,4 +16,4 @@ emmake make
 cd ..
 
 npm ci
-npx webpack
+npm run build
