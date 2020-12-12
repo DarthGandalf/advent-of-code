@@ -109,13 +109,12 @@ export default {
 
 <style lang="scss">
 body {
-	background-color: #0f0f23;
+	background-color: $aoc-background;
 	#app {
 		.v-btn {
 			text-transform: none;
 		}
-		div, textarea, .v-icon {
-			color: #cccccc;
+		div {
 			.aoc-em {
 				color: #ffffff;
 				text-shadow: 0 0 5px #ffffff;

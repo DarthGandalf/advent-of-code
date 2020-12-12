@@ -1,7 +1,14 @@
 $aoc-background: #0f0f23;
+$aoc-gray: #cccccc;
 
 $material-dark: (
-	'background': $aoc-background
+	'background': $aoc-background,
+	'text': (
+		'primary': $aoc-gray,
+	),
+	'icons': (
+		'active': $aoc-gray,
+	),
 );
 $material-dark-elevation-colors: (
 	'1': $aoc-background,
