@@ -3,12 +3,12 @@
 		<v-navigation-drawer app v-model="menu_visible">
 			<v-list nav dense>
 				<v-list-item two-line v-for="([num, name, visual], i) in days" :key="'day' + i" :href="'day' + num + '.html'">
-					<v-list-item-action class="mr-2"><v-icon v-if="num === current_day">{{mdiArrowRightBold}}</v-icon></v-list-item-action>
+					<v-list-item-action class="mr-2"><v-icon v-if="num === current_day" title="Selected day">{{mdiArrowRightBold}}</v-icon></v-list-item-action>
 					<v-list-item-content>
 						<v-list-item-title>Day {{num}}</v-list-item-title>
 						<v-list-item-subtitle>{{name}}</v-list-item-subtitle>
 					</v-list-item-content>
-					<v-list-item-action v-if="visual"><v-icon>{{mdiEye}}</v-icon></v-list-item-action>
+					<v-list-item-action v-if="visual"><v-icon title="Visualization">{{mdiEye}}</v-icon></v-list-item-action>
 				</v-list-item>
 			</v-list>
 		</v-navigation-drawer>
@@ -28,7 +28,7 @@
 				<v-card v-show="visual_supported">
 					<v-card-title>Visualization</v-card-title>
 					<v-card-text>
-						<v-checkbox v-model="visual_enabled" label="Enabled"></v-checkbox>
+						<v-checkbox v-model="visual_enabled" label="Enabled" @click="_unvis()"></v-checkbox>
 						<v-slider v-model="visual_speed" min=0 max=100 label="Speed"></v-slider>
 						<canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
 					</v-card-text>
@@ -69,6 +69,11 @@ export default {
 		_run() {
 			if (this.visual_supported && this.visual_enabled) {
 				this.$vuetify.goTo('#canvas');
+			}
+		},
+		_unvis() {
+			if (!this.visual_enabled) {
+				this.$vuetify.goTo(0);
 			}
 		},
 		getInput() {
