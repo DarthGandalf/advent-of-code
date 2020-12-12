@@ -76,6 +76,7 @@ aoc_executable(8 "Handheld Halting" 0)
 aoc_executable(9 "Encoding Error" 0)
 aoc_executable(10 "Adapter Array" 0)
 aoc_executable(11 "Seating System" 0)
+aoc_executable(12 "Rain Risk" 0)
 
 foreach(current_day RANGE 1 ${last_day})
 	configure_file(day.html day${current_day}.html)
