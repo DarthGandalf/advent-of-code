@@ -114,15 +114,12 @@ body {
 		.v-btn {
 			text-transform: none;
 		}
-		div {
+		div, textarea, .v-icon {
 			color: #cccccc;
 			.aoc-em {
 				color: #ffffff;
 				text-shadow: 0 0 5px #ffffff;
 			}
-		}
-		.v-icon {
-			color: #cccccc;
 		}
 		a, button#run {
 			text-decoration: none;
