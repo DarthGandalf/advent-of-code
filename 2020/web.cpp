@@ -44,6 +44,7 @@ int main(int argc, char* argv[]) {
 
 	if (solver->supports_visual()) {
 		vue.call<void>("supportVisual");
+		vue.call<void>("setVisualSpeed", solver->default_visual_speed());
 	}
 	{
 		std::ifstream f("input.txt");
@@ -64,9 +65,8 @@ void yield(std::chrono::milliseconds delay) { emscripten_sleep(delay.count()); }
 bool visual_enabled() {
 	return val::global("aocvue").call<bool>("visualEnabled");
 }
-std::chrono::milliseconds visual_delay() {
-	int delay = val::global("aocvue").call<int>("visualSpeed");
-	return std::chrono::milliseconds(100 - delay);
+int visual_speed() {
+	return val::global("aocvue").call<int>("getVisualSpeed");
 }
 
 sdl::Surface open_sprite(std::string_view filename) {

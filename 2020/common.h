@@ -39,6 +39,7 @@ class AbstractSolver {
   public:
 	static std::unique_ptr<AbstractSolver> Create();
 	virtual bool supports_visual() const { return false; }
+	virtual int default_visual_speed() const { return 50; }
 	virtual ~AbstractSolver() = default;
 	virtual void parse(std::string_view input) = 0;
 	virtual void part1(std::ostream& ostr) const = 0;
@@ -49,7 +50,7 @@ sdl::Surface open_sprite(std::string_view filename);
 std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)> open_font(int size);
 
 bool visual_enabled();
-std::chrono::milliseconds visual_delay();
+int visual_speed();
 
 class SurfaceLock {
   public:

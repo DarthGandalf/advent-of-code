@@ -57,19 +57,19 @@ std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)> open_font(int size) {
 }
 
 bool visual_enabled() {
-	char* e = std::getenv("VISUAL_DELAY");
+	char* e = std::getenv("VISUAL_SPEED");
 	if (!e) return true;
 	if (*e == '-') return false;
 	return true;
 }
-std::chrono::milliseconds visual_delay() {
+int visual_speed() {
 	using namespace std::chrono_literals;
-	char* e = std::getenv("VISUAL_DELAY");
-	if (!e) return 10ms;
-	if (*e == '-') return 0ms;
+	char* e = std::getenv("VISUAL_SPEED");
+	if (!e) return 90;
+	if (*e == '-') return 0;
 	std::string_view s(e);
 	int i;
 	std::from_chars(s.begin(), s.end(), i);
-	return std::chrono::milliseconds(i);
+	return i;
 }
 }  // namespace aoc2020

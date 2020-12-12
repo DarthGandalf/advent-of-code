@@ -94,8 +94,11 @@ export default {
 		visualEnabled() {
 			return this.visual_enabled;
 		},
-		visualSpeed() {
+		getVisualSpeed() {
 			return this.visual_speed;
+		},
+		setVisualSpeed(speed) {
+			this.visual_speed = speed;
 		},
 		finishVisual() {
 			this.$vuetify.goTo(0);

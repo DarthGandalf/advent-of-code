@@ -29,7 +29,7 @@ function(aoc_executable num fullname visual)
 		target_link_libraries(${name}_lib SDL2::SDL2
 			PkgConfig::SDL2IMAGE
 			PkgConfig::SDL2TTF)
-		add_test(${name}_test bash -c "diff -u <(cat ${CMAKE_SOURCE_DIR}/answers/${name}.txt) <(env VISUAL_DELAY=- ${CMAKE_BINARY_DIR}/${name})")
+		add_test(${name}_test bash -c "diff -u <(cat ${CMAKE_SOURCE_DIR}/answers/${name}.txt) <(env VISUAL_SPEED=- ${CMAKE_BINARY_DIR}/${name})")
 	endif()
 endfunction()
 

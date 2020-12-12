@@ -48,8 +48,11 @@ window.aocvue = new Vue({
 		visualEnabled() {
 			return this.$children[0].visualEnabled();
 		},
-		visualSpeed() {
-			return this.$children[0].visualSpeed();
+		getVisualSpeed() {
+			return this.$children[0].getVisualSpeed();
+		},
+		setVisualSpeed(speed) {
+			this.$children[0].setVisualSpeed(speed);
 		},
 		finishVisual() {
 			this.$children[0].finishVisual();

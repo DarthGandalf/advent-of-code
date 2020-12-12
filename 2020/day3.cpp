@@ -1,6 +1,7 @@
 #include <SDL_ttf.h>
 #include <fmt/core.h>
 
+#include <chrono>
 #include <iostream>
 #include <range/v3/algorithm/count_if.hpp>
 #include <range/v3/all.hpp>
@@ -40,6 +41,7 @@ struct Solver : AbstractSolver {
 	}
 
 	bool supports_visual() const override { return true; }
+	int default_visual_speed() const override { return 90; }
 
 	mutable std::optional<Visualizer> m_vis;
 	Map m_map;
@@ -135,10 +137,11 @@ struct Solver : AbstractSolver {
 				textrect.y = 0;
 				m_vis->m_renderer.copy(texttext.get(), nullptr, &textrect);
 				m_vis->m_renderer.present();
+				auto delay = std::chrono::milliseconds(100 - visual_speed());
 				if (m_map.tree(current_y, current_x) && i == 0) {
-					yield(visual_delay() * 5);
+					yield(delay * 5);
 				} else {
-					yield(visual_delay());
+					yield(delay);
 				}
 			}
 			if (!visual_enabled()) return;

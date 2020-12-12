@@ -16,6 +16,7 @@ struct Solver : AbstractSolver {
 		if (visual_enabled()) m_vis.emplace(512, 512);
 	}
 	bool supports_visual() const override { return true; }
+	int default_visual_speed() const override { return 10; }
 	mutable std::optional<Visualizer> m_vis;
 
 	std::vector<std::pair<char, int>> m_input;
@@ -203,7 +204,7 @@ struct Solver : AbstractSolver {
 				break;
 		}
 
-		float speed = 101 - visual_delay().count();
+		float speed = visual_speed() + 1;
 		int steps =
 			(int)std::max(std::abs(new_angle - angle) * 100, distance / 3) /
 				speed +
