@@ -83,4 +83,9 @@ module.exports = {
 		}),
 	],
 	devtool: debug ? 'inline-source-map' : 'source-map',
+	optimization: {
+		splitChunks: {
+			chunks: 'all',
+		},
+	},
 }
