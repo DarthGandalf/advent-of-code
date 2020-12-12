@@ -17,6 +17,7 @@ struct Solver : AbstractSolver {
 	}
 	bool supports_visual() const override { return true; }
 	int default_visual_speed() const override { return 10; }
+	virtual Visualizer* visualizer() override { return &*m_vis; }
 	mutable std::optional<Visualizer> m_vis;
 
 	std::vector<std::pair<char, int>> m_input;
@@ -224,44 +225,51 @@ struct Solver : AbstractSolver {
 			float si = std::sinf(mid_angle);
 			float co = std::cosf(mid_angle);
 
+			int window_x, window_y;
+			m_vis->m_window.getSize(&window_x, &window_y);
+
 			for (int i = 0; i < state.path.size(); ++i) {
 				float dx = state.path[i].first - mid_x;
 				float dy = state.path[i].second - mid_y;
 				dx /= 10;
 				dy /= 10;
-				points[i].x = 256 + int(dx * co + dy * si);
-				points[i].y = 256 + int(dy * co - dx * si);
+				points[i].x = window_x / 2 + int(dx * co + dy * si);
+				points[i].y = window_y / 2 + int(dy * co - dx * si);
 			}
 
-			points.back().x = 256;
-			points.back().y = 256;
+			points.back().x = window_x / 2;
+			points.back().y = window_y / 2;
 
 			m_vis->m_renderer.setDrawColor(0, 0, 255, 255);
 			m_vis->m_renderer.clear();
 			m_vis->m_renderer.setDrawColor(0, 255, 255, 255);
 			m_vis->m_renderer.drawLines(points.data(), points.size());
 
-			SDL_Rect ship{.x = 256 - 16, .y = 256 - 16, .w = 32, .h = 32};
+			SDL_Rect ship{.x = window_x / 2 - 16,
+			              .y = window_y / 2 - 16,
+			              .w = 32,
+			              .h = 32};
 			m_vis->m_renderer.copy(state.ship.get(), nullptr, &ship);
 
 			const int compass_size = 64;
-			const int compass_center = 512 - 20 - compass_size / 2;
-			SDL_Rect compass{.x = compass_center - compass_size / 2,
-			                 .y = compass_center - compass_size / 2,
+			const int compass_center_x = window_x - 20 - compass_size / 2;
+			const int compass_center_y = window_y - 20 - compass_size / 2;
+			SDL_Rect compass{.x = compass_center_x - compass_size / 2,
+			                 .y = compass_center_y - compass_size / 2,
 			                 .w = 64,
 			                 .h = 64};
 			m_vis->m_renderer.copyEx(state.compass.get(), nullptr, &compass,
 			                         -mid_angle * 90 / pi_half, nullptr,
 			                         (SDL_RendererFlip)0);
-			SDL_Rect N{.x = int(compass_center - 40 * si) - state.Nw / 2,
-			           .y = int(compass_center - 40 * co) - state.Nh / 2,
+			SDL_Rect N{.x = int(compass_center_x - 40 * si) - state.Nw / 2,
+			           .y = int(compass_center_y - 40 * co) - state.Nh / 2,
 			           .w = state.Nw,
 			           .h = state.Nh};
 			m_vis->m_renderer.copy(state.Nt.get(), nullptr, &N);
 
 			for (int cmd = index - 15; cmd < index + 15; ++cmd) {
 				SDL_Rect rect{.x = 10,
-				              .y = (cmd - index) * 20 + 256,
+				              .y = (cmd - index) * 20 + window_y / 2,
 				              .w = state.commands_size[cmd].first,
 				              .h = state.commands_size[cmd].second};
 				if (cmd < 0) continue;

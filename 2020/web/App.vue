@@ -30,7 +30,7 @@
 					<v-card-text>
 						<v-checkbox v-model="visual_enabled" label="Enabled"></v-checkbox>
 						<v-slider v-model="visual_speed" min=0 max=100 label="Speed"></v-slider>
-						<canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas><br/>
+						<canvas ref="canvas" id="canvas" oncontextmenu="event.preventDefault()"></canvas><br/>
 						<v-btn outlined id=stop class=ma-3 @click="_stop()" :disabled="!in_progress">Stop</v-btn>
 					</v-card-text>
 				</v-card>
@@ -63,9 +63,22 @@ export default {
 			visual_speed: 90,
 			in_progress: false,
 			should_stop: false,
+			visual_cb: null,
+			visual_ptr: null,
 			mdiEye,
 			mdiArrowRightBold,
 		}
+	},
+	mounted() {
+		const ro = new ResizeObserver(entries => {
+			for (let entry of entries) {
+				const {width, height} = entry.contentRect;
+				if (this.visual_cb) {
+					this.visual_cb(this.visual_ptr, width, height);
+				}
+			}
+		});
+		ro.observe(this.$refs.canvas);
 	},
 	methods: {
 		_run() {
@@ -88,8 +101,10 @@ export default {
 		setOutput2(output) {
 			this.output2 = output;
 		},
-		supportVisual() {
+		supportVisual(cb, ptr) {
 			this.visual_supported = true;
+			this.visual_cb = cb;
+			this.visual_ptr = ptr;
 		},
 		visualEnabled() {
 			return this.visual_enabled && !this.should_stop;
@@ -142,6 +157,9 @@ body {
 		}
 		button#stop:hover {
 			color: #ff0000;
+		}
+		#canvas {
+			width: min(100%, 512px);
 		}
 	}
 }

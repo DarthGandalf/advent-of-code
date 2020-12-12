@@ -1,5 +1,7 @@
 #include <SDL2/SDL_image.h>
+#include <charconv>
 #include <emscripten.h>
+#include <emscripten/bind.h>
 #include <emscripten/html5.h>
 #include <emscripten/val.h>
 #include <fmt/core.h>
@@ -36,6 +38,19 @@ static EM_BOOL run_clicked(int eventType,
 	return true;
 }
 
+static void visualizer_set_size(val self, val x, val y) {
+	auto self_str = self.as<std::string>();
+	std::string_view self_strv = self_str;
+	std::uintptr_t ptrint;
+	std::from_chars(self_strv.begin(), self_strv.end(), ptrint);
+	auto* visualizer = reinterpret_cast<aoc2020::Visualizer*>(ptrint);
+	visualizer->m_window.setSize(x.as<int>(), y.as<int>());
+}
+
+EMSCRIPTEN_BINDINGS(aoc2020) {
+	function("visualizer_set_size", visualizer_set_size);
+}
+
 int main(int argc, char* argv[]) {
 	auto vue = val::global("aocvue");
 	vue.call<void>("setLoaded");
@@ -43,7 +58,12 @@ int main(int argc, char* argv[]) {
 	auto solver = aoc2020::AbstractSolver::Create();
 
 	if (solver->supports_visual()) {
-		vue.call<void>("supportVisual");
+		void* visualizer = solver->visualizer();
+		std::ostringstream str;
+		str << reinterpret_cast<std::uintptr_t>(visualizer);
+		vue.call<void>("supportVisual",
+		               val::module_property("visualizer_set_size"),
+		               val(str.str()));
 		vue.call<void>("setVisualSpeed", solver->default_visual_speed());
 	}
 	{
@@ -65,9 +85,7 @@ void yield(std::chrono::milliseconds delay) { emscripten_sleep(delay.count()); }
 bool visual_enabled() {
 	return val::global("aocvue").call<bool>("visualEnabled");
 }
-int visual_speed() {
-	return val::global("aocvue").call<int>("getVisualSpeed");
-}
+int visual_speed() { return val::global("aocvue").call<int>("getVisualSpeed"); }
 
 sdl::Surface open_sprite(std::string_view filename) {
 	SDL_Surface* result =

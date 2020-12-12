@@ -40,6 +40,7 @@ class AbstractSolver {
 	static std::unique_ptr<AbstractSolver> Create();
 	virtual bool supports_visual() const { return false; }
 	virtual int default_visual_speed() const { return 50; }
+	virtual Visualizer* visualizer() { return nullptr; }
 	virtual ~AbstractSolver() = default;
 	virtual void parse(std::string_view input) = 0;
 	virtual void part1(std::ostream& ostr) const = 0;

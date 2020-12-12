@@ -42,6 +42,7 @@ struct Solver : AbstractSolver {
 
 	bool supports_visual() const override { return true; }
 	int default_visual_speed() const override { return 90; }
+	virtual Visualizer* visualizer() override { return &*m_vis; }
 
 	mutable std::optional<Visualizer> m_vis;
 	Map m_map;

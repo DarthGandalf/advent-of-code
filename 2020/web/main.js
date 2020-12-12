@@ -42,8 +42,8 @@ window.aocvue = new Vue({
 		setOutput2(output) {
 			this.$children[0].setOutput2(output);
 		},
-		supportVisual() {
-			this.$children[0].supportVisual();
+		supportVisual(cb, ptr) {
+			this.$children[0].supportVisual(cb, ptr);
 		},
 		visualEnabled() {
 			return this.$children[0].visualEnabled();
