@@ -94,13 +94,15 @@ struct Solver : AbstractSolver {
 		SDL_Rect center;
 		center.h = 13;
 		center.w = 12;
-		center.x = 200;
-		center.y = 200;
 		int counter = 0;
 		while (current_y < m_map.height()) {
 			current_x += xoff;
 			current_y += yoff;
 			for (int i = 0; i < 4; ++i) {
+				int window_x, window_y;
+				m_vis->m_window.getSize(&window_x, &window_y);
+				center.x = window_x / 3;
+				center.y = window_y / 3;
 				float subx = i * xoff / 4.0f;
 				float suby = i * yoff / 4.0f;
 				m_vis->m_renderer.clear();
@@ -134,8 +136,8 @@ struct Solver : AbstractSolver {
 				SDL_Rect textrect;
 				textrect.h = surftext.get()->h;
 				textrect.w = surftext.get()->w;
-				textrect.x = 100;
-				textrect.y = 0;
+				textrect.x = 10;
+				textrect.y = 10;
 				m_vis->m_renderer.copy(texttext.get(), nullptr, &textrect);
 				m_vis->m_renderer.present();
 				auto delay = std::chrono::milliseconds(100 - visual_speed());
