@@ -7,7 +7,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 add_subdirectory(fmt-7.1.3 EXCLUDE_FROM_ALL)
 enable_testing()
 list(APPEND CMAKE_CTEST_ARGUMENTS "--output-on-failure")
-set(html_days "")
+set(js_days "")
 set(last_day "")
 
 function(aoc_executable num fullname visual)
@@ -24,7 +24,7 @@ function(aoc_executable num fullname visual)
 		target_compile_options(${name}_lib PUBLIC "-sUSE_SDL=2")
 		target_compile_options(${name}_lib PUBLIC "-sUSE_SDL_TTF=2")
 		target_compile_options(${name}_lib PUBLIC "-sUSE_SDL_IMAGE=2")
-		set(html_days "${html_days}[${num}, '${fullname}', ${visual}],\n" PARENT_SCOPE)
+		set(js_days "${js_days}[${num}, '${fullname}', ${visual}],\n" PARENT_SCOPE)
 	else()
 		target_link_libraries(${name}_lib SDL2::SDL2
 			PkgConfig::SDL2IMAGE
@@ -86,6 +86,7 @@ if(EMSCRIPTEN)
 	target_link_libraries(day4_lib "-s DISABLE_EXCEPTION_CATCHING=0")
 	target_compile_options(day11_lib PRIVATE "-sDISABLE_EXCEPTION_CATCHING=0")
 	target_link_libraries(day11_lib "-s DISABLE_EXCEPTION_CATCHING=0")
+	file(WRITE ${CMAKE_BINARY_DIR}/alldays.js "export const days = [\n${js_days}];\n")
 else()
 	file(GLOB input_files
 		"${CMAKE_SOURCE_DIR}/sprites/*.png"

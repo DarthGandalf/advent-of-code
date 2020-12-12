@@ -4,6 +4,7 @@ import 'regenerator-runtime/runtime'
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import App from "./App.vue";
+import { days } from '../build-web/alldays.js';
 
 Vue.use(Vuetify);
 
@@ -24,7 +25,7 @@ window.aocvue = new Vue({
 	el: '#main',
 	render: h => h(App, {
 		props: {
-			days: window.AOCDays,
+			days,
 			current_day: window.AOCCurrentDay,
 		},
 	}),
