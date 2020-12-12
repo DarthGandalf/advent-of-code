@@ -5,7 +5,7 @@
 				<v-list-item two-line v-for="([num, name, visual], i) in days" :key="'day' + i" :href="'day' + num + '.html'">
 					<v-list-item-action class="mr-2"><v-icon v-if="num === current_day" title="Selected day">{{mdiArrowRightBold}}</v-icon></v-list-item-action>
 					<v-list-item-content>
-						<v-list-item-title>Day {{num}}</v-list-item-title>
+						<v-list-item-title class="aoc-em">Day {{num}}</v-list-item-title>
 						<v-list-item-subtitle>{{name}}</v-list-item-subtitle>
 					</v-list-item-content>
 					<v-list-item-action v-if="visual"><v-icon title="Visualization">{{mdiEye}}</v-icon></v-list-item-action>
@@ -20,7 +20,7 @@
 			<v-skeleton-loader v-show="loading" type="article@3"></v-skeleton-loader>
 			<v-container fluid v-show="!loading">
 				<v-textarea outlined label="Input" v-model="input"></v-textarea>
-				<v-btn outlined color=secondary :disabled="in_progress" id=run class="ma-3" @click="_run()">Run</v-btn>
+				<v-btn outlined :disabled="in_progress" id=run class="ma-3" @click="_run()">Run</v-btn>
 				<div class="d-flex">
 					<v-textarea outlined v-model="output1" label="Part 1"></v-textarea>
 					<v-textarea outlined v-model="output2" label="Part 2"></v-textarea>
@@ -107,11 +107,30 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .v-btn {
 	text-transform: none;
 }
 body {
 	background-color: #0f0f23;
+	#app {
+		div {
+			color: #cccccc;
+			.aoc-em {
+				color: #ffffff;
+				text-shadow: 0 0 5px #ffffff;
+			}
+		}
+		.v-icon {
+			color: #cccccc;
+		}
+		a, button#run {
+			text-decoration: none;
+			color: #009900;
+		}
+		a:hover, a:focus, button#run:hover {
+			color: #99ff99;
+		}
+	}
 }
 </style>

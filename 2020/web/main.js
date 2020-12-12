@@ -11,11 +11,6 @@ window.aocvue = new Vue({
 	vuetify: new Vuetify({
 		theme: {
 			dark: true,
-			themes: {
-				dark: {
-					secondary: '#99ff99'
-				},
-			},
 		},
 		icons: {
 			iconfont: 'mdiSvg',
