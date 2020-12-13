@@ -11,6 +11,7 @@ Visualizer::Visualizer(int width, int height)
 	  m_window(static_cast<SDL_Window*>(nullptr)),
 	  m_renderer(static_cast<SDL_Renderer*>(nullptr)),
 	  m_surface(0, width, height, 32, 0, 0, 0, 0) {
+	SDL_SetHint(SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT, "#canvas");
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	if (SDL_CreateWindowAndRenderer(width, height, 0, &window, &renderer) < 0) {

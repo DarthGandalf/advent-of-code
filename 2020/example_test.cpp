@@ -23,10 +23,7 @@ sdl::Surface open_sprite(std::string_view filename) {
 
 int main() {
 	auto solver = aoc2020::AbstractSolver::Create();
-	solver->parse(R"(F10
-N3
-F7
-R90
-F11)");
+	solver->parse(R"(939
+1789,37,47,1889)");
 	solver->part2(std::cout);
 }
