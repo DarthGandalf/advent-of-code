@@ -1,7 +1,10 @@
 #include <charconv>
 #include <cstdint>
+#include <numeric>
+#include <range/v3/algorithm/find_if.hpp>
 #include <range/v3/all.hpp>
 #include <range/v3/view/enumerate.hpp>
+#include <range/v3/view/iota.hpp>
 #include <range/v3/view/transform.hpp>
 #include <string_view>
 
@@ -44,7 +47,28 @@ struct Solver : AbstractSolver {
 			}
 		}
 	}
+
+	static auto stepped_iota(std::int64_t start, std::int64_t step) {
+		return ranges::views::iota(0) |
+			   ranges::views::transform(
+				   [=](std::int64_t x) { return x * step + start; });
+	}
+
 	void part2(std::ostream& ostr) const override {
+		std::int64_t step = 1;
+		auto times = stepped_iota(0, step);
+		for (auto [bus, offset] : ranges::views::zip(m_buses, m_offsets)) {
+			std::int64_t first = *ranges::find_if(
+				times, [bus = bus, offset = offset](std::int64_t time) {
+					return (time + offset) % bus == 0;
+				});
+			step = std::lcm(step, bus);
+			times = stepped_iota(first, step);
+		}
+		ostr << *times.begin();
+	}
+
+	void part2x(std::ostream& ostr) const {
 		const std::vector<int>& a = m_buses;
 		std::vector<int> r = ranges::views::zip(a, m_offsets) |
 							 ranges::views::transform([](const auto& ao) {
