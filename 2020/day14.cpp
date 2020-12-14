@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <range/v3/all.hpp>
 #include <range/v3/numeric/accumulate.hpp>
+#include <range/v3/view/enumerate.hpp>
 #include <range/v3/view/transform.hpp>
 #include <string_view>
 #include <unordered_map>
@@ -97,38 +98,33 @@ struct Solver : AbstractSolver {
 	}
 	void part2(std::ostream& ostr) const override {
 		std::unordered_map<std::int64_t, std::int64_t> mem;
-		std::vector<std::vector<int>> bits;
+		Mask mask;
 		for (const auto& cmd : m_data) {
 			std::visit(
-				overload{[&](const Mask& m) {
-							 bits = m.str |
-									ranges::views::transform([](char c) {
-										switch (c) {
-											case '0':
-												return std::vector{-1};
-											case '1':
-												return std::vector{1};
-											case 'X':
-												return std::vector{0, 1};
-										}
-										abort();
-									}) |
-									ranges::to_vector;
-						 },
+				overload{[&](const Mask& m) { mask = m; },
 			             [&](const Set& s) {
+							 std::vector<std::vector<int>> bits =
+								 mask.str | ranges::views::enumerate |
+								 ranges::views::transform([&](const auto& r) {
+									 const auto& [index, c] = r;
+									 switch (c) {
+										 case '0':
+											 return std::vector{int(
+												 1 & (s.addr >> (35 - index)))};
+										 case '1':
+											 return std::vector{1};
+										 case 'X':
+											 return std::vector{0, 1};
+									 }
+									 abort();
+								 }) |
+								 ranges::to_vector;
 							 for (const auto& addr_bits : cart_product(bits)) {
 								 std::int64_t addr = 0;
-								 for (const auto& [index, mode] :
+								 for (const auto& [index, bit] :
 					                  addr_bits | ranges::views::enumerate) {
 									 addr <<= 1;
-									 switch (mode) {
-										 case -1:
-											 addr |=
-												 1 & (s.addr >> (35 - index));
-											 break;
-										 case 1:
-											 addr |= 1;
-									 }
+									 addr |= bit;
 								 }
 								 mem[addr] = s.value;
 							 }
