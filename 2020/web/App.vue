@@ -32,6 +32,9 @@
 						<v-slider v-model="visual_speed" min=0 max=100 label="Speed"></v-slider>
 						<canvas ref="canvas" id="canvas" oncontextmenu="event.preventDefault()"></canvas><br/>
 						<v-btn outlined id=stop class=ma-3 @click="_stop()" :disabled="!in_progress">Stop</v-btn>
+						<div>
+							If you see visualization glitches, try <a href="?renderer=software">this</a> and contact me.
+						</div>
 					</v-card-text>
 				</v-card>
 				Source code is <a href="https://github.com/DarthGandalf/advent-of-code/tree/master/2020">over here</a>.

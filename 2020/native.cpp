@@ -72,4 +72,5 @@ int visual_speed() {
 	std::from_chars(s.begin(), s.end(), i);
 	return i;
 }
+std::string get_renderer_param() { return ""; }
 }  // namespace aoc2020

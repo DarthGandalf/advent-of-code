@@ -52,6 +52,7 @@ std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)> open_font(int size);
 
 bool visual_enabled();
 int visual_speed();
+std::string get_renderer_param();
 
 class SurfaceLock {
   public:

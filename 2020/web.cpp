@@ -1,11 +1,11 @@
 #include <SDL2/SDL_image.h>
-#include <charconv>
 #include <emscripten.h>
 #include <emscripten/bind.h>
 #include <emscripten/html5.h>
 #include <emscripten/val.h>
 #include <fmt/core.h>
 
+#include <charconv>
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -86,6 +86,9 @@ bool visual_enabled() {
 	return val::global("aocvue").call<bool>("visualEnabled");
 }
 int visual_speed() { return val::global("aocvue").call<int>("getVisualSpeed"); }
+std::string get_renderer_param() {
+	return val::global("AOCRender").as<std::string>();
+}
 
 sdl::Surface open_sprite(std::string_view filename) {
 	SDL_Surface* result =

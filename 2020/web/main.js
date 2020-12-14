@@ -65,3 +65,5 @@ window.aocvue = new Vue({
 		},
 	},
 });
+
+window.AOCRender = (new URL(document.location)).searchParams.get('renderer') || '';
