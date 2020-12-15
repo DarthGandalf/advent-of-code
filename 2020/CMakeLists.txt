@@ -79,7 +79,7 @@ aoc_executable(11 "Seating System" 0)
 aoc_executable(12 "Rain Risk" 1)
 aoc_executable(13 "Shuttle Search" 0)
 aoc_executable(14 "Docking Data" 0)
-aoc_executable(15 "X" 0)
+aoc_executable(15 "Rambunctious Recitation" 0)
 
 foreach(current_day RANGE 1 ${last_day})
 	configure_file(day.html day${current_day}.html)
