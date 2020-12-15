@@ -23,9 +23,6 @@ sdl::Surface open_sprite(std::string_view filename) {
 
 int main() {
 	auto solver = aoc2020::AbstractSolver::Create();
-	solver->parse(R"(mask = 000000000000000000000000000000X1001X
-mem[42] = 100
-mask = 00000000000000000000000000000000X0XX
-mem[26] = 1)");
-	solver->part2(std::cout);
+	solver->parse(R"(0,3,6)");
+	solver->part1(std::cout);
 }
