@@ -41,7 +41,7 @@ struct Solver : AbstractSolver {
 	}
 	void part1(std::ostream& ostr) const override {
 		State state = m_input;
-		for (int i : ranges::views::iota(0, 6)) {
+		for ([[maybe_unused]] int i : ranges::views::iota(0, 6)) {
 			auto [min_x, max_x] = ranges::minmax(
 				state | ranges::views::transform(
 							[](const auto& t) { return std::get<0>(t); }));
@@ -82,7 +82,7 @@ struct Solver : AbstractSolver {
 	}
 	void part2(std::ostream& ostr) const override {
 		State state = m_input;
-		for (int i : ranges::views::iota(0, 6)) {
+		for ([[maybe_unused]] int i : ranges::views::iota(0, 6)) {
 			auto [min_x, max_x] = ranges::minmax(
 				state | ranges::views::transform(
 							[](const auto& t) { return std::get<0>(t); }));

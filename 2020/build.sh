@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CXXFLAGS="-flto"
+export CXXFLAGS="-flto -Wall"
 export LDFLAGS="-flto"
 
 mkdir build-native

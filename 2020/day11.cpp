@@ -37,7 +37,7 @@ struct Map {
 				return occupied_for(row, col) == 0 ? Cell::Busy : Cell::Empty;
 			case Cell::Busy:
 				return occupied_for(row, col) >= 4 + part2 ? Cell::Empty
-														   : Cell::Busy;
+				                                           : Cell::Busy;
 		}
 	}
 
@@ -49,7 +49,8 @@ struct Map {
 		}
 	}
 
-	friend std::ostream& operator<<(std::ostream& ostr, const Map& map) {
+	[[maybe_unused]] friend std::ostream& operator<<(std::ostream& ostr,
+	                                                 const Map& map) {
 		for (const auto& row : map.rows) {
 			for (Cell cell : row) {
 				switch (cell) {
@@ -93,15 +94,15 @@ struct Solver : AbstractSolver {
 	Map m_map;
 	void parse(std::string_view input) override {
 		m_map.rows = input | ranges::views::split('\n') |
-					 ranges::views::transform([](auto&& line_range) {
+		             ranges::views::transform([](auto&& line_range) {
 						 return line_range |
-								ranges::views::transform([](char c) {
+			                    ranges::views::transform([](char c) {
 									if (c == 'L') return Cell::Empty;
 									return Cell::Floor;
 								}) |
-								ranges::to<std::vector<Cell>>();
+			                    ranges::to<std::vector<Cell>>();
 					 }) |
-					 ranges::to<std::vector<std::vector<Cell>>>();
+		             ranges::to<std::vector<std::vector<Cell>>>();
 	}
 	void part1(std::ostream& ostr) const override {
 		Map map = m_map;
