@@ -82,6 +82,7 @@ aoc_executable(13 "Shuttle Search" 0)
 aoc_executable(14 "Docking Data" 0)
 aoc_executable(15 "Rambunctious Recitation" 0)
 aoc_executable(16 "Ticket Translation" 0)
+aoc_executable(17 "Conway Cubes" 0)
 
 foreach(current_day RANGE 1 ${last_day})
 	configure_file(day.html day${current_day}.html)
