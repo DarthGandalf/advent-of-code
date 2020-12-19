@@ -1,0 +1,626 @@
+105: 12 | 69
+42: 69 48 | 12 41
+66: 69 69 | 12 12
+91: 69 38 | 12 26
+75: 105 105
+39: 69 119 | 12 124
+88: 12 87 | 69 133
+7: 69 55 | 12 84
+55: 12 12
+31: 116 69 | 125 12
+100: 96 69 | 87 12
+40: 49 12 | 66 69
+58: 69 71 | 12 57
+122: 12 34 | 69 17
+65: 12 98 | 69 124
+2: 69 49 | 12 84
+111: 20 69 | 54 12
+64: 12 51 | 69 108
+9: 98 69 | 82 12
+38: 55 69 | 84 12
+71: 59 12 | 100 69
+120: 86 12 | 30 69
+6: 12 87 | 69 124
+63: 12 124 | 69 49
+129: 12 52 | 69 103
+0: 8 11
+69: "a"
+35: 111 12 | 58 69
+32: 69 3 | 12 46
+78: 69 37 | 12 87
+93: 69 82 | 12 49
+99: 2 12 | 61 69
+16: 12 133 | 69 98
+37: 12 69
+115: 12 119 | 69 66
+21: 117 69 | 124 12
+119: 69 69 | 12 69
+8: 42
+84: 69 105 | 12 12
+83: 69 49 | 12 117
+130: 12 56 | 69 21
+132: 66 69 | 98 12
+124: 69 12
+24: 12 113 | 69 123
+53: 12 93 | 69 83
+117: 69 12 | 12 105
+18: 55 12 | 75 69
+68: 133 69
+17: 12 106 | 69 127
+56: 12 55 | 69 75
+112: 124 12 | 66 69
+57: 12 2 | 69 59
+30: 87 12 | 119 69
+12: "b"
+70: 96 69 | 101 12
+3: 75 12 | 119 69
+73: 69 29 | 12 130
+79: 12 85 | 69 81
+92: 69 55 | 12 87
+26: 12 124 | 69 96
+41: 12 35 | 69 89
+47: 87 12 | 124 69
+114: 69 47 | 12 16
+28: 91 12 | 45 69
+11: 42 31
+22: 133 69 | 55 12
+72: 39 12 | 70 69
+118: 75 105
+52: 69 134 | 12 80
+131: 12 66 | 69 37
+13: 76 12 | 27 69
+4: 69 75 | 12 87
+27: 12 63 | 69 7
+113: 69 114 | 12 79
+80: 12 5 | 69 118
+125: 12 126 | 69 129
+51: 112 12 | 15 69
+33: 69 131 | 12 59
+101: 12 69 | 69 105
+10: 69 23 | 12 25
+77: 69 33 | 12 104
+20: 69 102 | 12 18
+25: 59 12 | 60 69
+126: 12 13 | 69 64
+116: 69 122 | 12 19
+97: 69 117 | 12 55
+87: 12 69 | 69 12
+109: 98 69 | 75 12
+96: 12 12 | 105 69
+15: 12 101 | 69 119
+107: 69 96 | 12 87
+14: 12 10 | 69 1
+108: 12 59 | 69 94
+123: 95 69 | 32 12
+46: 87 69 | 98 12
+86: 82 12 | 124 69
+61: 117 12 | 49 69
+121: 117 12 | 98 69
+74: 96 12 | 124 69
+59: 124 12 | 84 69
+102: 82 12 | 84 69
+135: 62 69 | 38 12
+34: 99 12 | 67 69
+95: 74 12 | 65 69
+5: 37 69 | 96 12
+81: 49 12 | 98 69
+98: 69 69 | 69 12
+89: 69 73 | 12 44
+48: 12 14 | 69 24
+110: 69 133 | 12 37
+67: 121 12 | 78 69
+82: 69 69
+62: 84 69
+134: 132 12 | 110 69
+43: 88 12 | 97 69
+50: 84 12 | 37 69
+94: 101 12 | 98 69
+103: 12 120 | 69 90
+104: 6 69 | 40 12
+60: 87 69 | 124 12
+49: 12 12 | 69 12
+29: 22 12 | 4 69
+76: 12 63 | 69 109
+133: 12 69 | 12 12
+90: 50 69 | 36 12
+19: 77 69 | 28 12
+106: 69 107 | 12 88
+45: 92 69 | 110 12
+1: 12 53 | 69 72
+54: 12 18 | 69 68
+23: 9 69
+128: 49 12 | 84 69
+85: 66 69 | 75 12
+44: 69 43 | 12 135
+127: 115 12 | 128 69
+36: 55 69 | 55 12
+
+babababbabaababbaaabababbaabaaabaaabbbbb
+abaabbaaaaababbbabbbaaaa
+bbbbbabbbbbabbaabaabaabbaabaabaa
+ababbbbbabbaabaabbabbaaabbbbabbbaabaaaababaaaabb
+aabaaaabbabababaabbababa
+abbbababbbaabababbaababaabbabbbbabaabaab
+bbabaaaabbbbaabaabbbaabb
+bbbaaaabaaababaaaaaaaaabbbaababababbbbaabbbabbba
+abbbaaabbbbaabbaabbbaaabaabbbabbabaabbaaabaaabaa
+aaaaabbbaababbbaabaabbab
+ababbbbbabbbaaabbabaaaaa
+aabbbaabbbbbabbabbabbabbbaaabbaabbababba
+bbaaaababbbbbabbbababaaa
+abbbabbabbabaabbabaaababbbbbabab
+babbbbbbbbbaabaaaabbbbaa
+bbbaabaabbaabbbaabbbabba
+ababaabbbbbbaaabaaabbaaa
+baaabbabbaabaabaaaabbbbabbbbaaaabbbabbbb
+aaabababbbbbbababbbaaabbaabbbbaaabbbaaaa
+bbbbbbabbbabbababaaabaabbbaaababaaabaaba
+babaabbbabaaababbbaaabbb
+abbbabaababbaaaaabaabbab
+aaaaabaaabbbbabaabbbbbba
+bababbbaabaabababbabbbaa
+bbabbabaabaaaaaaabbaaabaabaabaabbbbaabbbbababaabbbbbaaaaababbabb
+abaababaabaaaaabaaaababaaaaababaabbbaaaa
+bbbabaabbaababaabaaababb
+aaabababaaababbbbbabaaaaaaaaabbabbbaaabaabbbbaab
+aaabaabbabbaabaabbabbaaabbaabbaaabbabbbbbbabbbabbabbaabaabaaabaa
+abababbabbabbabbabbbbbaa
+abbbababbabaababbbbabbba
+ababaabbbbbaaabbbababbbaaaaabbbbbaaabaaabbbaaaba
+aaababbaababbbaabbababbb
+abaaaabaabaaabbabbaaaabababbabbbabbbaaba
+bbabbaaaababababbaaaabaa
+abbaabaaaaaabbbabababababbbaabbbbababaabbbbbabaaaaaabbabbbaaaabbaabaaaba
+babbbbabbbbbbbbaaaaaaaaa
+bbbbbabaaabbbabbaaaaaaba
+baaaabbaaababaaaabababaa
+bbaaaabbbabbababbbababbaaabbabba
+abbabaabbbaaaaaabbababbbabaabbaabababaababaabbaa
+bbbbbababbbbaaabbaaaaaaababbabbbaabaabab
+babbabbbbabaaababbbabaaa
+bbaaaaabaaabbaababbbaaabbbaabbba
+babaabbbbbaaaaabbaabaaab
+babbbbbbabbbabaaabaaaaabbbaaabbb
+bbbaaabababbaabbbbbbbaababbabbaaabbabbabbbabababababbbbababbababababaabb
+bbbaabbababbbbbbbaaaaaaa
+aaabababbaabaabbbaabbababbbbbbbaabababbbaaabbaab
+baaaaabababbabbbaaababbbbbaabaabbabbbabbbbababba
+abaabaaaaabaaabbbabaaabb
+bbbaaaaaaaaaabbbbababaaa
+bbbababbababbbabbbababab
+abbbabbaaababbbbaabbbbbbbaabababaaabbbab
+abaabbaabaabbabaababbaaababbbbaababbabaaaabababa
+abababbbababbaaabaaabbba
+baabbababaabbaaaababaaba
+bbbbbababbbaaaaabababaaa
+babbaabbbbbababbaaabbaba
+baabbbbabaabababbbbabbaaaabaabaaaaabaabaabababbabbaababababaaaaabbababaababbbbbbaabbbbbb
+aaaabaababbbbbabaabaabaa
+bbabbababbbbbaabaaabbbaa
+bbaabbaaabaabbaabaababbb
+aabaaabaaaabbaabbbbbbbabaabbbbbbbbbbbabaabbbabaaabbaabbb
+abbaaabaabaababbabbbaaabbbaaabba
+babbbbaaabbaabaabbbababbbababbaa
+bbabaaaabaaaaaaaaabaaaab
+abaabbababbabababaabbbabaabaaaababbbbbbb
+abbbbbabbaaaaaaababbbaba
+baabbbbbbbbabbbbbbabbbaa
+bbababaaaabbbbbbabbaabab
+babbbbbbaaaabaabaaaabaabaabbbbaaaaaaabab
+aabbbaabbbaabbabbbababbaaabbbabbbbbbababbaabaabaabbaaaaaaabaaabbabaaaabaabbbababbbbbaaba
+bababbabbbabaabbbaaaabab
+abaabababaaabbaaabbbaaaa
+bbababbababbababbbabaabaaabbaaab
+bbbaabbaaaabababbbbaabab
+bbbbbabaaaabbbabbaaabababbbbaaaabbabaabaaabababbaaabbaaaabbaabbbaaaaabbababbaaabaabbabaaabbbbabb
+abababbaaabaabababaaabbb
+aaaaaaabbabbabbbaaaabaababababababbabaabbbaaabba
+bbbaaaabaaaababbabaabbab
+abaabbaabbbbbbababaabbaabbbabaaaabaabbba
+bbbaabbaabbaaaaabaaaabaababbaaba
+bbbaabaabaaabaababaabaab
+babbabaababbbbabababaaaa
+aabbbaababababbabbabaabbbbbbabab
+bbbbbbbbabbaabbbbbaababaaaabbaaaaabbaaaabaaabbaabaabbabbabaabbbabbbabaaa
+abbaabbbbabbabbaaabaaaaabaaaabbabaaabbaaabbaababaaaaaaabbbaababbbbbaaaba
+aaababababbaabaabbbaaabbbbaaabba
+aabbbbbbaabbbbabbbbaabababaaaabbabaaaabbbaabbababaabbbaa
+abbbabbabbabaaaabababaab
+babaababbbababaabaabaabbabababaabaaabbba
+aabaaabababbbbbbbababbbb
+abbaaaababaabaabbbaaabbaabbabaabaabbbabbabaaaaabbbbaabbb
+babbaaaababaabbababbbabb
+baaaabaaaaaaabbabaabbabbbaabbababbbaabaabbbbbaaabbbabbbb
+bbaaaababbbaaaaaaababaabbaabaaababbabaab
+aabaaabbaaababaaaaaaaabbaababbbabaaababaabbabbabbaabbbba
+aaabaabababbaaaabbaaaaaaaaaaaabbaabaabbbaabaaaababbabbbaaabbbbba
+bbbababbbaabbbaaabababbbbabbbaaababbbbaa
+bbaabaababaaabababaabbbb
+bbaabbbaabbbbaaabbaabbbb
+ababababbaaabbaaabbaabbb
+abaaabbaabaaabbaabbbababbbbababbabbabbababbbbaabababaababbaabaaaabbbbaba
+abbaabbaabbababbabbaabbbaabbaaabaabaaabaaabaabbbbbbaabbabababbab
+abbaabaaaabbaaaababbbbabaabbbabaabababaa
+baababbababaababbbaaabaa
+baaabbbbbaaaabbaabaabaaaabbbbbabaababaabaabaabbb
+babaabbbbbabaabbabaaaaabaaabababbbbbbbaaaaabbababbaabbab
+bbababaabbaabbbabaaaabbb
+ababaabbbaaababaaababbaa
+aabababaabaabbbbabbabbbaabaabbbb
+baabbaaaaababaabbabbbbba
+bbbbbbbbbaababaabbabbbaa
+ababbbabbbbbbaaaabaababb
+bbabbabbababababaabababa
+bbbbbbbbbaaaabbbabbaaababaabaaaaaaabbbaabbbaaabbabbbbabbbaabababbbabbbbb
+bbaababaaabbbbbabaaababb
+aabbabbbaabbbabbaaabaaba
+baabbaaaaaaaabbaabbaabab
+abbbabbabaababbaabaabbbb
+baaaaaaababbabbbbbabbbaa
+aabbaabbbaaabbbbbbbaabaabbabbababbaabaababbaababbbababba
+bbbbbbbaaaaaababbbababab
+aabbbbabababbaaaaaabbbab
+aaaaaaabbabbaaabbbabbbaaababbbba
+aabaaababaaabaababbabbabaaaabbabbbabaaba
+bbbaaaabaaaaaaabababbaaababaaaaa
+aaaaaaababaabaaababbbbba
+ababbbabbaabbabbbabbbbba
+babbbbabbbaaabbbbaabababbaaaabab
+abbbbaaaabaaaaabaababbaa
+abbaaaaabbaabbabbbabbbbabbbabaaaabbbbaaaabbabbbababababaababbbbb
+aaabaabbaaaababababbabab
+aabaaaabaabbabbaabababaabbbbabaa
+aaabaabbbabbaabbaabababa
+abbbaaabbbbaaaabaaabbbab
+abaaaaabaaaaabbaabbbaabb
+baababbabbbaaaaaaabaaabbaababbaababbbaaabbaaabba
+bababbbaaaaabbbbaabbaabbbbbababaabababaaababaaaa
+baaabbabbababbabaabaaaab
+bbbbaaaaaaaaaaabaaabaaabbaaaabbabaaabaabaabbbaaaabbabbabbabaaabbaabaabaaabaaabbb
+aaaaababbbaaababbabbabbabbaabbbbaaaabaaabbaababbaaaabaaa
+bbbabbbbaabbbbbabababbabbabbaaabbbaaabababbaabaabaabaaaababbbbabbbaaabbabbbaaaaaababbaab
+abababbababbabbbabaaabbaabaabbababbaabbb
+aabbbbababbbabbbbabbbabb
+bbabbaabbbbaaaabaaaabaabaabaaaaa
+aaaaabbaababbaaabbbaabba
+abbaabaaaaaaabaababbabab
+aaaababaaabbbabbbaabaaabaaabbbab
+aabbabbbaaaababbaabababa
+aaabababbaaaaaaababbabaaaabaaaab
+aabaabbabbbbbaaaababbabbabbbbaaababbbababbabbabbabababbaaaabaaababaabaababaababbbaaaabaaaabaabba
+abaaaaaabbbaabbaabbbbbbbbabbbbbabbabaaabaaabbbbaabaabbbabbbbabababbbbaab
+aabaabababbbabababbbbbaa
+bbabbababbbbbaababababbaaaaabbaa
+babaabbabaaaabaaaabaaabb
+abaababaabaaaaaababbbbbbbabbbababbabaaab
+bbaaababaaababaaababbbabbbaabbbaabaabaababbabaab
+abbaabaaaaabaaaaaaaaabba
+bababbbaabababbbbaaabbaababaaaaababbaaba
+aaaabaabaaaaabbaabbbbabb
+ababaabbbabbaaaabbabbbab
+babaabababbaaabaababbaab
+aaabababababbbbbbbaabbaaababbbbabaabbbba
+aaaaaaababaaaababbabaaba
+bbbbbabaaaaababbabaabbaabbbbaabbbbabaabbabaabbbbaaabbbabbbbabababaaaabbb
+aaabaabaaabababbbbbbbbaa
+bbbbaababbabaabbbaaabbabababababbbabbaababaabbbb
+baabbabbabaababbbaabbabbaaaababbabbbbbbb
+baabaababaaabbabaaabbabb
+bbbbbaabaabbaabbaababbbabababbaa
+bbbabbaaababaabbaabaababaaabbabb
+bbbaaabbaabbabbaabbbaaaa
+abbbbbabbbabaaabbaaaabababbbaabb
+aabbbaaabbbababbabaababaaababbbaababbaaabbbaaaaaabbabbbb
+aabaaaabbbbbbbbaabbabbbbbbabaabbbabbbaabbbaabbbabbbabbbaabbaaaaababbbabbbaabbbba
+aabaaababaaaaaaaaaabbaba
+babaabaabbbbbababbbabbbb
+bbabbbabbaaaababaabbbaababbaabaaaaabbbaabbbbaaabbbabaabaaaabbbbbbbaaabaabbbaaabbabbababbbaaaabbb
+aaabbaabbbbaabbaababaaabaaabbaba
+aaaabbbbaaabbbbaaabbbaababbaabaabaabbabbbbbbaaaababbbaaabbbbbabaaabaabbaabbabbaaaaaabaaa
+bbbbaababbbbaababaaaabab
+ababababbbbbbababbbbbbbbabbbbbba
+bbbababbbbaabbaaababbaba
+baabbbbbbbabbaaabaabbbabbbbabbaaaabbbbaaaaabbaabaaaaabaaababbbbabbbbaaababaaaaaa
+abaabaaaabaababbbbbabaaa
+bbbaabaabbbbabbababbaaba
+baabaaabbbaaaaaaaaaabbbaababaaaaabbabababbbaaabaabbaaaaabaababbaaabbabaaabaaabbbabbaabbb
+bbaabaababababbaabbababa
+bbabaabbaabbbaabbaaababb
+abababbbbbaabababababbbaabbababa
+aaaaaaabbaaaaaaaaabaaaaa
+aabbbbababbbaaabaaababbaababaabbaabaabbb
+aabbaababbabbaabbababbbb
+bababbbabbaabbbabbbbaaabaabbbbababaaabbb
+aaabbaababaaaababbbbabbbbbbababa
+aaaabaababaaabababaaababaaabaaab
+aaaababaabbbabaaaabaabababbbbaaabbabbaaaaabbbbbabbaaaabb
+aabbaababbbbbabaabaaabbb
+bbbabaabbaaaaaaaabababaa
+bbbbabbababbabbbbbaabbaabaababbabbbaabab
+aaaaabbabaabbbbbabaaaaaaaaaabbababbababb
+bbabbababaaabaabbaababbb
+ababaabbbabbbbabbbaabbab
+babaaabababbaabbbaabbaabbbbaaaba
+abaabaaababaabbabbbabbbb
+bababbbaababbbaaaabbaaaabbabbbababbaaaaabbbbaababaabbbaa
+aaaabaababbbbbabbaaaabab
+abbababbbbabbbaaabbabbab
+abbababbaabbbbaabbbbaabbabaaabababbabbaaabbbaaaabbabaabbbbbaaaba
+aabbbbbabaaabbbbaabaaaaa
+bbbbabbabaabbabaababaaba
+baaabbbbbbaababaaaaaaaaaaabaabbaaaaabbabaaababab
+ababaabbaabbaabbbabbbbab
+bbbaaaaaabbbababbabbbbabaaababbabaabbbbaabbabbabaaabbbbbaaabbaaaaabbabaaabaabaaa
+aaabbbabaaabaababbbbaabaabaaaabbaaaaabaaababbbbababaabaa
+aaabaabbaaaabababaaaabab
+bbabaaaaaaabbbbabbabbaabaaaaaabbbbbbbbaa
+abaaaabaabbaaaaaaaaababbbbbaabbaaabaabba
+bbaabbbababbbbababbbaaba
+aaabbaabaabbaaaabbbbbaaabbabbababbbbbaab
+abbbabbbbbbbbbabaaaaabbaaabaaaababbbaaba
+bbbaaabaaaabaababbbabaababbbaaabbaabbaabbbbbbaaabbababab
+aaabbaabbbabbabbababbbaa
+abaaabbaabaaaaabbabaaaab
+baabbbbbbabaababbaabaaaa
+baabbaabababbbababbabbab
+bbbbaabbabbbabaaaaaababbabaaababbabbabaabbbbababbabbbabaabbabaaa
+bbaabaabbbbaaaababababbbaabaabba
+aaababbbbbbaabaabababaaa
+babababbbbbbabaabaabbaababaaabbabbbbabbbbaaaabbb
+baabbabbaaaaabbabbbabaaa
+abbaaaaabbababaabaaaaabb
+bbabaabbbaaabaaaaabbbbabbbaabbbaaaabaaabaabbabab
+abababbababbbbaaabbaabba
+aabbbbabbbbbbaababbbababbaabbbbbabaababaaabaaaab
+bbbaaabbbaabbabbabababbababbaaaabbbbbaabaaabbbbabaabbbabaabaabbbbbbababaababbbaa
+babababbaaababaabaabbbbbbaabbaabbbaabbbb
+baaabbababaabbaaabbbbbaa
+aabbbbbabbaabaabaaabaaaaaaabbbaa
+bbaabaabbbababbbabaabaab
+aababaabaabaaabbaaababbbbbbabbbbaabaabba
+bbbaaabbbabbbbabaabbbaaaabaababaabbbbbaa
+bababbababababbaaaaaaaba
+aabbbaabbbabbaaababbbbabbabbbbbbbabbbaaa
+bbbaaaaaaaabaaaabaaababb
+bbaaababbbbbbabaabbbbaba
+baaabbbbbbbabbaaabbabbaa
+abaababbabaaaaaaaaabaaaabaaaaabaaaaabbabbbbababa
+baabaaabbbbbababaaabbbabbbaaaaab
+aaababaababbbbaaabaababa
+aababaabaaaaaaaaabbababaaaababbbbbbbbabb
+baaabababbbabaababbbbbbb
+babababbaabbbbabbabaaabb
+bababbbabababbbabaabbbab
+baaabbaabbbbbbabbaabbbab
+ababbbbbbabbaaaabbbbabaa
+baabbbbabbbbbbaabababbabaababababababbaaababbaaaabbbabbabbabbaaabbbababa
+babaabbabbabbaaabbabbabbbabbababbbbbbbaa
+aaaababababaaabaaabaaaabaababaaabbaabbbabbbabbaaaaaabbbbbbbabbabbbabaabaaaababbbabababaaaabaabaa
+abbbbaaabbbbbababaaaabbabaaabaabbabbbaab
+aaaaaabbbbaaaaaabaaaaabb
+aaaaabbabbaabbbbaabbbbaabbabaabbaabababbaaaaabbbbbaaaaaabbbbaabbabbabbababbaabaa
+babababbabababbbaaabbaba
+bbabbaabbbbbbaaabbaabbbaababbaab
+bbaabbaaaabbbbbbaabbaabbbabbbaaa
+abbaabaaabaaababbbaaabba
+abaaaaaababaabaaababbabb
+baaabaabbbbabbaabaabaaab
+babbabbbaaaaaaabbbbaaaba
+aaabaabbbaaababaaabaaabaaabbabbababaaaab
+bbbaaaabbbbaabbbbaabbabaababbbbaaaaaabbabbaabbbabbbbabab
+abaaabbaabbbbbababbabaaa
+aaababaabbbaabbaaaaaabaaabbabbba
+ababbaaabbabbaaabaabaabbaaabaaaaabbaabba
+ababbbbbbbaabaabaaabaabbabbaababbbbaabbb
+babbbbbbaababbbbbabbaaba
+bbbaaaabbabababbabababbb
+babbbbaabababbbaabababbababaabaabaaaabbbbbaaaabbaabbabab
+abbbbababbbbbbbabbbbaaababbbbababbbbabbaaabbabbbbaababbabbabababbbabbabbabaaabbabbbbbaaa
+abbbabbaaaababababaabbaabbaababaabbaaabbabbaabbb
+aaababaaaaabbaabbbaaababbaabbbbbbbaabaaababaaaab
+aabbaabbabbbbaaababaaaaa
+bbbaabbaabababbababbabbbbaaaaabbbbaaaabb
+aabbaaababaaabaaabaabbbbaaabbbab
+baaaabbabbaabababbaaabba
+aabbbaaaaababbbbbaaabaaa
+aababaababbaabaabbababaabbababbaaabbabba
+bbaabbaaababbaaababababa
+abaababbbabbabaaababaaaa
+aaaaabaaababbbabbbbbbaab
+bbbababbbbbbbbbabbabbbab
+bababbabbababbbaababbbbbaabbaaab
+aaaaaabbaaaabaabaabaabba
+babaabbabbaabababbbaabaaaaabbabb
+bbbaaabaabbabababbbaaaba
+aabbbbbbaabbbabbbbaaaaabbabbbaabababbaba
+abbbabbaabaabaabaaabaaaa
+abaabaaaaaabbbbaaaababaaaababbbabbaabaabababbaababbabbbbbbabaaba
+bbabbabbababbaaaabaabbbb
+aabbbababbbaaaaabbbabbaaaaabaaabaaabaaabbbaababbbaaabbaabbbbabaaaabbaaabbaaaababbaabbbbb
+ababaaabbababbabbabaaaaa
+abaaaaaaabbaabbbaabbaababbbbbbab
+aaababbabaabbbbbbbbaaabbbabbbaab
+aabbaabbbaaabbababaabababbaaabbbbbbaabab
+bbaaaaaabbbbbabaaabaaaaa
+abababbbaaaaabaabababaab
+abaaabbaaabbbbabaaaabbab
+abbabbaabbabbbbabaaabbabaaabaaababaaaaabaaaabababbabbaba
+bbbabbaaabaaabbaabbbabbababbaabb
+babbbabaababbabaaabababbbbabaaaabbbaababbaaababb
+aabaaabaaabbbaaaababababaaaabbab
+bbbaaaabbababbbaabbabaab
+aaabababaabaaabbbaabbbba
+baababaabaaabaabbaabbabaababaaaabbbbabab
+aabbbabbaabbbaaaaabbbbbababaaabababbbaaa
+abaaabababaaaabaaaabbaba
+aaaababbbaaaaaaaabaaaaaaaababbaaabbaaaab
+bbabaabbababbaababababaaabbbbabb
+ababaabbaaaaabbbbbaaabba
+ababaaabbaaabbaababbbbbbabbaabba
+bbbbbabbabbabbbabbabaababbbbabbabbbabababbaababbaabaaaaaabababaababababb
+abaaabbaabbaaaaaababaaaa
+baabaabbbabaabaabbbaabbabaabbbaabbaababbaaabaaab
+baaaabbaababbbbaababbaba
+aabaaabaabaaabbaaaabbbbaaabbbbaa
+baaababaaaabaaaababaaaab
+bbaababbabaabaabbbaabaabbbbaaabbabbabbbbbabbaabbbbbaaaababbbaabb
+bbbababbbbbaaabbbabbaaaababbbbbbaaabbbabaabbabaaaaabaaba
+bbabaabbbabaabbbaabbaababbbaabbbbbaaaabb
+abaabaaabbaabaababaabbbb
+abaaabaaaabbabbbbbabababbaabababbbbababbaababbbbaaaaaaaaaaabaaabbbaaaaababbababb
+bbbaabbabbbaabbbbabbabab
+bbbaaaaaaabbbabbaaaabbaa
+aaaabbbbababaaabbbbbbaabbabaabbabbaaabaaababaaaaaaaaaaaa
+bbaaababbaabaabbbaaabaabaabbbbaaababbaab
+aabbbaaabaaabbaabababbba
+bbaaababaaaababbbaaabaabbbbababa
+bbbaaaaabbbbbbabaabbabbbabbabbbb
+baaababaaaabababaaaabaaabaabbabbababbbabaaaababbaabaabbbaaababbbbbbaabaabbaababababbbbbb
+bbbbbabbaaaaabbaabbaaaaaabbbabaabbbbbbaa
+baaaabbabbabbaabbaabaaaa
+abbaaaaabbbbbbbabaaaabbaabaaaabb
+abbaabaabbaaabbaabbaaaabbaaaaabaaababbbbbbbabbbaaaabbbabbbbabaaababbabaaaabaabbbbbbababb
+baabaaaababaaaabbabbbabb
+baababbababaabbabbbabaaa
+bbaabbbaaaaaabaaabaaaaaabbbaaaaaabaababbababaaaaaaaabbabbababbaa
+bbbabbaaaabbbbababaaaaaaabaaaaaaabababbbbbbababa
+bbaabababbbaaaabaabbbbbabaabaabaabbbbabbabaaaabb
+abababababaaaaaababbbbaaaabbbbbbaababbbaaabaabbbaababbaaabababaa
+abaabbaababbaaaababbbaab
+abbbbaaaabababbabbabbaabababbaaabbaaabba
+bbaaaaabbabbabaabbabbaaaaabbabababbaaaabababbbbabbaaabbbbabababa
+bbbaabaabababbabaabbaaaababaaaabaabaaabaabbbaabbaababbababbbaaabbbaaaaba
+aaabbaabbaaabbbbbaabaabaaabbbaaabbaabbaabaaaaaaaabbaabba
+baaabbbbaabbaabaaaabbaaa
+bbabaaaabaabbababbbbbbbaaabbbaaaaabaabbbbabbbabb
+abbaaabaaababaabbabbbaba
+abbbaaabbaabbababbbbabab
+babaabaaabababababbaabba
+bbabaaaabaabbaaabaabbaaababaabaababbabbbbaaaabaaababbbaaabbaabbaaaabbabaababbababbbbbbaa
+babaaaaabababaaaabbbaabbaaababbbaabbabbbbaaaabba
+aabababaabbbaabbbabababbaabbbbbabaaaaababaaaabbbabaabaaaaaaaabaaaaaaaabb
+baabbbabaaabbaabbaaaababaabbabbbbbbaabbbbaaabbaaaaaababbbbabbbbabaabaaaabbaabbbaabaaaabbbbaabbbb
+aaabbaabbaababbaaabababa
+bbaaababbbaaababbbaaababaaababaabaaaaabaaabababbaababbababbabbba
+aabbabbbbabbbbaababbbaaa
+abaabaaabaaaaaaabbaabbabaaaaaaabbbbabbaabbabbbab
+ababaabbbabbabaaabbbaaaa
+abaabbaaabbaaabaaaaabaaa
+bbbaabaabbaabaabbaabbabbbbbaabbaaabaaaaa
+babbaaaabaabbaaaababbbbbbbbbaaaa
+bbaaaaabbbababaaaaaaaaaa
+abbbabbbbbabaaaaabababab
+baabaabbbaaabababababaaa
+aabaabaaabbbbaababbaaabbbbaaabbbabbbbabaabbbaaba
+babbaaaaaaabaabbbbbbabaa
+ababaaababaabbbbbaabbbbabbabaababaabaaaa
+abbbabaaaabbaaaabbbbbbbabbaababb
+bbbabbbbaaabbabbbabbabba
+baababbaababbaaaaaabbbbb
+abaabaaaaaaaaabbbbaababaabaaaaaaaaabaaba
+baaabbbbaabbabbbbbbbbaabbaaababbaabbabab
+bbbabbaababaaababbaabaaa
+abbabbaaabbbaabaaabaabaa
+ababaaabbaaabbaabaaaabbb
+abaabbaaabaaababaaaabbaa
+baababaaaababbbbabbabbaa
+bbbbaababbababaaabbbbaab
+aababbbabbbaaabbaabbabbbaaababbabbabbbba
+abababbaababbaaabbbaabaababababbbaaabbaabbaaaaaaaabbaaababbbbbba
+aaaaaabbbaaababaaaabbaaa
+abaabbaaaababaabbababbbabbbbabbb
+aabbabbbaababbbbbbbbaabbbabbabbbbaaababb
+babababbaaabbbbabbbababa
+aababaaabaabaabbbabbaaaababaaabb
+bbbbbaaababaabaababaaababaaaabbaaaabbabb
+bbbaaabbbbabbabababaabbbbbaaaaaaababbbababbbbbaaabaabbbabbbaaaba
+aaaababaaabbbabbabaabbbb
+babaaabaabababbaababaaaa
+abbaabaabbbbbaabbaaaaabb
+abbbbabaaabaaaabbabbaabaaaaabbab
+abaaabbaaabaaabaababbabb
+abbbbbabaabaababbaababbaaaabaaab
+bbabbababbaababbbbabbbbabbabaabbbbaabbabbbabbabbaabaabbbabaaaaababbababbaaababababbabbab
+bbbbbaaaabaabbaaabaaaabaaaaaaabbbaaaabaaabbababbaaabaaba
+bababaaabbbbabbaababaaabbbababbaababbaaaabbaabbaaaabbbab
+bbabbabaaaabaabbbabbabbbabbbaaba
+ababaaabbaababaaaaaaabbabaaaaabaaabbabab
+bbbaabbaababbbbbaabbbaabbbbaabba
+baaabaabaaaababbabaaabaababbaabaabaabbbaabbaabbb
+abaaabbaabaaabaabaabababaaaabbababaabbabababbaabbaaabaab
+abbaaaabaababbabababaaba
+bbbabbbabaababaaaaaabbababbabbbaaaabbbab
+bababbabbbabbabaaabbbbbabaabaaaa
+abababababaabaaabbabaabbababbbaa
+bbbbaabbaabbaabaabbbabaabbabbaaabbaaabaa
+aaababaaaaabbbbabaabbbba
+babbbbabbbaaaabaabbababa
+abaababbaabbaaaaaabaabaa
+abaabbaabbabaabbbbaabbbaaaaaabbbbaabaaabbababbaa
+abbaaaaaaabbbbababababbbaaaaaaaa
+baaaabaabbabbbaaaaaaaabaaaabaabaaabbbabbaaaabbbb
+aaaababaabbbabbabaabbaaabbbabbbababbbaab
+bbaabaababaabaaaabbbabaaabbabbab
+bbbbabaababbbaaaabbaaabaaabababababaaababbaaaabbbaaababa
+abaabaaaaababbbbbaaabbba
+baabbabbbabbbbabbbbbbbbbaaaaabbaabaaabbabbbabbba
+babaabbaabbbbbaababbbabbaabaabbaaabbabaa
+abbbbbabaaaabaabbbbaaaaaabbbababbaabaabababaaabbaaaaaaaaabbbbabb
+ababababbaaabbbbbbbbabaa
+abaaaababbbabbaaabbabbab
+aabbaabbbbbaabaabbbababa
+baabbaabbabbbbaaaabababa
+babbaabbbbbbababaabbbbabaabaabbaabbbaaaaabaabbab
+abbabbbaabbaabbababbbaababbbbaab
+bbbbbbbaaabbabbbaaabbaba
+babbaabbabbbaaabbbaabbbaabababbbaabaaabbaaabbabb
+bbaaaababbbbbaaabbaaabba
+aaaabababaabbaabbabaaaaa
+bbabaaaaaabbbaabbabbbbbbbbbabbaabaaaaabbaabaabbb
+aabbbbabbabbbbaabaaabbbbababaabaabaabbbbbaabbbba
+aaababaabbbababbbbababab
+baaabbbabaaabaaaaababbaabbaaabba
+baabaabaababbaaabababbbb
+baababbabaaaaabaaaaabaabababaaabbabbbbabaaaaaabaaaaaababaabaabba
+aabaaabbaababaabaaabaaab
+babababbbbaaaabaabbaaaab
+bbbaaabbbbabaabaaaaabbab
+‰PNG
+
+   IHDR         )B   	pHYs  Ä  Ä•+   PIDAT(‘cüÿÿÿ )Šñj`ld$^.Å„M#†|¦chÀ¦]EÃÿzÌF#ß|nG–cÄÓõû1HrLcµ  Ø$p=­    IEND®B`‚‰PNG
+
+   IHDR           szzô   	pHYs  &  ÿğSåó   âIDATX…í•ÑÃ Díªƒ±f33Ùõ#)M(JcCTUåı  bæ0D“ „Ş·BşW@"!Uí:öş!P\rçœË|ÁÓ% ˜/î7ÏÌæ˜fMç¯B<L8ºvÌL €ÉwËâ'I«	u[iÌ5%2n¼pZúaùå] ¯†øDwZÉ-|½šM¸5 (‘„×Ø gaŒ	Céf†˜°“½®¯@ÜBì•ğˆÕèa7IScnálp´âVÒÔ\yq#JÕè¤Ï„ä,=ÇÖÀ“Éägx ¸OK±SÙ˜ø    IEND®B`‚‰PNG
+
+   IHDR         )B   	pHYs  Ä  Ä•+   `IDAT(‘•AÀ Áé¿¡/OOZÀX-'Ì‰
+ ò£Ú–¸5Ék4Kˆ_èP…-;Î–6°ˆˆĞvÉ/µTáÕ€áàÍğñ+ÜRÜäÅNYÖØÙIÇ!Äò,Yÿ}X›ÜRã|WH    IEND®B`‚‰PNG
+
+   IHDR         )B   	pHYs  Ä  Ä•+   &IDAT(‘cüÿÿÿ )ŠG5rŒŒÔ±‘Ô´ y	—|qÔ    IEND®B`‚‰PNG
+
+   IHDR         )B   	pHYs  Ä  Ä•+   mIDAT(‘Q
+€0C_ÄƒéÉÜN?Úá™”QÈIe0 çO ­äM`˜»j„m»ÅSÑV3"#=Àeè¢ŸM³êĞìGyé»ô`K¥m£Œ'Ç¶r‡QÂ6;Àò>ù™Üç¥¢;+”¡æqÂC    IEND®B`‚‰PNG
+
+   IHDR   @   @   ªiqŞ   	pHYs  Ä  Ä•+  qIDATxœå[mPSW~NB¾	QKtQº@¬EeÊZ+P ®ÎÒYµ*íì°ƒîî¸è¬i«­¶ãş(àÎ¬3ıl®;BıQË”i­:KieÕ1j¨,ÚZñ£$Á
+‘är“œı	„{óE‚ÙŸfnŞ{>Ÿó÷¼ï{.@Œ •º¨N§£ ñ`h¬Æ!ˆUÇ³fÙ½ÏOà§X#–ŒzŸŸÆÅX#vÌ=N@6¾Õ0ş?4`®Çj±# ¤¤R£ ğ8~Õ0«“’XØ¡ Ì¸¨Bò°Ç3˜X¤¡;&}ÿ_  ‹p5&ıÆ„€ìì!ãóH :è²__¡ï¿™óî÷‰_!köU*:ªW8íFP!¶Òâô&¼ğäX£™	¡j.á#N¹|I3®¾´–Ñ4\/£G¯• éV1†ñÓj§€9Ê>Zµ¢e‹gA&²yåƒâ'ù+ p	Ê–Ô¡lIl¬uWÊiÅ™*˜¹ÓBDÔ·@¼˜¡•Ú
+zã•L”çÔúL ÒÙüİ }E2‘å9µ¸ñJ&*µ4^ı )ªÎ?K»^Ö B[¹h„·Œ]2Ë¿ğ‹å¢Th«Ğõ²…óÏF•„¨PSCOÿy%ÔJcÀr‚¿ï†zf¬«VqêO«ğ×œÚ¨‘1B“î{îUZóüÄ	œ¼eÎé±ãD54û»Ğ6Tì·-İ·ZhöwaÇ‰jœÓò–	YÔ>_êç¶S¡À1–êç¶ÓíË÷ñ¾»Ğ›‡İ§öâœ¾ÈÛO}}MI„Š´ZïóMd 7½e‹ÒttïÊİÈMmáï»e^kªhi@yNïäm¬~‚g}ã3yB(U©¼mQ¤ã°zWõl·–äjÆ¦£‡aceœ:;r«#ŞS& (MG¬ÙÆ‘÷˜ç!ï£¨ëÜH(ø¬Ré„HÄ?^
+Š…¸æ+§òIç&’¨=æyœzVo‹È0N‰€x1C?}áœ=ßc‡gjÚp¹ÿ)^µœ˜àÄÀ¿KÜaÌ!ÏÔ´¡×œê#	YÔ¿XŠ©‘S"`gŞ»koceX_ıVµß=91èb‚~«š¬¯?ÎÙj¥¯ç½´m>„MÀeİ•ÿG¾µá :Œ9ÒìÙüû"‚EíÆß­9ò7òß†Zi[Â& jEÇÉiéÍEİ•² u#Õ€1Ô])CKo®L.Áo­;a [iÙâ:|÷é½˜lğøÈ €ÌE’`
+¸’”
+ÈßOÿ“#/[\¹h8,-+*Noâøöçô…8Û­õ9êd²¨T&$'›œ<ˆ¥K/A$rB«½@ä·ıï÷íÃHúãø §Wô?Q½^½^úû%p»ÇIÖu¯ çõ´`şyo}™È†âŒ&»ÆÛ</Â" dáÑ±ib2˜ ÂWÌ¬Y³‹>öØ]$%A.ß€ôúndffìÃ©T"5HÍê÷‘;ôö^ò’¢×Ëqúşä§µB@YŸ1†C€_µ¼’3U÷°ùÙC¸/HÆá°’““ƒ„„ïï1OĞš‘?„ØdÂĞ°?³©
+)d27Y$$°üR7dväÃzÈGô æ{X÷ïZÜîNÄğp\ĞmIäòa:Q]““MP©LP© ‘·ÚáB.W`Ù²§½¿‹´Z|_]¡ìl@šIbY·[ €B"qû-70 FOµF¯—ãş}1(% ÈÉ“'©ÅbÙl†ÅbÃ0p¹\‘Í2DhµZiµø¦±.…â¡ô	 ·o+ğæ›‹18(Ñét>–R
+B¦'åt:ç1;:+—>›G>£Ñ`Ñòå„¨¡ÀápÀn·ctt‡£££œ?¹\¢VÛhV–c™™¦iş p»]
+…0™,¸té*qC$â£§ññJ®”J]T£a0‘”¤¤èÛ‚¡¡!tt\F\œ.×0 ÀéŒƒÛ-| … !!.¿'K(`Ù8jX,308¨Âİ»³Ñ×§ÃÌ „Ò”;^[÷9Ö|Kb¬ŠtP"œò€Ìf3:::  yyy¸xñ"XÖ•qp"V¨0ˆ«·ãëËÅ0™’a2©`³É¼F[/(%Äh¾=ÿİ™ò> À-”‚‰× Ãõ<ší¥¼Zâv6[är§wKQJa³Ùpùòø½€X,ÆÒ¥KÑÚÚ
+J¯òè¨*ïÄ“±gù[øİœ“ÁÀSÿß}†Î²CÚÈ!;B?ŞOg\v$š;‘6dÁŠ}ÿ !@JŠİgÛ¤§[¡Pøîíîn=ôúnNÛ‰¹¹¹hkkƒËåF_ŸÚg’V2û·iTßØä‡_²BVètj`M@‚Äâ•¥ÍèF¦ênjˆÑÀ©SwmIii/
+”JàçT,£   gÎÌBMMVH«§Q]§i3øÈÌöDÜ0ö6'"äs‡u‰IÃõµùêÌFŞòv»tvÎ Ÿ~:¬[—OV­*$'NÜÚO_7õå«5Ü¾ºÖ‚u‰C>ÇÂ:x^+áÈ6,<rıû÷“‚–1B'`ÃÜ¾ùÆaĞt«˜“)œEiºÎ¨UĞ2}}ÒÆ¢M;ã	¬TÓMÿiw>„EÀ°#ğ%>ö®ÜBÜAI0™fí#”-@ˆ›î]µ›#¯»R†V–¶ïYq¦
+#¬ÜG–›Ú¾DÉdX,Ê€ïL&IĞvÊ×aù¯Z}d#¬oÙ´îd„M€™KŞiŞÅ‘\»O©ÛjÃxp¹ø(ƒA
+·;°#£ş\»•#»ù™9a;ñSŠ>Ş½°FFí#“‰l8^º)ñF¿$Œ@LıSâôxézNVÊÈ¨ñŞ…×CûdL‰ «CIJÔÃéöu#æ%ö mË3~5eEÄf“úõë O©Ûé·[–!5±×·M—¥Gêau(§ÂM9ş<§/"Û¾<À‘ÏKìAóæ|l\r˜òF†IàÔ„¸éÆ%‡ióæ|Îä`[ãŸë·pQ ^Û¾…ìkİÎ‘ËD6.Ù„æÍùœ#rlŒÿ×¢;w|@mÚÚ¼9‡K6qÔğ\~Ô^Qğñ'2;ÿû. €ï’47µº¿hq^_@ı´]«a±øf,­Ö8(•˜Á`A£ºNWk±á‰c(˜¿Âo¿Õ-;°ëä; ª#ÔRå95ô_«_‚H8¬=fß€Ni¶§sBPTTäÉ” ˜ßP´„[ë³.¶5ˆxåÇµTmû²êãSœÓa2R¥w¼ÏŞğ—HGûƒNŞÈ¨±êãSQ›<åo„Îé‹ˆf*u•giJ0¼r™­Ïo»#¬•ºJhöwEdğøõ¯Ä¬%©ÒU’Ìn ¶½œ;(aá­'³8²VÚörd|pUºJ2Õ£.¦í;A3—lùğê×Ã´8£	/,ük4@)á× é0ÛÑĞµG¯• éfñß¾vº†=#
+DB]0³/şíˆ·gíƒ›¡¯šñåÉÜ0e†ÏGŠ‡ú­0ë“«wÆÊŠ´®Ä÷²ÈÃœ<£¯ÅÇ¢Â‰0Chy€h#&Œyƒb± 08(†İü"s:#<ñ€Læ9!ÂIƒE1Õ€1BMƒMbjÆ	xÄ5àÜ •zTÿ$À£r¹'^ˆåˆÉ?NÚí•gİİi°XD19àÒj–†i	I    IEND®B`‚    
+ €   OS/2–¼  Ø   `cmapƒ’   ¬  DglyfÊšš  X  Zühead_ÿ  ğ   6hhea |  (   $hmtx† à  L  Lloca åX  kT  PmaxpÿÔ h  ˜    nameh>k$  ¸   post ÿı  8                 ,       
+ ~ ÿox     " & : ¬!"ÿÿ     ¡nx     " & 9 ¬!"ÿÿÿãÿÁÿSÿKà°à­à¬à«à¨à–à%ß° Ô                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+ ~ ÿox     " & : ¬!"ÿÿ     ¡nx     " & 9 ¬!"ÿÿÿãÿÁÿSÿKà°à­à¬à«à¨à–à%ß° Ô                                                                                                                                                                                                                                                                                                                                                                                                                                                                7é"&_<õ       ÌşˆÁ    ÌşˆÁ    €€            €         €                Ó   €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  € €€  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  € €  €  € €€  €  €  €  €  €  €  €  €  €  €  €  €  €  €  € €€  €  €  €  €  € €€  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  € € €€ €€  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €      Ó <                         "                          *        1        L        d        o       <         »      	  Ğ      
+ - Û              0       (O       .w       )¥       Î  	   4Ö  	   
+  	  *  	  68  	  0n  	    	   ´  	  xÔ  	  *L  	 	 v  	 
+ ZŒ  	  .æ  	  `  	  Pt  	  \Ä  	  R   	  rCopyright Nate Halley 2012Synchronizer NBPRegularFontStruct Synchronizer NBPSynchronizer NBP RegularVersion 1.0Synchronizer-NBPFontStruct is a trademark of FSI FontShop International GmbHhttp://fontstruct.comNate HalleySynchronizer NBP was built with FontStruct
+http://www.fontshop.comhttp://fontstruct.com/fontstructions/show/753777Creative Commons Attribution Share Alikehttp://creativecommons.org/licenses/by-sa/3.0/Five big quacking zephyrs jolt my wax bedBQwLcl5j C o p y r i g h t   N a t e   H a l l e y   2 0 1 2 S y n c h r o n i z e r   N B P R e g u l a r F o n t S t r u c t   S y n c h r o n i z e r   N B P S y n c h r o n i z e r   N B P   R e g u l a r V e r s i o n   1 . 0 S y n c h r o n i z e r - N B P F o n t S t r u c t   i s   a   t r a d e m a r k   o f   F S I   F o n t S h o p   I n t e r n a t i o n a l   G m b H h t t p : / / f o n t s t r u c t . c o m N a t e   H a l l e y  S y n c h r o n i z e r   N B P    w a s   b u i l t   w i t h   F o n t S t r u c t 
+ h t t p : / / w w w . f o n t s h o p . c o m h t t p : / / f o n t s t r u c t . c o m / f o n t s t r u c t i o n s / s h o w / 7 5 3 7 7 7 C r e a t i v e   C o m m o n s   A t t r i b u t i o n   S h a r e   A l i k e h t t p : / / c r e a t i v e c o m m o n s . o r g / l i c e n s e s / b y - s a / 3 . 0 / F i v e   b i g   q u a c k i n g   z e p h y r s   j o l t   m y   w a x   b e d B Q w L c l 5 j X              3 Ì           €     
+        FSTR @  !"     €    û    €               f 3                                    €  ÿ…   õ  ÿ   {  ÿ…   õ  ÿ†ÿÍÿÜÿÜ  şû      m z  ÿ†  {  ÿ…  {  ÿ…  z    ÿÜÿÜÿÎıè   ı          €          €  ÿ€   €     €  ÿ€    ş    €€          €   €   €  €€  ş€  €  ş€    €€     €  ÿ€  ÿ€  ÿ€   €  ÿ€   €   €   €   €   €  ÿ€   €  ÿ€  ÿ€  ÿ€  € €  ÿ€ÿ  €   €   €   €   €  ÿ€   €  ÿ€  ÿ€  ÿ€  ÿ€  ÿ€   €  ÿ€     €          €  ı€   €   €  ÿ      ÿ€   €  ÿ€     ÿ    €  ÿ€   €  ÿ€    €  ÿ€  €  ÿ€ş  €   €   €   €   €   €  ÿ€  ÿ€  ÿ€  ÿ€  ÿ€  ÿ€       €€              €       €   €     ş€   €       €  ş          €     €  ÿ€ € €  ÿ€ÿ€   ÿ   €  ÿ€ € €  ÿ€     ÿ  € €  ÿ€       €            €         ÿ      ÿ€  ş    €      €   €   ÿ ÿ€ €      €  ÿ€  ş€  €  ÿ€ € €  ÿ€     €    	       €      ÿ€     € €  ÿ€ € €   €  ÿ                €   €  ÿ    €       €     €  ÿ€ €   ş   €  ÿ€                   €       €  ÿ    €     €  ÿ€ €   ş   €  ÿ€      €€             €  €   €  ı€   €  €   €  ş€  ÿ€   €   €   €  ÿ€    €  ÿ€   €  ÿ€  €  ÿ€   €  ÿ€ş€    €     ÿ   ÿ€  ÿ        €€      ÿ       €     ÿ         €     ÿ   ÿ€  ÿ         €  	       €      ÿ€        €  ÿ€ € €   €  ÿ       €€       €    €  ÿ€                        ÿ        €€            €       €       €       €       €     €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€       €        €  €  ÿ    €  ş€   €   €  ÿ€  €  ÿ€  ÿ   €   €     €  ÿ€€ €  ÿ€ÿ    ÿ   ÿ€  ÿ€  €   €   €  ÿ€  ş     €  €       ÿ€   €   €        €   €  ı        €   	           €     ş    €         ş    €  €   €  ş   €       ÿ€  ÿ€  €  ÿ€ € €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€       €           €  €  ş    €  €   €  ş€     ş    €  €   €  ş   €     €  ÿ€ € €  ÿ€     ÿ   €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€       €    €  ş€   €   €   €  ÿ€   €   €   €  ÿ€        €   €  ÿ€   €   €   €  ş€  ÿ€  ÿ        €                  €  ı€  €  ş   €     €  ÿ€ €   ÿ  €  ÿ€  ÿ€  ÿ€       €        €  €       €  ı€   €  €  ş€      €     €  ÿ€ €   ÿ      ÿ€  ÿ€  ÿ   €  ÿ€     €          €       €      ş   €    €  ş€€ €  ÿ€ € €   €  ÿ      €           €  €  ş    €  €   €  ş   €  ş    €  €   €  ş   €     €  ÿ€ €   ÿ      ÿ   €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€       €        €  €  ş    €  €  ş€  €   €  ş   €     €  ÿ€€   ÿ ÿ  €   €     ş   €  ÿ€                  ÿ           ÿ     ÿ          	        €      ÿ€     ÿ         €  ÿ€ € €   €  ÿ €   ÿ      €€           €  ÿ    €  ÿ    €       €       €     €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€      €€         €  ı€  €   € €  ÿ€  €  ÿ€     €€            €       €       €  ÿ    €  ÿ    €     €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€       €             €  ÿ€   €       €  ş    €  €   €  ş   €     €  ÿ€  €  ÿ€ € €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€     €          ÿ€  ş€   €       €      €  ş   €   €   ÿ      ş ÿ€ €  €   €  ı€€ €  ÿ€     €          €  €   €  ÿ€  ş€      €    €  ÿ      ı€     ÿ € €  ÿ€     €          €  ÿ€   €  ı€     ş€  €  ş€  €   €   ÿ € €  ÿ€ş    ÿ€  ÿ€  ÿ€  ÿ   ÿ€       €       €     ı€   €            €  ÿ€ €   ş   €  ÿ€       €         €  ı€     ş€  €   €   ş ÿ€   ÿ€  ş   ÿ€     €        €  ş   €  ş€          ÿ€  ÿ€  ÿ€  ÿ   ÿ€       €  	      €  ş   €  ş€       ÿ€  ÿ€  ÿ€  ş€     €       €  €  ÿ   €  ı€   €            €      €  ş  €   ş   €  ÿ€       €         €  €   €  ÿ€  ş€       ÿ      ı   €  ş€       €           ÿ   €  ÿ         €      €  ÿ€  ş   ÿ€       €       €  €  ş    €  €  ÿ€        €  ÿ€ € €  ÿ€      €  ı€     €            €  ÿ    €  ÿ€   €  ş    €   €   €  ÿ   €   €     €  ÿ€ € €  ÿ€€ €  ÿ€ş    ş€   €  ÿ   ÿ € €  ÿ€     €         €          ı€  ÿ€     €          €  ş€   €   €  ÿ€  €  ÿ€   €   €      ÿ ÿ    ÿ€  ÿ€  ş       €   €  ı        €          €  ş€   €   €  ÿ€  €  ÿ€   €   €  € €  ÿ€ş€   ÿ€  ÿ€  ş       €  €  ı        €        €  €  ş    €  €   €  ş   €     €  ÿ€ €   ş      ş   €  ÿ€     €         €  ı€     ş€  €  ş€  €   ÿ ş€   ÿ€  ÿ   ÿ€  ÿ        €           €      €   €  ÿ    €  ÿ    €  ş€   €  €   €  ş   €     €  ÿ€   €  ÿ€ € €  ÿ€ € €  ÿ€ÿ€   ş  €€  ş€€ €  ÿ€       €      €     ÿ€   €  ı€     ş€  €  ÿ€  ÿ€  ÿ€     €  ÿ€€   ÿ ş€   ÿ€  ÿ   ÿ€  ÿ€   €  ÿ                    €       €  ş€     ş      ş€   €      €     €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€     €       ÿ   €  ÿ     €   €  ÿ€  ı€       €       €  €  ş    €  €   €     €  ÿ€ €€  ı€  €  ı€       €          €   €  ÿ    €   €   €  ş    €  €   €  ı    €  €   €     €  ÿ€ €   ÿ      ÿ     ÿ      ÿ   €  ÿ€   €  ÿ€       €          €  ş€   €   €  ÿ€  €  ÿ€   €   €      ÿ ÿ    ş   ÿ€  ÿ€   €   €     ı    	    €          #       €  €   €  ş    €   €   €  ÿ    €  ÿ    €   €   €  ş    €  €   €       ÿ      ÿ   €  ÿ€   €  ÿ€ € €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€       €            €  ÿ    €   €   €  ş    €  €   €       ş   €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€                    €   €     ş    €       €      ş      ÿ€     €   €  ÿ€  ÿ€  €  ÿ€ € €  ÿ€ € €   €  ÿ€  ÿ€                 ÿ€   €       ÿ€  ş   ÿ€       €€           €  ÿ    €  ÿ    €  ÿ    €  ÿ    €     €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€                 €  ÿ€        €      €  ı      €€             €  €   €  ş    €   €   €  ÿ    €  € €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€       € €       €     €  ÿ€             €   €  ÿ    €    €  ÿ€ € €  ÿ€     €€          €      €  ş€  €   €  ş   €   € €  ÿ€ÿ€ €   €   €   €  ş   €  ÿ€     €          €  ş€     ş    €   €  ÿ€  €   €€  ş€€ €  ÿ€ş    ÿ   ÿ€  ÿ   ÿ€     €€      €     ı€   €            €  ÿ€ €€  ş€€ €  ÿ€       €           €         ÿ   €  ÿ€   €   €   €€  ş€€ €  ÿ€ş  €      €     ı      €€      €     ı€   €  €   €  ş       €     €  ÿ€ €€  ÿ€   €  ÿ   ÿ€€ €  ÿ€     €      €  ÿ€   €   €  €  ş€      €    €   €   €  ÿ€  ÿ€  ş€€ €  ÿ€     €€            ş    €  €  ş€  €  ş€        €  ÿ€€ €  ÿ€ÿ  €   €   €   €  ş      €          €  ş€     ş    €   €  ÿ€       ş   €  ÿ€ş    ÿ   ÿ€  ş€      €         €  ÿ€   €       ş € €  ÿ€     €        €  €  ş    €  €   €  ÿ€   €     €  ÿ€ € €  ÿ€  €  ş€  €  ÿ€              €   €  ÿ    €  ÿ€   €       €  ş    €   €  ÿ€     €  ÿ€ € €  ÿ€  €  ÿ€ € €  ÿ€ş    ş€  ÿ€  ÿ     €  €       ÿ€       €   €  ı      €€          €   €   €  ı€     ÿ€      €       ş      ş   €  ÿ€  ş   €  ÿ€       €€         €  ı€   €   €  ÿ€   €          ş   €  ÿ€  ÿ€  ş€  €  ÿ€       €€       €  €  ş    €  €   €  ş   €     €  ÿ€ €€  ş€  €  ş€€ €  ÿ€     €€        €  ı€     ş€  €  ş€  € €  ÿ€ş€€  ÿ€  ÿ€  ÿ€  ÿ        €€         €  €  ş€  €  ş€     € €  ÿ€ş€    €   €   €  ı€       €€         €  ı€   €   €  ÿ€   €     € €  ÿ€ş€€  ÿ€  ÿ€  ş€  €  ÿ€       €€                   €  ş   €  ş    €            €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€       €        €  ş   ÿ€   €   €  €  ş€     €  ÿ€ €€   €   €  ÿ€  ÿ€  ş€     €€      €     ş€   €  €  ÿ€   €   €     €  ÿ€ €   ş ÿ€ €   €  €  ı€       €€           €  ÿ    €   €   €  ş    €  €   €     €  ÿ€ €   ÿ      ÿ     ÿ      ÿ        €€        €   €   €   €  ÿ    €  ş€   €  €   €     €  ÿ€   €  ÿ€ €   ÿ      ş      ş    	    €€         #       €  €   €  ş    €   €   €  ÿ    €  ÿ    €   €   €  ş    €  €   €     €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€       €€            ş    €  €  ş€  €   €     €  ÿ€€   ÿ ÿ  €   €     ş        €€          €   €  €  ş€   €      ş€  €  ÿ€     €   €  ÿ€  ÿ€  €  ÿ€ € €   €  ÿ€  ÿ€       €            €  ÿ    €  ÿ    €       €       €     €  ÿ€ €   ÿ   €  ÿ€ € €  ÿ€ € €  ÿ€    €        €   €       ı        €             €       €       €  ÿ    €  ÿ    €     €  ÿ€ €   ÿ   €  ÿ€ € €  ÿ€ € €  ÿ€      €€        €   €  ş    €   €   €   €   €  ş    €   € €  ÿ€ € €  ÿ€   €  ÿ€   €  ÿ€ € €  ÿ€        €          €  ÿ€   €       ş € €  ÿ€     €          €   €  ÿ€   €  ÿ€   €   €     ÿ      ÿ       ÿ ÿ  €   €      €   €  ÿ€  ÿ€  ÿ   ÿ€  ÿ€     €          €   €     ÿ   €  ş€        €     ÿ€  ÿ€  ÿ   ÿ€€ €  ÿ€  €  €            €   €      €  ş€     ş€   €      €  ş€     ş€   €      €     €  ÿ€   €  ÿ€ € €  ÿ€ €   ÿ      ÿ   €  ÿ€ € €  ÿ€   €  ÿ€     €           ÿ€   €   €   €  ÿ€  ÿ    €   €   €  ş    €  €   €        €   €  ÿ€  ÿ€  ÿ   €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€        €          €  ÿ€   €       ÿ     ÿ                   €       €  ı€     ı€   €      €     €  ÿ€ € €  ÿ€ €   ÿ   €  ÿ€ € €  ÿ€     €€          €   €   €  € €  ÿ€   €  ÿ€     €€                  €     ş€   €  ş€      €     ş€  ÿ€  €  ÿ€  ş€  €     €  ÿ€   €  ÿ€ € €  ÿ€ € €  ÿ€   €  ÿ€€ €  ÿ€   €  ÿ€ÿ€€  ş€    €€        ÿ€  ÿ€     ÿ   €    €  ÿ€ÿ€€   €   €  ı€    €€          €   €      €  ı€   €      €  ş€   €      €   € €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€     €€      ş   €        €  ş€    €€       €    €  ÿ€       €          # ' + / 3 7 ;       €   €   €   €   €  ş    €   €   €  ş    €   €   €   €   €  ş    €   €   €  ş    €   €   €   €   €  ş    €   €   €     €  ÿ€   €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€     €€        €  € €  ÿ€     €€        ÿ€  ÿ€  €    €  ÿ€ÿ€€  ş€    €€€          ÿ       €     ÿ       € €   €   €   €  ÿ€  ÿ€  ÿ€  ÿ€      €€           €     ÿ    €   €  ş€      €   ÿ€  ÿ€  €   €  ÿ   €  ÿ€      €€                    €  ş€          €  ş€      € €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€                 €       €    €  ÿ€ € €  ÿ€     €€         €     ÿ   €  ÿ€   €   €    €  ş€  ÿ€  ÿ€ € €   €     ş      €          €   €  ÿ€   €  ÿ€     ÿ€  ÿ€  €   ÿ ş€    €      €  ı   €  ı€     € €         €  € €  ÿ€       €                 €     €  ÿ€ € €  ÿ€    €      €  ÿ€   €   €   €€   €   €  ı€      €€        €   €  ÿ    €   €   €  ÿ    €   € €  ÿ€ €€  ş€  €  ş€€ €  ÿ€    €€              €      €  ş€   €      €  ı€   €      €   € €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€           €  ÿ€   €      €  ÿ€     €      €     ı€  ÿ€               €     ş€   €     ÿ       €     €  ÿ€ €   ÿ       €     ı€                €         €  ı    €     ÿ       €     €  ÿ€ € €  ÿ€     ÿ       €     ı€     €          €  €  ş    €  €   €  ş    €       €  ÿ€   €     €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€ € €  ÿ€  €  ÿ€     €€          €  €   €  ÿ€  ş€      €  ş   €       ÿ€   €  ş      ÿ   €  ÿ€  €  ÿ€       €€          €  €   €  ÿ€  ş€      €  ÿ   €       ÿ€   €  ş      ÿ   €  ÿ€  €  ÿ€       €€          €  €   €  ÿ€  ş€       €   €   €  ÿ    €       ÿ€   €  ş      ÿ     ÿ€   €  ÿ   €  ÿ€       €€            €  €   €  ÿ€  ş€  ÿ€   €       €   €   €  ş€   €   €   €       ÿ€   €  ş      ÿ € €  ÿ€ÿ€ €   €  ÿ€  ÿ€  €  ÿ€   €  ÿ€       €€           €  €   €  ÿ€  ş€      €  ş€   €   €   €       ÿ€   €  ş      ÿ   €  ÿ€  €  ÿ€   €  ÿ€     €€            €  €   €  ÿ€  ş€      €  ş    €  €   €  ş   €       ÿ€   €  ş      ÿ   €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€       €         €   €  ÿ€     ÿ      ÿ      ş€  ÿ€    €  ÿ       €  ÿ€  ÿ   ÿ€  ÿ€  ÿ€     ÿ      €        €         ÿ      ÿ€  ş    €            €  ÿ€ € €   €  ÿ€  ÿ€    ÿ   €  ÿ€     €€        €  ş   €  ş€     ı€  €    €  ÿ€  ÿ€  ÿ€  ÿ€  ÿ€  €  ÿ€     €€        €  ş   €  ş€     ş€  €    €  ÿ€  ÿ€  ÿ€  ÿ€  ÿ€  €  ÿ€     €€         €   €   €   €   €  ş   €  ş€     ş€   €    €   €  ÿ€   €  ÿ€  ÿ€  ÿ€  ÿ€  ÿ€  ÿ€  €  ÿ€     €€         €  ş   €  ş€     ş    €   €   €    €  ÿ€  ÿ€  ÿ€  ÿ€  ÿ€  €  ÿ€   €  ÿ€       €€           ÿ   €  ÿ      ı€  €     €  €   €  ÿ€  ş€  ÿ€  €  ÿ€     €€           ÿ   €  ÿ      ş€  €     €  €   €  ÿ€  ş€  ÿ€  €  ÿ€     €€           ÿ    €   €   €   €   €  ÿ      ş€   €     €  €   €   €  ÿ€   €  ÿ€  ÿ€  ş€  ÿ€  €  ÿ€     €€            ÿ   €  ÿ      ş    €   €   €     €  €   €  ÿ€  ş€  ÿ€  €  ÿ€   €  ÿ€       €         €  ı€     ş€     ÿ   €   €   ş ÿ€   ÿ€  ÿ€  ÿ€  ÿ   ÿ€     €€            €   €  ÿ€   €   €  ı€   €   €  ÿ€   €   €  ÿ    €   €   €    €  ÿ€ÿ  €   €  €  ı€     ÿ   ÿ€  ş€€ €  ÿ€ € €  ÿ€   €  ÿ€     €€        €  €  ş    €  €   €  ş   €  ş   €     €  ÿ€ €€  ş€  €  ş€€ €  ÿ€  €  ÿ€       €€        €  €  ş    €  €   €  ş   €  ÿ   €     €  ÿ€ €€  ş€  €  ş€€ €  ÿ€  €  ÿ€       €€        €  €  ş    €  €   €  ş    €   €   €  ÿ    €     €  ÿ€ €€  ş€  €  ş€€   ÿ€   €  ÿ   €  ÿ€       €€          €  €  ş    €  €   €  ı€   €       €   €   €  ş€   €   €   €     €  ÿ€ €€  ş€  €  ş€  €  ÿ€ÿ€ €   €  ÿ€  ÿ€  €  ÿ€   €  ÿ€       €€         €  €  ş    €  €   €  ş   €  ş€   €   €   €     €  ÿ€ €€  ş€  €  ş€€ €  ÿ€  €  ÿ€   €  ÿ€ 	    €€         #       €  €   €  ş    €   €   €  ÿ    €  ÿ    €   €   €  ş    €  €   €     €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€       €           €  ÿ   ÿ€   €   €         ÿ€   €   €  ş   €    €  ÿ€ÿ  €     ş€  ÿ€  ÿ€ €    €   €  ş   €  ÿ€       €€       €  €  ş    €  €   €  ı€  €     €  ÿ€ €   ş      ş € €  ÿ€     €€       €  €  ş    €  €   €  ş€  €     €  ÿ€ €   ş      ş € €  ÿ€     €€         €  €  ş    €  €   €  ş    €   €   €  ÿ    €     €  ÿ€ €   ş      ş   €  ÿ€   €  ÿ€ € €  ÿ€     €€        €  €  ş    €  €   €  ş    €   €   €     €  ÿ€ €   ş      ş € €  ÿ€   €  ÿ€       €€            €  ÿ    €   €   €  ş    €  €   €  ş€  €    €  ş€€ €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€  €  ÿ€     €         €  ı€   €  €  ş€  €  ş€      ÿ ÿ    ÿ€  ÿ€  ÿ   ÿ€  ÿ€     €                     €  ÿ    €  ÿ    €  ş€   €        ş         €  ÿ€ € €  ÿ€ € €  ÿ€ € €  ÿ€ş€€  ı€  €  ÿ€ € €  ÿ€       €€           €      €  ş€  €   €  ş   €  ş   €   € €  ÿ€ÿ€ €   €   €   €  ş   €  ÿ€  €  ÿ€       €€           €      €  ş€  €   €  ş   €  ÿ   €   € €  ÿ€ÿ€ €   €   €   €  ş   €  ÿ€  €  ÿ€       €€           €      €  ş€  €   €  ş    €   €   €  ÿ    €   € €  ÿ€ÿ€ €   €   €   €  ş     ÿ€   €  ÿ   €  ÿ€       €€      !       €      €  ş€  €   €  ı€   €       €   €   €  ş€   €   €   €   € €  ÿ€ÿ€ €   €   €   €  ş € €  ÿ€ÿ€ €   €  ÿ€  ÿ€  €  ÿ€   €  ÿ€       €€            €      €  ş€  €   €  ş   €  ş€   €   €   €   € €  ÿ€ÿ€ €   €   €   €  ş   €  ÿ€  €  ÿ€   €  ÿ€     €€             €      €  ş€  €   €  ş   €  ş    €  €   €  ş   €   € €  ÿ€ÿ€ €   €   €   €  ş   €  ÿ€ € €  ÿ€   €  ÿ€ € €  ÿ€       €€       #   €   €   €     ı€   €   €  ÿ€   €   €   €  ÿ€   €   €  ş    €   €   €     €  ÿ€   €  ÿ€ € €  ÿ€   €   €   €  ÿ€  ÿ€  ÿ€  €  ÿ€ € €  ÿ€   €  ÿ€       €        €         ÿ      ÿ€  ş    €            €  ÿ€ € €   €  ÿ€  ÿ€    ÿ   €  ÿ€     €€       €     ı€   €  €   €  ş       €  ş   €     €  ÿ€ €€  ÿ€   €  ÿ   ÿ€€ €  ÿ€  €  ÿ€       €€       €     ı€   €  €   €  ş       €  ÿ   €     €  ÿ€ €€  ÿ€   €  ÿ   ÿ€€ €  ÿ€  €  ÿ€       €€       €     ı€   €  €   €  ş        €   €   €  ÿ    €     €  ÿ€ €€  ÿ€   €  ÿ   ÿ€€   ÿ€   €  ÿ   €  ÿ€       €€        €     ı€   €  €   €  ş       €  ş€   €   €   €     €  ÿ€ €€  ÿ€   €  ÿ   ÿ€€ €  ÿ€  €  ÿ€   €  ÿ€     €€        €  ş€  €       ş   €  ÿ€    €€        €  ÿ€  €       ş   €  ÿ€  €   €          €  ÿ    €   €   €  ÿ    €       ş € €  ÿ€   €  ÿ€ € €  ÿ€  €   €         €  ÿ    €   €   €       ş   €  ÿ€   €  ÿ€       €       €  €  ş    €  €  ş€  €  ÿ   €     €  ÿ€ €   ÿ       €   €   €  ı€     €€           €  ı€   €   €  ÿ€   €   €   €  ş€   €   €   €       ş      ÿ   ÿ€  ş€    ÿ€  ÿ€  €  ÿ€   €  ÿ€     €€        €  €  ş    €  €   €  ş   €  ş   €     €  ÿ€ €€  ş€  €  ş€€ €  ÿ€  €  ÿ€       €€        €  €  ş    €  €   €  ş   €  ÿ   €     €  ÿ€ €€  ş€  €  ş€€ €  ÿ€  €  ÿ€       €€        €  €  ş    €  €   €  ş    €   €   €  ÿ    €     €  ÿ€ €€  ş€  €  ş€€   ÿ€   €  ÿ   €  ÿ€       €€          €  €  ş    €  €   €  ı€   €       €   €   €  ş€   €   €   €     €  ÿ€ €€  ş€  €  ş€  €  ÿ€ÿ€ €   €  ÿ€  ÿ€  €  ÿ€   €  ÿ€       €€         €  €  ş    €  €   €  ş   €  ş€   €   €   €     €  ÿ€ €€  ş€  €  ş€€ €  ÿ€  €  ÿ€   €  ÿ€     €€         €  ş€  €  ş€   €     €  ÿ€  €  ÿ€  €  ÿ€       €€         €  ÿ   ÿ€   €   €         ÿ€  ÿ   €   €    €  ÿ€ÿ  €  €  ÿ   ÿ€  ÿ€ €    €   €  ÿ€  ş€       €€       €     ş€   €  €  ÿ€   €   €  ı€  €     €  ÿ€ €   ş ÿ€ €   €  €  ı€  €  ÿ€     €€       €     ş€   €  €  ÿ€   €   €  ş€  €     €  ÿ€ €   ş ÿ€ €   €  €  ı€  €  ÿ€     €€         €     ş€   €  €  ÿ€   €   €  ş    €   €   €  ÿ    €     €  ÿ€ €   ş ÿ€ €   €  €  ı€€ €  ÿ€   €  ÿ€ € €  ÿ€     €€        €     ş€   €  €  ÿ€   €   €  ş    €   €   €     €  ÿ€ €   ş ÿ€ €   €  €  ı€  €  ÿ€   €  ÿ€       €€             ş    €  €  ş€  €   €  ş€  €     €  ÿ€€   ÿ ÿ  €   €     ş € €  ÿ€     €         €  ı€   €  €  ş€  €  ş€  € €  ÿ€ş€   ÿ€  ÿ€  ÿ€  ÿ€  ÿ      €€              ş    €  €  ş€  €   €  ş    €   €   €     €  ÿ€€   ÿ ÿ  €   €     ş € €  ÿ€   €  ÿ€       €       €  €  ş    €  €   €     €  ÿ€ €€  ı€  €  ı€       €€      €     ş€   €  €  ÿ€   €   €     €  ÿ€ €   ş ÿ€ €   €  €  ı€       €€             €  ÿ    €   €   €  ş    €  €   €  ş    €   €   €    €  ş€€ €  ÿ€   €  ÿ€ € €  ÿ€   €  ÿ€  €  ÿ€   €  ÿ€      €€       €    €  ÿ€     €    	       €   €  ÿ€   €  €   ÿ€  ÿ€  €  ÿ€     €    	       €      ÿ€     € €  ÿ€ € €   €  ÿ         €  	       €      ÿ€        €  ÿ€ € €   €  ÿ      €    	   €   €  ÿ      ÿ€  € €  ÿ€ €   ÿ€  ÿ€     €€        €   €      €  ı€     ÿ€        ÿ€  € €  ÿ€   €  ÿ€ €   ÿ€  ÿ€     ÿ€  ÿ€   €€            €      €  ş€  ÿ€        ÿ€     € €  ÿ€   €  ÿ€ € €   €  ÿ    €   €  ÿ      €€           €      €  ş€  ÿ€        ÿ€        €  ÿ€   €  ÿ€ € €   €  ÿ    €   €  ÿ     €€        €   €  ÿ    €   €   €  ÿ    €   €€  ş€€ €  ÿ€   €  ÿ€ € €  ÿ€                    ÿ        €           €   €   €   €   €       ÿ      ÿ      ÿ       €        €   €  ÿ    €       €   € €  ÿ€ € €  ÿ€ € €  ÿ€      €            €       €  ÿ    €   € €  ÿ€ € €  ÿ€ € €  ÿ€                    ş€  ÿ€   €   €   €  ÿ€            €  ÿ€ €    €   €  ÿ€  ÿ€  ÿ   €  ÿ€       €        ş€  ÿ€  €   €   ş ÿ€   ı        Œ   Œ   Œ   Œ   Ä   ü  ¬  `    Œ  Ğ     p    `  ¤  È  ì  h     8  Ô  |  ğ  	T  	Ì  
+$  
+Ì  D  |  Ô  P  ˆ    ”    l  ä  4  €  Ì    p  ¼    `  ø  $  œ    x  Ğ  x  ø  ˆ  À    ¸  0    €    D  À  ø  t  ˜  Ğ  <  ¨  ø  d  Ğ  0  œ     8  œ  ,  X  È   ,      è  !@  !¤  "   "€  "ä  #`  #Ü  $°  %  %Œ  &  &,  &¨  '$  '\  'ä  (D  )   )¤  )Ü  *X  *  +L  +˜  ,(  ,T  ,x  -Ğ  -ô  .,  .Œ  .ğ  /l  /¤  0  0p  0”  0Ì  1  1h  1ø  2D  2¨  3   3°  4(  4   5,  5ä  6p  7  7  8  8h  8È  9P  9È  :(  :ˆ  ;  ;ˆ  ;è  <   =  =˜  >(  >ä  ?t  @H  @à  AD  A¨  B8  B´  CD  C¤  DL  DĞ  ET  Eì  F°  GH  Gø  HÈ  I@  IÄ  JH  Jà  Kx  K°  Kè  LL  Lœ  M  M   N  N˜  O(  Oä  Pt  PÄ  QP  QÈ  R@  Rä  St  Sì  TL  TÜ  U,  U  V8  V\  V   Vä  W(  Wl  Wä  X\  XÔ  Y8  Y\  Y¬  Yü  ZL  ZÄ  Zü
