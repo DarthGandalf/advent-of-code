@@ -84,6 +84,7 @@ aoc_executable(15 "Rambunctious Recitation" 0)
 aoc_executable(16 "Ticket Translation" 0)
 aoc_executable(17 "Conway Cubes" 0)
 aoc_executable(18 "Operation Order" 0)
+aoc_executable(19 "Monster Messages" 0)
 
 foreach(current_day RANGE 1 ${last_day})
 	configure_file(day.html day${current_day}.html)
@@ -105,4 +106,5 @@ else()
 
 	add_executable(example_test example_test.cpp common.cpp)
 	target_link_libraries(example_test day${last_day}_lib)
+	target_link_libraries(day19_lib "-pthread")
 endif()

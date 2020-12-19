@@ -78,6 +78,7 @@ module.exports = {
 		new CopyPlugin({
 			patterns: [
 				{ from: "build-web/day*", toType: "file", to({ absoluteFilename }) {return path.basename(absoluteFilename);}},
+				{ from: "raku.js", toType: "file", to({ absoluteFilename }) {return path.basename(absoluteFilename);}},
 			],
 		}),
 	].concat(debug ? [] : [new CleanWebpackPlugin()]),
