@@ -36,7 +36,7 @@ abbbab
 aaabbb
 aaaabbb)");
 
-	solver->parse(R"(42: 9 14 | 10 1
+if(0)	solver->parse(R"(42: 9 14 | 10 1
 9: 14 27 | 1 26
 10: 23 14 | 28 1
 1: "a"
@@ -84,5 +84,5 @@ aaaabbaabbaaaaaaabbbabbbaaabbaabaaa
 babaaabbbaaabaababbaabababaaab
 aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba)");
 
-	solver->part2(std::cout);
+	solver->part1(std::cout);
 }

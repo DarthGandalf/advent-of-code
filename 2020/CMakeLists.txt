@@ -106,5 +106,4 @@ else()
 
 	add_executable(example_test example_test.cpp common.cpp)
 	target_link_libraries(example_test day${last_day}_lib)
-	target_link_libraries(day19_lib "-pthread")
 endif()
