@@ -474,6 +474,10 @@ struct Solver : AbstractSolver {
 		}();
 		for (int i : ranges::views::iota(0, steps)) {
 			if (!visual_enabled()) return;
+			int window_x, window_y;
+			m_vis->m_window.getSize(&window_x, &window_y);
+			float coef = window_x / 800.0f;
+			R.setScale(coef, coef);
 			state.background(R);
 
 			for (auto& [tile, tex] : state.tiles) {
@@ -561,6 +565,10 @@ struct Solver : AbstractSolver {
 	           bool found) const {
 		if (found) state.monsters.push_back(*pos);
 		auto& R = m_vis->m_renderer;
+		int window_x, window_y;
+		m_vis->m_window.getSize(&window_x, &window_y);
+		float coef = window_x / 800.0f;
+		R.setScale(coef, coef);
 		state.background(R);
 		SDL_Rect rect{.x = 100 - 36, .y = 100 - 36, .w = 672, .h = 672};
 		R.copy(state.bigmap->get(), nullptr, &rect);
