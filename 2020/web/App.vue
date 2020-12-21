@@ -161,9 +161,6 @@ body {
 		button#stop:hover {
 			color: #ff0000;
 		}
-		#canvas {
-			width: min(100%, 512px);
-		}
 	}
 }
 </style>

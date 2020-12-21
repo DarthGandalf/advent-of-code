@@ -65,6 +65,12 @@ int main(int argc, char* argv[]) {
 		               val::module_property("visualizer_set_size"),
 		               val(str.str()));
 		vue.call<void>("setVisualSpeed", solver->default_visual_speed());
+
+		int window_x, window_y;
+		solver->visualizer()->m_window.getSize(&window_x, &window_y);
+		val::global("document")
+			.call<val>("getElementById", val("canvas"))["style"]
+			.set("width", fmt::format("min(100%, {}px)", window_x));
 	}
 	{
 		std::ifstream f("input.txt");
