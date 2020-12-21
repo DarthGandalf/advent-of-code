@@ -303,7 +303,7 @@ struct Solver : AbstractSolver {
 		}
 		int monsters = 0;
 		image2d.rotation_when([&](const Tile& t) -> bool {
-			draw2_prepare(*draw_state, t);
+			if (visual_enabled()) draw2_prepare(*draw_state, t);
 			monsters = 0;
 			for (int row = 0; row < t.rows.size() - monster_pic.size() + 1;
 			     row++) {
@@ -325,7 +325,9 @@ struct Solver : AbstractSolver {
 			}
 			return monsters;
 		});
-		draw2(*draw_state, std::nullopt, false);
+		if (visual_enabled()) {
+			draw2(*draw_state, std::nullopt, false);
+		}
 		ostr << (image.size() - monsters * monster_shape.size());
 	}
 

@@ -86,6 +86,7 @@ aoc_executable(17 "Conway Cubes" 0)
 aoc_executable(18 "Operation Order" 0)
 aoc_executable(19 "Monster Messages" 0)
 aoc_executable(20 "Jurassic Jigsaw" 1)
+aoc_executable(21 "Allergen Assessment" 0)
 
 foreach(current_day RANGE 1 ${last_day})
 	configure_file(day.html day${current_day}.html)
