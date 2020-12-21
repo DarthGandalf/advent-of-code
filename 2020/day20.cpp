@@ -533,7 +533,7 @@ struct Solver : AbstractSolver {
 				auto [startx, starty, startangle] =
 					state.initial_location.at(current_tile);
 				auto [row, col, endangle, flip] = new_loc;
-				bool flipping = std::abs(i - steps / 2) < steps / 5;
+				bool flipping = flip && std::abs(i - steps / 2) < steps / 5;
 				SDL_Rect rect{
 					.x = startx +
 				         i * (100 - 36 + col * tile_size - startx) / steps,
