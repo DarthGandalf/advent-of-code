@@ -23,10 +23,19 @@ sdl::Surface open_sprite(std::string_view filename) {
 
 int main() {
 	auto solver = aoc2020::AbstractSolver::Create();
-	solver->parse(R"(mxmxvkd kfcds sqjhc nhms (contains dairy, fish)
-trh fvjkl sbzzf mxmxvkd (contains dairy)
-sqjhc fvjkl (contains soy)
-sqjhc mxmxvkd sbzzf (contains fish))");
+	solver->parse(R"(Player 1:
+9
+2
+6
+3
+1
+
+Player 2:
+5
+8
+4
+7
+10)");
 
 	solver->part2(std::cout);
 }
