@@ -30,6 +30,8 @@ Visualizer::Visualizer(int width, int height)
 	}
 	m_window = sdl::Window(window);
 	m_renderer = sdl::Renderer(renderer);
+	SDL_EventState(SDL_MOUSEWHEEL, SDL_IGNORE);
+	SDL_EventState(SDL_FINGERDOWN, SDL_IGNORE);
 }
 
 TtfInit::TtfInit() { TTF_Init(); }
