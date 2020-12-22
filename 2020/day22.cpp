@@ -5,6 +5,7 @@
 #include <deque>
 #include <range/v3/all.hpp>
 #include <range/v3/numeric/accumulate.hpp>
+#include <range/v3/view/concat.hpp>
 #include <range/v3/view/enumerate.hpp>
 #include <range/v3/view/split.hpp>
 #include <range/v3/view/transform.hpp>
@@ -70,7 +71,11 @@ struct Solver : AbstractSolver {
 				         ranges::to<std::deque<int>>();
 				sub[1] = game[1] | ranges::views::take(card[1]) |
 				         ranges::to<std::deque<int>>();
-				winner = subgame(std::move(sub)).first;
+				if (ranges::max(sub[0]) > ranges::max(sub[1])) {
+					winner = 0;
+				} else {
+					winner = subgame(std::move(sub)).first;
+				}
 			} else {
 				winner = card[0] < card[1] ? 1 : 0;
 			}
