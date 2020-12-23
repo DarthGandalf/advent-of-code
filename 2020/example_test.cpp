@@ -10,6 +10,7 @@ namespace aoc2020 {
 void yield(std::chrono::milliseconds delay) {}
 bool visual_enabled() { return false; }
 std::chrono::milliseconds visual_delay() { return std::chrono::milliseconds(0); }
+std::string get_renderer_param() { return ""; }
 
 sdl::Surface open_sprite(std::string_view filename) {
 	TTF_Font* font = TTF_OpenFont("/usr/share/fonts/hack/Hack-Regular.ttf", 30);
@@ -23,19 +24,7 @@ sdl::Surface open_sprite(std::string_view filename) {
 
 int main() {
 	auto solver = aoc2020::AbstractSolver::Create();
-	solver->parse(R"(Player 1:
-9
-2
-6
-3
-1
-
-Player 2:
-5
-8
-4
-7
-10)");
+	solver->parse(R"(389125467)");
 
 	solver->part2(std::cout);
 }
