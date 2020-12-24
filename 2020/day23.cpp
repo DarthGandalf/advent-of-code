@@ -2,6 +2,7 @@
 #include <list>
 #include <range/v3/algorithm/minmax.hpp>
 #include <range/v3/all.hpp>
+#include <range/v3/view/enumerate.hpp>
 #include <range/v3/view/filter.hpp>
 #include <range/v3/view/transform.hpp>
 
@@ -52,7 +53,7 @@ struct Solver : AbstractSolver {
 			ostr << c;
 		}
 	}
-	void part2(std::ostream& ostr) const override {
+	void part2_slower(std::ostream& ostr) const {
 		constexpr int N = 1000000;
 		auto input_range =
 			m_input | ranges::views::filter([](char c) { return c != '\n'; }) |
@@ -103,6 +104,49 @@ struct Solver : AbstractSolver {
 		std::int64_t a = game.front();
 		game.pop_front();
 		std::int64_t b = game.front();
+		ostr << (a * b);
+	}
+	void part2(std::ostream& ostr) const override {
+		constexpr int N = 1000000;
+		auto input_range =
+			m_input | ranges::views::filter([](char c) { return c != '\n'; }) |
+			ranges::views::transform([](char c) { return c - '0' - 1; });
+		std::vector<int> game;
+		game.resize(N);
+		for (const auto& x : input_range | ranges::views::sliding(2)) {
+			auto it = x.begin();
+			auto first = *it++;
+			auto second = *it;
+			game[first] = second;
+		}
+		auto [min, max] = ranges::minmax(input_range);
+		const auto minusone = [&min = min](int c) {
+			return c == min ? N - 1 : c - 1;
+		};
+		game[ranges::back(input_range)] = max + 1;
+		for (int i : ranges::views::iota(max + 1, N - 1)) {
+			game[i] = i + 1;
+		}
+		game[N - 1] = ranges::front(input_range);
+		int current = game[N - 1];
+		for ([[maybe_unused]] int i : ranges::views::iota(0, 10000000)) {
+			std::array<int, 3> sub;
+			sub[0] = game[current];
+			sub[1] = game[sub[0]];
+			sub[2] = game[sub[1]];
+			game[current] = game[sub[2]];
+			int destination = minusone(current);
+			while (ranges::find(sub, destination) != sub.end()) {
+				destination = minusone(destination);
+			}
+			game[sub[2]] = game[destination];
+			game[destination] = sub[0];
+			current = game[current];
+		}
+		int a = game[0];
+		std::int64_t b = game[a];
+		a++;
+		b++;
 		ostr << (a * b);
 	}
 };
