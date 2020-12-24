@@ -89,6 +89,7 @@ aoc_executable(20 "Jurassic Jigsaw" 1)
 aoc_executable(21 "Allergen Assessment" 0)
 aoc_executable(22 "Crab Combat" 0)
 aoc_executable(23 "Crab Cups" 0)
+aoc_executable(24 "Lobby Layout" 0)
 
 foreach(current_day RANGE 1 ${last_day})
 	configure_file(day.html day${current_day}.html)
