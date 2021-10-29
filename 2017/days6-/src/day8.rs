@@ -16,6 +16,26 @@ struct Line {
 	cond_with: i32,
 }
 
+impl Line {
+	fn exec<F: FnMut(i32)>(&self, regs: &mut FnvHashMap<String, i32>, mut cb: F) {
+		let value = *regs.get(&self.cond_of).unwrap_or(&0);
+		let cond = match &*self.cond {
+			"==" => value == self.cond_with,
+			"!=" => value != self.cond_with,
+			"<" => value < self.cond_with,
+			">" => value > self.cond_with,
+			"<=" => value <= self.cond_with,
+			">=" => value >= self.cond_with,
+			_ => unreachable!(),
+		};
+		if cond {
+			let entry = regs.entry(self.reg.clone()).or_default();
+			*entry += self.delta;
+			cb(*entry);
+		}
+	}
+}
+
 #[derive(Debug)]
 struct Input(std::collections::HashMap<String, (i32, Vec<String>)>);
 
@@ -55,21 +75,19 @@ fn parse(input: &str) -> anyhow::Result<Vec<Line>> {
 fn part1(input: &Vec<Line>) -> i32 {
 	let mut regs = FnvHashMap::<String, i32>::default();
 	for line in input {
-		let value = *regs.get(&line.cond_of).unwrap_or(&0);
-		let cond = match &*line.cond {
-			"==" => value == line.cond_with,
-			"!=" => value != line.cond_with,
-			"<" => value < line.cond_with,
-			">" => value > line.cond_with,
-			"<=" => value <= line.cond_with,
-			">=" => value >= line.cond_with,
-			_ => unreachable!(),
-		};
-		if cond {
-			*regs.entry(line.reg.clone()).or_default() += line.delta;
-		}
+		line.exec(&mut regs, |_| {});
 	}
 	regs.values().cloned().max().unwrap_or_default()
+}
+
+#[aoc(day8, part2)]
+fn part2(input: &Vec<Line>) -> i32 {
+	let mut regs = FnvHashMap::<String, i32>::default();
+	let mut max = 0;
+	for line in input {
+		line.exec(&mut regs, |x| max = max.max(x));
+	}
+	max
 }
 
 #[cfg(test)]
@@ -87,11 +105,13 @@ c inc -20 if c == 10",
 		)
 		.unwrap();
 		assert_eq!(part1(&input), 1);
+		assert_eq!(part2(&input), 10);
 	}
 
 	#[test]
 	fn answers() {
 		let input = parse(include_str!("../input/2017/day8.txt")).unwrap();
 		assert_eq!(part1(&input), 5075);
+		assert_eq!(part2(&input), 7310);
 	}
 }
