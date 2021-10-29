@@ -46,7 +46,6 @@ fn parse(input: &str) -> anyhow::Result<Vec<Line>> {
 		.none_err()?;
 	let result: anyhow::Result<Vec<Line>> = input
 		.into_inner()
-		.filter(|pair| pair.as_rule() == Rule::line)
 		.map(|line| -> anyhow::Result<_> {
 			let mut iter = line.into_inner();
 			let reg = iter.next().none_err()?.as_str().to_string();
