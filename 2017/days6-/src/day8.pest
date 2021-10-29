@@ -1,0 +1,7 @@
+num = @{ "-"? ~ ASCII_DIGIT+ }
+reg = @{ ASCII_ALPHA+ }
+op = { "inc" | "dec" }
+cond = { "==" | "!=" | "<=" | ">=" | "<" | ">" }
+line = { reg ~ op ~ num ~ "if" ~ reg ~ cond ~ num }
+input = { SOI ~ line ~ (NEWLINE ~ line)* ~ EOI }
+WHITESPACE = _{ " " }

@@ -1,0 +1,6 @@
+object = { ASCII_ALPHA+ }
+weight = { ASCII_DIGIT+ }
+list = { object ~ ("," ~ object)* }
+line = { object ~ "(" ~ weight ~ ")" ~ ("->" ~ list )? }
+input = { SOI ~ line ~ (NEWLINE ~ line)* ~ EOI }
+WHITESPACE = _{ " " }
