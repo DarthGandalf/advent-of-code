@@ -1,0 +1,5 @@
+good_garbage_symbol = { ANY }
+garbage_symbol = { "!" ~ ANY | !">" ~ good_garbage_symbol }
+garbage = { "<" ~ garbage_symbol* ~ ">" | "," }
+group = { "{" ~ (garbage | group)* ~ "}" }
+input = { SOI ~ group ~ &EOI }
