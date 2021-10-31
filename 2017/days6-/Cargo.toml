@@ -2,7 +2,7 @@
 name = "aoc2017"
 version = "0.1.0"
 authors = ["Alexey Sokolov <sokolov@google.com>"]
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 aoc-runner = "0.3.0"

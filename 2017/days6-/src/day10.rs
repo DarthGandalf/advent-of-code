@@ -42,7 +42,7 @@ fn part2(input: &str) -> String {
 		.as_bytes()
 		.iter()
 		.cloned()
-		.chain(vec![17u8, 31, 73, 47, 23])
+		.chain([17, 31, 73, 47, 23])
 		.collect();
 	let mut pos: u16 = 0;
 	let mut state: VecDeque<u8> = (0..256).map(|x| x as u8).collect();
