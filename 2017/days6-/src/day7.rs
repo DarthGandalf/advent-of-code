@@ -21,23 +21,20 @@ fn parse(input: &str) -> anyhow::Result<Input> {
 			let object = line
 				.clone()
 				.into_inner()
-				.filter(|pair| pair.as_rule() == Rule::object)
-				.next()
+				.find(|pair| pair.as_rule() == Rule::object)
 				.none_err()?
 				.as_str()
 				.to_string();
 			let weight = line
 				.clone()
 				.into_inner()
-				.filter(|pair| pair.as_rule() == Rule::weight)
-				.next()
+				.find(|pair| pair.as_rule() == Rule::weight)
 				.none_err()?
 				.as_str()
 				.parse::<i32>()?;
 			let children = line
 				.into_inner()
-				.filter(|pair| pair.as_rule() == Rule::list)
-				.next()
+				.find(|pair| pair.as_rule() == Rule::list)
 				.map(|list| -> Vec<String> {
 					list.into_inner()
 						.filter(|pair| pair.as_rule() == Rule::object)

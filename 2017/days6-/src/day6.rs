@@ -18,8 +18,8 @@ fn next(state: &mut Vec<i32>) {
 }
 
 #[aoc(day6, part1)]
-fn part1(input: &Vec<i32>) -> usize {
-	let mut current = input.clone();
+fn part1(input: &[i32]) -> usize {
+	let mut current = input.to_owned();
 	let mut seen = std::collections::HashSet::<Vec<i32>>::new();
 	loop {
 		if seen.contains(&current) {
@@ -31,8 +31,8 @@ fn part1(input: &Vec<i32>) -> usize {
 }
 
 #[aoc(day6, part2)]
-fn part2(input: &Vec<i32>) -> usize {
-	let mut current = input.clone();
+fn part2(input: &[i32]) -> usize {
+	let mut current = input.to_owned();
 	let mut seen = std::collections::HashSet::<Vec<i32>>::new();
 	loop {
 		if seen.contains(&current) {

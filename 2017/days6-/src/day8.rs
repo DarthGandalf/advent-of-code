@@ -67,11 +67,11 @@ fn parse(input: &str) -> anyhow::Result<Vec<Line>> {
 			})
 		})
 		.collect();
-	Ok(result?)
+	result
 }
 
 #[aoc(day8, part1)]
-fn part1(input: &Vec<Line>) -> i32 {
+fn part1(input: &[Line]) -> i32 {
 	let mut regs = FnvHashMap::<String, i32>::default();
 	for line in input {
 		line.exec(&mut regs, |_| {});
@@ -80,7 +80,7 @@ fn part1(input: &Vec<Line>) -> i32 {
 }
 
 #[aoc(day8, part2)]
-fn part2(input: &Vec<Line>) -> i32 {
+fn part2(input: &[Line]) -> i32 {
 	let mut regs = FnvHashMap::<String, i32>::default();
 	let mut max = 0;
 	for line in input {

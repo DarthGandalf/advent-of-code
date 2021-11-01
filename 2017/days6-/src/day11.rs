@@ -5,7 +5,7 @@ fn part1(input: &str) -> i32 {
 	let mut s: i32 = 0;
 	let mut nw: i32 = 0;
 	let mut ne: i32 = 0;
-	for dir in input.trim().split(",") {
+	for dir in input.trim().split(',') {
 		match dir {
 			"s" => s += 1,
 			"n" => s -= 1,
@@ -25,7 +25,7 @@ fn part2(input: &str) -> i32 {
 	let mut nw: i32 = 0;
 	let mut ne: i32 = 0;
 	let mut max: i32 = 0;
-	for dir in input.trim().split(",") {
+	for dir in input.trim().split(',') {
 		match dir {
 			"s" => s += 1,
 			"n" => s -= 1,
