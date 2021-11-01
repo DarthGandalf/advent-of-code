@@ -29,5 +29,6 @@ mod tests {
 		assert_eq!(parse::<i32>("1"), &[1]);
 		assert_eq!(parse::<i32>("12"), &[12]);
 		assert_eq!(parse::<i32>(" 12 3,4-5 -6 "), &[12, 3, 4, -5, -6]);
+		assert_eq!(parse::<i32>("0 <-> 2"), [0, 2]);
 	}
 }

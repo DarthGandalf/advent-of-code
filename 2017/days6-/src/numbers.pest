@@ -1,4 +1,4 @@
 num = @{ "-"? ~ ASCII_DIGIT+ }
-allowed_sym = { "-" | ASCII_DIGIT }
+allowed_sym = { "-" ~ &ASCII_DIGIT | ASCII_DIGIT }
 WHITESPACE = _{ !allowed_sym ~ ANY }
 input = { SOI ~ num* ~ &EOI }
