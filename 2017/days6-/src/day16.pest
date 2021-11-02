@@ -1,0 +1,7 @@
+num = @{ ASCII_DIGIT+ }
+program = { ASCII_ALPHA }
+spin = { "s" ~ num }
+exchange = { "x" ~ num ~ "/" ~ num }
+partner = { "p" ~ program ~ "/" ~ program }
+mov = { spin | exchange | partner }
+input = { SOI ~ mov ~ ("," ~ mov)* ~ &EOI }

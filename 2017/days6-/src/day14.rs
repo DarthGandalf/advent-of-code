@@ -45,7 +45,7 @@ fn part2(input: &str) -> usize {
 		pathfinding::undirected::connected_components::connected_components(&nodes, |&(x, y)| {
 			vec![(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
 				.into_iter()
-				.filter(|&(x, y)| x >= 0 && x < 128 && y >= 0 && y < 128)
+				.filter(|&(x, y)| (0..128).contains(&x) && (0..128).contains(&y))
 				.filter(|&(x, y)| grid[y as usize][x as usize] == '1')
 		});
 	result.len()
