@@ -36,7 +36,7 @@ fn part1(input: &str) -> u16 {
 }
 
 #[aoc(day10, part2)]
-fn part2(input: &str) -> String {
+pub fn part2(input: &str) -> String {
 	let lengths: Vec<u8> = input
 		.trim()
 		.as_bytes()
