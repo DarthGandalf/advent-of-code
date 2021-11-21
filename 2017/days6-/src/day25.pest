@@ -1,0 +1,8 @@
+num = @{ ASCII_DIGIT+ }
+state_name = { ASCII_ALPHA }
+state_desc = { "In state" ~ state_name ~ ":" ~ state_if* }
+dir = { "left" | "right" }
+state_if = { "If the current value is" ~ num ~ ":" ~ "- Write the value" ~ num ~ "." ~ "- Move one slot to the" ~ dir ~ "." ~ "- Continue with state" ~ state_name ~ "." }
+header = { "Begin in state" ~ state_name ~ "." ~ "Perform a diagnostic checksum after" ~ num ~ "steps." }
+input = { SOI ~ header ~ state_desc+ ~ &EOI }
+WHITESPACE = _{ " " | NEWLINE }
