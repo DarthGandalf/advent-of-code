@@ -2,13 +2,13 @@ use aoc_runner_derive::{aoc, aoc_generator};
 use std::collections::VecDeque;
 
 #[derive(Debug)]
-enum Val {
+pub enum Val {
 	Reg(char),
 	Num(i64),
 }
 
 impl Val {
-	fn parse(input: &str) -> Self {
+	pub fn parse(input: &str) -> Self {
 		if let Ok(num) = input.parse::<i64>() {
 			Val::Num(num)
 		} else {
@@ -16,7 +16,7 @@ impl Val {
 		}
 	}
 
-	fn eval(&self, regs: &fnv::FnvHashMap<char, i64>) -> i64 {
+	pub fn eval(&self, regs: &fnv::FnvHashMap<char, i64>) -> i64 {
 		match self {
 			Val::Reg(r) => *regs.get(r).unwrap_or(&0),
 			Val::Num(n) => *n,
@@ -54,7 +54,7 @@ fn parse(input: &str) -> Vec<Cmd> {
 				"mod" => Cmd::Mod(reg, Val::parse(arg2)),
 				"rcv" => Cmd::Rcv(Val::parse(arg1)),
 				"jgz" => Cmd::Jgz(Val::parse(arg1), Val::parse(arg2)),
-				_ => panic!("unknown command"),
+				_ => panic!("unknown command {}", cmd),
 			}
 		})
 		.collect()
