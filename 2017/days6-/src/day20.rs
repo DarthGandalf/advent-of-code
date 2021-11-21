@@ -37,7 +37,7 @@ fn parse(input: &str) -> Vec<Point> {
 
 #[aoc(day20, part1)]
 fn part1(input: &[Point]) -> usize {
-	let mut state: Vec<Point> = input.iter().cloned().collect();
+	let mut state: Vec<Point> = input.to_vec();
 	for _ in 0..100_000 {
 		for p in &mut state {
 			p.vx += p.ax;
@@ -58,7 +58,7 @@ fn part1(input: &[Point]) -> usize {
 
 #[aoc(day20, part2)]
 fn part2(input: &[Point]) -> usize {
-	let mut state: Vec<Point> = input.iter().cloned().collect();
+	let mut state: Vec<Point> = input.to_vec();
 	for _ in 0..10_000 {
 		let mut freq = fnv::FnvHashMap::<(i64, i64, i64), usize>::default();
 		for p in &state {

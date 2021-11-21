@@ -4,12 +4,12 @@ struct Grid(Vec<Vec<char>>);
 
 impl Grid {
 	fn get(&self, y: i32, x: i32) -> char {
-		if (0..self.0.len() as i32).contains(&y) {
-			if (0..self.0[y as usize].len() as i32).contains(&x) {
-				return self.0[y as usize][x as usize];
-			}
+		if (0..self.0.len() as i32).contains(&y)
+			&& (0..self.0[y as usize].len() as i32).contains(&x)
+		{
+			return self.0[y as usize][x as usize];
 		}
-		return ' ';
+		' '
 	}
 }
 

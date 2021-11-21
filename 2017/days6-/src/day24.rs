@@ -35,7 +35,7 @@ fn part1(input: &[(i32, i32)]) -> i32 {
 	});
 
 	let mut maxsum = 0;
-	while queue.len() > 0 {
+	while !queue.is_empty() {
 		let current = queue.pop_front().unwrap();
 		for &nextitem in index_of_pin.get(&current.endpin).unwrap() {
 			if !current.used.contains(&nextitem) {
@@ -71,7 +71,7 @@ fn part2(input: &[(i32, i32)]) -> i32 {
 
 	let mut maxsum = 0;
 	let mut maxlen = 0;
-	while queue.len() > 0 {
+	while !queue.is_empty() {
 		let current = queue.pop_front().unwrap();
 		for &nextitem in index_of_pin.get(&current.endpin).unwrap() {
 			if !current.used.contains(&nextitem) {

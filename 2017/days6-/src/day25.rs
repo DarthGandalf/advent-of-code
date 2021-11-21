@@ -1,4 +1,3 @@
-use crate::NoneError;
 use aoc_runner_derive::{aoc, aoc_generator};
 use pest::Parser;
 
@@ -58,7 +57,7 @@ fn parse(input: &str) -> (char, usize, fnv::FnvHashMap<char, State>) {
 							name = Some(y.as_str().chars().next().unwrap());
 						}
 						Rule::state_if => {
-							let mut z = y.into_inner().into_iter();
+							let mut z = y.into_inner();
 							let current = z.next().unwrap().as_str().parse().unwrap();
 							let write = z.next().unwrap().as_str().parse().unwrap();
 							let dir = z.next().unwrap().as_str();
@@ -112,25 +111,9 @@ mod tests {
 	use super::*;
 
 	#[test]
-	fn test_example() {
-		let input = parse(
-			"
-0/2
-2/2
-2/3
-3/4
-3/5
-0/1
-10/1
-9/10",
-		);
-		assert_eq!(part1(&input), 31);
-	}
-
-	#[test]
 	fn answers() {
 		let input = parse(include_str!("../input/2017/day25.txt"));
-		assert_eq!(part1(&input), 1906);
+		assert_eq!(part1(&input), 3362);
 	}
 }
 

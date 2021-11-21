@@ -45,7 +45,7 @@ fn parse(input: &str) -> Vec<Cmd> {
 			let cmd = split.next().unwrap();
 			let arg1 = split.next().unwrap();
 			let reg = arg1.chars().next().unwrap();
-			let arg2 = split.next().unwrap_or_else(|| "0");
+			let arg2 = split.next().unwrap_or("0");
 			match cmd {
 				"snd" => Cmd::Snd(Val::parse(arg1)),
 				"set" => Cmd::Set(reg, Val::parse(arg2)),
