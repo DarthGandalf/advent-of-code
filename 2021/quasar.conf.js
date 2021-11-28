@@ -76,6 +76,13 @@ module.exports = configure(function (ctx) {
       chainWebpack (/* chain */) {
         //
       },
+
+/*      extendWebpack(cfg, { isServer, isClient }) {
+        cfg.module.rules.push({
+          test: /.*txt$/,
+          loader: 'raw-loader',
+        });
+      },*/
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
