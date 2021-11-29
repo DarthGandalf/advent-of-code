@@ -1,13 +1,15 @@
 <template>
-  <Day :input="input" :func="solFn"></Day>
+  <Day :daynum="daynum" :func="solFn"></Day>
 </template>
 
 <script lang="ts">
+type SolutionFn = (input: string) => string;
+
 import Day from 'components/Day.vue';
 import { defineComponent } from 'vue';
 import solution from '../../solutions/day1';
 
-type SolutionFn = (input: string) => string;
+const daynum = 1;
 
 export default defineComponent({
   name: 'Day1',
@@ -15,8 +17,8 @@ export default defineComponent({
   setup() {
     let solFn = solution as SolutionFn;
     return {
-      input: 'input',
       solFn,
+      daynum,
     };
   }
 });
