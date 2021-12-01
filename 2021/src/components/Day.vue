@@ -30,14 +30,15 @@ export default defineComponent({
     const output_text = ref('');
 
     onBeforeMount(async () => {
-      const res = await fetch(`/input/${props.daynum}.txt`);
+      const res = await fetch(`/input/day${props.daynum}.txt`);
       const data = await res.text();
       input_text.value = data;
       loaded.value = true;
     });
 
     function run() {
-      output_text.value = props.func(input_text.value) as string;
+      const results = props.func(input_text.value) as string[];
+      output_text.value = `Part 1:\n${results[0]}\n\nPart 2:\n${results[1]}`;
     }
 
     return {

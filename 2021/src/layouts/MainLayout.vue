@@ -51,7 +51,7 @@ import EssentialLink from 'components/EssentialLink.vue'
 const linksList = [
   {
     title: 'Day 1',
-    caption: 'Day 1 Name',
+    caption: 'Sonar Sweep',
     link: 'day-1'
   },
 /*  {

@@ -7,7 +7,7 @@ type SolutionFn = (input: string) => string;
 
 import Day from 'components/Day.vue';
 import { defineComponent } from 'vue';
-import solution from '../../solutions/day1';
+import { solution } from '../../solutions/day1';
 
 const daynum = 1;
 
