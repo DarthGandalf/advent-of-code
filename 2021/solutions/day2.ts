@@ -3,22 +3,20 @@ type Line = {
   dir: Dir;
   by: number;
 };
-type Input = Line[];
 
-function parse(input: string): Input {
+function* parse(input: string): Iterable<Line> {
   const result = [];
   for (const line of input.split('\n')) {
     const [dir, num] = line.split(' ');
     const by = Number(num);
-    result.push({dir: dir as Dir, by});
+    yield {dir: dir as Dir, by};
   }
-  return result;
 }
 
-function part1(input: Input): number {
+function part1(input: string): number {
   let depth = 0;
   let fwd = 0;
-  for (const { dir, by } of input) {
+  for (const { dir, by } of parse(input)) {
     switch (dir) {
       case "forward":
         fwd += by;
@@ -35,11 +33,11 @@ function part1(input: Input): number {
   return depth * fwd;
 }
 
-function part2(input: Input): number {
+function part2(input: string): number {
   let depth = 0;
   let fwd = 0;
   let aim = 0;
-  for (const { dir, by } of input) {
+  for (const { dir, by } of parse(input)) {
     switch (dir) {
       case "forward":
         fwd += by;
@@ -58,7 +56,5 @@ function part2(input: Input): number {
 }
 
 export function solution(input: string): number[] {
-  const x = parse(input);
-
-  return [part1(x), part2(x)]
+  return [part1(input), part2(input)]
 }
