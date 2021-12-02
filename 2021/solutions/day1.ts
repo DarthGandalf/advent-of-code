@@ -1,6 +1,6 @@
 import { ints } from './util';
 
-export function solution(input: string): string[] {
+export function solution(input: string): number[] {
   const z = ints(input);
 
   let result = 0;
@@ -13,9 +13,5 @@ export function solution(input: string): string[] {
     if (z[i-3] < z[i]) result2++;
   }
 
-  return [`${result}`, `${result2}`];
+  return [result, result2];
 }
-
-
-// 1: 1387
-// 2: 1362

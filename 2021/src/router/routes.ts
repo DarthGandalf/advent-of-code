@@ -7,10 +7,10 @@ const routes: RouteRecordRaw[] = [
     children: [{
       path: 'day-1',
       component: () => import('pages/Day1.vue'),
-    }, /*{
+    }, {
       path: 'day-2',
       component: () => import('pages/Day2.vue'),
-    }*/],
+    }],
   },
 
   // Always leave this as last one,

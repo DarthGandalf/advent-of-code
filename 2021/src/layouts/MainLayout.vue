@@ -54,11 +54,11 @@ const linksList = [
     caption: 'Sonar Sweep',
     link: 'day-1'
   },
-/*  {
+  {
     title: 'Day 2',
-    caption: 'Day 2 Name',
+    caption: 'Dive!',
     link: 'day-2'
-  },*/
+  },
 ];
 
 import { defineComponent, ref } from 'vue'

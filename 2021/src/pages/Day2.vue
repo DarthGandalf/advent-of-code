@@ -7,12 +7,12 @@ type SolutionFn = (input: string) => number[];
 
 import Day from 'components/Day.vue';
 import { defineComponent } from 'vue';
-import { solution } from '../../solutions/day1';
+import { solution } from '../../solutions/day2';
 
-const daynum = 1;
+const daynum = 2;
 
 export default defineComponent({
-  name: 'Day1',
+  name: 'Day2',
   components: { Day },
   setup() {
     let solFn = solution as SolutionFn;
