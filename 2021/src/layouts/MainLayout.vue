@@ -59,6 +59,11 @@ const linksList = [
     caption: 'Dive!',
     link: 'day-2'
   },
+  {
+    title: 'Day 3',
+    caption: 'Binary Diagnostic',
+    link: 'day-3'
+  },
 ];
 
 import { defineComponent, ref } from 'vue'
