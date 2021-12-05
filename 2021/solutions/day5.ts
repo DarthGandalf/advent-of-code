@@ -9,13 +9,13 @@ class State {
   map1 = new Map<string, number>();
   map2 = new Map<string, number>();
 
-  static #key(point: [number, number]): string {
+  private static key(point: [number, number]): string {
     const [x, y] = point;
     return `${x},${y}`;
   }
 
-  static #addPoint(maps: Map<string, number>[], point: [number, number]) {
-    const key = State.#key(point);
+  private static addPoint(maps: Map<string, number>[], point: [number, number]) {
+    const key = State.key(point);
     for (const map of maps) {
       const val = map.get(key) || 0;
       map.set(key, val + 1);
@@ -29,25 +29,25 @@ class State {
       const mix = Math.min(x1, x2);
       const max = Math.max(x1, x2);
       for (let x = mix; x <= max; x++) {
-        State.#addPoint([this.map1, this.map2], [x, y1]);
+        State.addPoint([this.map1, this.map2], [x, y1]);
       }
     } else if (x1 == x2) {
       const miy = Math.min(y1, y2);
       const may = Math.max(y1, y2);
       for (let y = miy; y <= may; y++) {
-        State.#addPoint([this.map1, this.map2], [x1, y]);
+        State.addPoint([this.map1, this.map2], [x1, y]);
       }
     } else if (x1 - x2 == y1 - y2) {
       const mix = Math.min(x1, x2);
       const max = Math.max(x1, x2);
       for (let x = mix, y = Math.min(y1, y2); x <= max; x++, y++) {
-        State.#addPoint([this.map2], [x, y]);
+        State.addPoint([this.map2], [x, y]);
       }
     } else if (x1 - x2 == y2 - y1) {
       const mix = Math.min(x1, x2);
       const max = Math.max(x1, x2);
       for (let x = mix, y = Math.max(y1, y2); x <= max; x++, y--) {
-        State.#addPoint([this.map2], [x, y]);
+        State.addPoint([this.map2], [x, y]);
       }
     } else {
       throw new Error('invalid line')
