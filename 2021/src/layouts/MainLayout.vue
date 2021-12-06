@@ -74,6 +74,11 @@ const linksList = [
     caption: 'Hydrothermal Venture',
     link: 'day-5'
   },
+  {
+    title: 'Day 6',
+    caption: 'Lanternfish',
+    link: 'day-6'
+  },
 ];
 
 import { defineComponent, ref } from 'vue'
