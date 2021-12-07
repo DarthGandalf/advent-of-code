@@ -48,38 +48,35 @@
 <script lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
 
-const linksList = [
-  {
+const linksList = [{
     title: 'Day 1',
     caption: 'Sonar Sweep',
     link: 'day-1'
-  },
-  {
+  }, {
     title: 'Day 2',
     caption: 'Dive!',
     link: 'day-2'
-  },
-  {
+  }, {
     title: 'Day 3',
     caption: 'Binary Diagnostic',
     link: 'day-3'
-  },
-  {
+  }, {
     title: 'Day 4',
     caption: 'Giant Squid',
     link: 'day-4'
-  },
-  {
+  }, {
     title: 'Day 5',
     caption: 'Hydrothermal Venture',
     link: 'day-5'
-  },
-  {
+  }, {
     title: 'Day 6',
     caption: 'Lanternfish',
     link: 'day-6'
-  },
-];
+  }, {
+    title: 'Day 7',
+    caption: 'The Treachery of Whales',
+    link: 'day-7'
+  }];
 
 import { defineComponent, ref } from 'vue'
 
