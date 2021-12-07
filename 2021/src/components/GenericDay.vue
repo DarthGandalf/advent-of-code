@@ -5,39 +5,43 @@
       <q-btn no-caps color="primary" label="Run" @click="run()" />
       <q-input outlined v-model="output_text" type="textarea"/>
     </template>
-    <q-skeleton v-else height="200px" width="200px"/>
+    <q-spinner v-else color="primary" size="3em"/>
   </q-page>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onBeforeMount } from 'vue';
 
+type SolutionFile = {
+  solution: (input: string) => number[];
+}
+
 export default defineComponent({
-  name: 'Day',
+  name: 'GenericDay',
   props: {
     daynum: {
       type: Number,
       required: true
-    },
-    func: {
-      type: Function,
-      required: true,
     },
   },
   setup(props) {
     const loaded = ref(false);
     const input_text = ref('');
     const output_text = ref('');
+    let func = () => {;};
 
     onBeforeMount(async () => {
       const res = await fetch(`/input/day${props.daynum}.txt`);
       const data = await res.text();
+      const solutionFile = await import(`../../solutions/day${props.daynum}`) as SolutionFile;
+      const {solution} = solutionFile;
+      func = solution;
       input_text.value = data;
       loaded.value = true;
     });
 
     function run() {
-      const results = props.func(input_text.value) as string[];
+      const results = func(input_text.value) as string[];
       output_text.value = `Part 1:\n${results[0]}\n\nPart 2:\n${results[1]}`;
     }
 
