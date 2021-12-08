@@ -10,6 +10,6 @@ describe('Day 7', () => {
 
   it('answers', () => {
     const input = readFileSync('public/input/day7.txt', {encoding:'utf8', flag:'r'});
-    expect(solution(input)).toStrictEqual([356179, 1]);
+    expect(solution(input)).toStrictEqual([356179, 99788435]);
   })
 });
