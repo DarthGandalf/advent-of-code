@@ -80,6 +80,10 @@ const linksList = [{
     title: 'Day 8',
     caption: 'Seven Segment Search',
     link: 'day-8'
+  }, {
+    title: 'Day 9',
+    caption: 'Smoke Basin',
+    link: 'day-9'
   }];
 
 import { defineComponent, ref } from 'vue'
