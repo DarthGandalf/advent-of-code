@@ -90,7 +90,7 @@ const linksList = [{
     link: 'day-10'
   }, {
     title: 'Day 11',
-    caption: 'Syntax Scoring',
+    caption: 'Dumbo Octopus',
     link: 'day-11'
   }];
 
