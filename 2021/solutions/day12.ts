@@ -21,11 +21,11 @@ function parse(input: string): Map<string, string[]> {
 export function part1(input: string): number {
   const neigh = parse(input);
   let numpaths = 0;
-  const queue = [["start"]];
+  const queue = [['start']];
   while (queue.length > 0) {
     const current_path = queue.pop()!;
     const last_part = current_path[current_path.length - 1];
-    if (last_part == "end") {
+    if (last_part == 'end') {
       numpaths++;
       continue;
     }
@@ -61,15 +61,15 @@ function count(path: string[], next: string): number {
 export function part2(input: string): number {
   const neigh = parse(input);
   let numpaths = 0;
-  const queue = [["start"]];
+  const queue = [['start']];
   while (queue.length > 0) {
     const current_path = queue.pop()!;
     const last_part = current_path[current_path.length - 1];
     for (const next_part of neigh.get(last_part)!) {
-      if (next_part == "start") {
+      if (next_part == 'start') {
         continue;
       }
-      if (next_part == "end") {
+      if (next_part == 'end') {
         numpaths++;
         continue;
       }

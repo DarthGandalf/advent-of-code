@@ -4,7 +4,7 @@ import { readFileSync } from 'fs';
 
 describe('Day 14', () => {
   it('works', () => {
-    let input = `NNCB
+    const input = `NNCB
 
 CH -> B
 HH -> N

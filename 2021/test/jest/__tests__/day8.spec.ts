@@ -4,7 +4,7 @@ import { readFileSync } from 'fs';
 
 describe('Day 8', () => {
   it('works', () => {
-    const input = `acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf`;
+    const input = 'acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf';
     expect(solution(input)).toStrictEqual([0, 5353]);
 
     const input2 = `be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe

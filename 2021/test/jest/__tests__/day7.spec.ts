@@ -4,7 +4,7 @@ import { readFileSync } from 'fs';
 
 describe('Day 7', () => {
   it('works', () => {
-  const input = `16,1,2,0,4,2,7,1,2,14`;
+  const input = '16,1,2,0,4,2,7,1,2,14';
     expect(solution(input)).toStrictEqual([37, 168]);
   });
 

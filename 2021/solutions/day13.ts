@@ -32,7 +32,7 @@ function vis(points: Set<string>): string {
   let may = 0;
   const ps = [];
   for (const s of points) {
-    let [x, y] = s.split(' ').map(Number);
+    const [x, y] = s.split(' ').map(Number);
     if (x > max) max = x;
     if (y > may) may = y;
     if (x < mix) mix = x;
@@ -55,9 +55,9 @@ function vis(points: Set<string>): string {
 
 export function part1(input: string): number {
   const [points_array, folds] = parse(input);
-  let { axis, num } = folds[0];
-  let new_points = new Set<string>();
-  for (let p of points_array) {
+  const { axis, num } = folds[0];
+  const new_points = new Set<string>();
+  for (const p of points_array) {
     if (p[axis] > num) {
       p[axis] = 2*num - p[axis];
     }
@@ -73,9 +73,9 @@ export function part2(input: string): string {
     points.add(`${x} ${y}`);
   }
   for (const { axis, num } of folds) {
-    let new_points = new Set<string>();
-    for (let s of points) {
-      let p = s.split(' ').map(Number);
+    const new_points = new Set<string>();
+    for (const s of points) {
+      const p = s.split(' ').map(Number);
       if (p[axis] > num) {
         p[axis] = 2*num - p[axis];
       }

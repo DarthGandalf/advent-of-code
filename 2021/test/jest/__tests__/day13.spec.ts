@@ -4,7 +4,7 @@ import { readFileSync } from 'fs';
 
 describe('Day 13', () => {
   it('works', () => {
-    let input = `6,10
+    const input = `6,10
 0,14
 9,10
 0,3

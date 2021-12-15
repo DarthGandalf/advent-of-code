@@ -3,8 +3,8 @@ import { ints } from './util';
 function part1(input: string): number {
   const crabs = ints(input);
   crabs.sort((a, b) => a - b);
-  let mincrab = crabs[0];
-  let maxcrab = crabs[crabs.length-1];
+  const mincrab = crabs[0];
+  const maxcrab = crabs[crabs.length-1];
   const left = [];
   const right = [];
   for (let i = mincrab; i <= maxcrab; ++i) {
@@ -29,7 +29,7 @@ function part1(input: string): number {
     rightfuel += crabs.length - 1 - index;
     right[i] = rightfuel;
   }
-  let sum = [];
+  const sum = [];
   for (let i = mincrab; i <= maxcrab; ++i) {
     sum.push(left[i] + right[i]);
   }
@@ -39,8 +39,8 @@ function part1(input: string): number {
 function part2(input: string): number {
   const crabs = ints(input);
   crabs.sort((a, b) => a - b);
-  let mincrab = crabs[0];
-  let maxcrab = crabs[crabs.length-1];
+  const mincrab = crabs[0];
+  const maxcrab = crabs[crabs.length-1];
   const left = [];
   const right = [];
   for (let i = mincrab; i <= maxcrab; ++i) {
@@ -71,7 +71,7 @@ function part2(input: string): number {
     right[i] = rightfuel;
     rightinc += crabs.length - 1 - index;
   }
-  let sum = [];
+  const sum = [];
   for (let i = mincrab; i <= maxcrab; ++i) {
     sum.push(left[i] + right[i]);
   }

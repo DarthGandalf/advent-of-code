@@ -1,4 +1,4 @@
-type Dir = "forward" | "down" | "up";
+type Dir = 'forward' | 'down' | 'up';
 type Line = {
   dir: Dir;
   by: number;
@@ -18,13 +18,13 @@ function part1(input: string): number {
   let fwd = 0;
   for (const { dir, by } of parse(input)) {
     switch (dir) {
-      case "forward":
+      case 'forward':
         fwd += by;
         break;
-      case "down":
+      case 'down':
         depth += by;
         break;
-      case "up":
+      case 'up':
         depth -= by;
         break;
     }
@@ -39,14 +39,14 @@ function part2(input: string): number {
   let aim = 0;
   for (const { dir, by } of parse(input)) {
     switch (dir) {
-      case "forward":
+      case 'forward':
         fwd += by;
         depth += aim * by;
         break;
-      case "down":
+      case 'down':
         aim += by;
         break;
-      case "up":
+      case 'up':
         aim -= by;
         break;
     }

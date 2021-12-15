@@ -40,8 +40,8 @@ function part1(input: string): number {
 
 function find_common(list: string[], choose: (list0: string[], list1: string[]) => string[]): number {
   for (let pos = 0;; pos++) {
-    let list0 = [];
-    let list1 = [];
+    const list0 = [];
+    const list1 = [];
     for (const line of list) {
       if (line.charAt(pos) == '1') {
         list1.push(line);
@@ -59,7 +59,7 @@ function find_common(list: string[], choose: (list0: string[], list1: string[]) 
 }
 
 function part2(input: string): number {
-  let lines = [];
+  const lines = [];
   for (const line of parse(input)) {
     lines.push(line);
   }

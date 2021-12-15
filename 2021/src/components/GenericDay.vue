@@ -13,7 +13,7 @@
 import { defineComponent, ref, onBeforeMount } from 'vue';
 
 type SolutionFile = {
-  solution: (input: string) => number[];
+  solution: (input: string) => string[];
 }
 
 export default defineComponent({
@@ -28,7 +28,7 @@ export default defineComponent({
     const loaded = ref(false);
     const input_text = ref('');
     const output_text = ref('');
-    let func = () => {;};
+    let func = (input: string) => [input];
 
     onBeforeMount(async () => {
       const res = await fetch(`/input/day${props.daynum}.txt`);
@@ -41,7 +41,7 @@ export default defineComponent({
     });
 
     function run() {
-      const results = func(input_text.value) as string[];
+      const results = func(input_text.value);
       output_text.value = `Part 1:\n${results[0]}\n\nPart 2:\n${results[1]}`;
     }
 

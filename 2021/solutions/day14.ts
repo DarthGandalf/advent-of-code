@@ -52,7 +52,7 @@ export function part2(input: string): number {
     chars.add(right);
   }
   if (chars.size * chars.size != map.size) {
-    throw new Error("unsupported map size");
+    throw new Error('unsupported map size');
   }
   let inside = new Map<string, Map<string, number>>();
   for (const a of chars) {

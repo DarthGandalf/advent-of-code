@@ -61,7 +61,7 @@ function parse(input: string): Line[] {
   for (const line of lines) {
     const [x1, y1, x2, y2] = ints(line);
     if (y2 === undefined) {
-      throw new Error("wrong input line " + line)
+      throw new Error('wrong input line ' + line)
     }
     result.push({
       a: [x1, y1] as [number, number],

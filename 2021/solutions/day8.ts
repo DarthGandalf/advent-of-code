@@ -107,7 +107,7 @@ export function part2(input: string): number {
       }
     }
 
-    let unknown_digits = digits_strings.filter((s) => !decrypt.has(s));
+    const unknown_digits = digits_strings.filter((s) => !decrypt.has(s));
 
     for (const d of unknown_digits) {
       if (d.length == 6) {
