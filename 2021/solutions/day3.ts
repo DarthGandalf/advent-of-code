@@ -1,5 +1,4 @@
 function* parse(input: string): Iterable<string> {
-  const result = [];
   for (const line of input.split('\n')) {
     yield line;
   }

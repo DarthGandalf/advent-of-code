@@ -5,7 +5,6 @@ type Line = {
 };
 
 function* parse(input: string): Iterable<Line> {
-  const result = [];
   for (const line of input.split('\n')) {
     const [dir, num] = line.split(' ');
     const by = Number(num);

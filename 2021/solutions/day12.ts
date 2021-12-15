@@ -1,5 +1,3 @@
-type Edge = [string, string]
-
 function parse(input: string): Map<string, string[]> {
   const neigh = new Map<string, string[]>();
   for (const line of input.split('\n')) {
@@ -21,7 +19,7 @@ function parse(input: string): Map<string, string[]> {
 export function part1(input: string): number {
   const neigh = parse(input);
   let numpaths = 0;
-  const queue = [['start']];
+  const queue: string[][] = [['start']];
   while (queue.length > 0) {
     const current_path = queue.pop()!;
     const last_part = current_path[current_path.length - 1];
@@ -31,7 +29,7 @@ export function part1(input: string): number {
     }
     for (const next_part of neigh.get(last_part)!) {
       if (next_part.toUpperCase() == next_part || !current_path.includes(next_part)) {
-        const new_path = JSON.parse(JSON.stringify(current_path));
+        const new_path = JSON.parse(JSON.stringify(current_path)) as string[];
         new_path.push(next_part);
         queue.push(new_path);
       }
@@ -61,7 +59,7 @@ function count(path: string[], next: string): number {
 export function part2(input: string): number {
   const neigh = parse(input);
   let numpaths = 0;
-  const queue = [['start']];
+  const queue: string[][] = [['start']];
   while (queue.length > 0) {
     const current_path = queue.pop()!;
     const last_part = current_path[current_path.length - 1];
@@ -74,7 +72,7 @@ export function part2(input: string): number {
         continue;
       }
       if (next_part.toUpperCase() == next_part || count(current_path, next_part) < 2) {
-        const new_path = JSON.parse(JSON.stringify(current_path));
+        const new_path = JSON.parse(JSON.stringify(current_path)) as string[];
         new_path.push(next_part);
         queue.push(new_path);
       }

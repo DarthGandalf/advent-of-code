@@ -21,10 +21,10 @@ class Board {
       const marked = [];
       for (const [j, val] of row.entries()) {
         marked.push(false);
-        if (this.where.has(num[i][j])) {
+        if (this.where.has(val)) {
           throw new Error('not unique')
         }
-        this.where.set(num[i][j], [i, j]);
+        this.where.set(val, [i, j]);
       }
       this.marked.push(marked);
       this.mrow.push(0);

@@ -56,15 +56,6 @@ export function part2(input: string): number {
       }
     }
 
-    let segment_a = '';
-    {
-      const s = new Set(digits[7]);
-      for (const x of digits[1]) {
-        s.delete(x);
-      }
-      segment_a = s.values().next().value;
-    }
-
     let segments_bd = [];
     {
       const s = new Set(digits[4]);
