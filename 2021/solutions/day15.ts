@@ -76,5 +76,3 @@ export function solution(input: string): number[] {
     solve(L * 5, (y, x) => (map[y % L][x % L] + Math.floor(x / L) + Math.floor(y / L) + 8) % 9 + 1)
   ];
 }
-
-// 697 too low
