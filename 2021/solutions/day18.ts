@@ -160,7 +160,7 @@ function magnitude(a: SnailNum): number {
   }
 }
 
-export function solution(input: string): number[] {
+export function solution1(input: string): number[] {
   input = input.trim();
   const numbers = input.split('\n');
   const result = numbers.map(parse_line).reduce(add);
@@ -175,3 +175,99 @@ export function solution(input: string): number[] {
   }
   return [magnitude(result), max]
 }
+
+// -----------------------------------------------------------------
+
+function simplify2(a: string): string {
+  const foo = {a};
+  function try_explode() {
+    let index = 0;
+    let depth = 0;
+    for (let c of a) {
+      if (c == '[') {
+        depth++;
+      } else if (c == ']') {
+        depth--;
+      }
+      if (depth > 4) {
+        const close = a.indexOf(']', index);
+        let prefix = a.substring(0, index);
+        let suffix = a.substring(close + 1);
+        const [x, y] = a.substring(index + 1, close).split(',').map(Number);
+        const prefix_matches = [...prefix.matchAll(/\d+/g)];
+        if (prefix_matches.length > 0) {
+          const lastmatch = prefix_matches[prefix_matches.length - 1];
+          const num = Number(lastmatch[0]);
+          const pr = prefix.substring(0, lastmatch.index);
+          const suf = prefix.substring(lastmatch.index! + lastmatch[0].length)
+          prefix = pr + Number(num + x) + suf;
+        }
+        const suffix_match = suffix.match(/\d+/);
+        if (suffix_match) {
+          const firstmatch = suffix_match;
+          const num = Number(firstmatch[0]);
+          const pr = suffix.substring(0, firstmatch.index);
+          const suf = suffix.substring(firstmatch.index! + firstmatch[0].length);
+          suffix = pr + Number(num + y) + suf;
+        }
+        a = `${prefix}0${suffix}`;
+        return true;
+      }
+      index++;
+    }
+    return false;
+  }
+  function try_split() {
+    const match = a.match(/\d\d+/);
+    if (!match) {
+      return false;
+    }
+    const num = Number(match[0]);
+    const prefix = a.substring(0, match.index);
+    const suffix = a.substring(match.index! + match[0].length);
+    a = `${prefix}[${Math.floor(num/2)},${Math.floor((num+1)/2)}]${suffix}`;
+    return true;
+  }
+  while (true) {
+    if (try_explode()) continue;
+    if (try_split()) continue;
+    break;
+  }
+  return a;
+}
+
+function add2(a: string, b: string): string {
+  return simplify2(`[${a},${b}]`);
+}
+
+function magnitude2(a: string): number {
+  type Data = number | Data[]
+  const data = JSON.parse(a) as Data;
+
+  function mag2(b: Data): number {
+    if (typeof b == 'number') {
+      return b;
+    } else {
+      return mag2(b[0]) * 3 + mag2(b[1]) * 2
+    }
+  }
+  return mag2(data);
+}
+
+function solution2(input: string): number[] {
+  input = input.trim();
+  const numbers = input.split('\n');
+  const result = numbers.reduce(add2);
+  let max = -Infinity;
+  for (let i = 0; i < numbers.length; ++i) {
+    for (let j = 0; j < numbers.length; ++j) {
+      const summag = magnitude2(add2(numbers[i], numbers[j]));
+      if (summag > max) {
+        max = summag;
+      }
+    }
+  }
+  return [magnitude2(result), max];
+}
+
+export const solution = solution1;
