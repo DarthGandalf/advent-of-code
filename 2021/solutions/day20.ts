@@ -89,7 +89,7 @@ function visual(image: Set<string>): string {
 export function solution(input: string): number[] {
   input = input.trim();
   let [rules, image] = parse(input);
-  image = apply2(image, rules):
+  image = apply2(image, rules);
   const part1 = image.size;
   for (let i = 0; i < 24; ++i) {
     image = apply2(image, rules);
