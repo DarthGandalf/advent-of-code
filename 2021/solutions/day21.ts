@@ -46,7 +46,7 @@ function* full(): Iterable<[number, number, number, number]> {
 }
 
 function part2(p1: number, p2: number): number {
-  let x = [];
+  let x: number[][][][] = [];
   for (let i = 0; i < 10; ++i) {
     const row = [];
     for (let j = 0; j < 10; ++j) {
@@ -64,48 +64,44 @@ function part2(p1: number, p2: number): number {
   }
   const empty = JSON.stringify(x);
   x[p1-1][p2-1][0][0] = 1;
-  let how = 0;
-  let won1 = 0;
-  let won2 = 0;
-  while (true) {
-    if (how < 3) {
-      let y = JSON.parse(empty);
-      for (const [i, j, k, n] of full()) {
-        y[i][j][k][n] = x[(i-1+10)%10][j][k][n]+x[(i-2+10)%10][j][k][n]+x[(i-3+10)%10][j][k][n];
+  let player = 0;
+  let won = [0, 0];
+  const move = [
+    (y: number[][][][], i: number, j: number, k: number, n: number) => {
+      y[i][j][k][n] = x[(i-1+10)%10][j][k][n]+x[(i-2+10)%10][j][k][n]+x[(i-3+10)%10][j][k][n];
+    },
+    (y: number[][][][], i: number, j: number, k: number, n: number) => {
+      y[i][j][k][n] = x[i][(j-1+10)%10][k][n]+x[i][(j-2+10)%10][k][n]+x[i][(j-3+10)%10][k][n];
+    }
+  ];
+  const checkwin = [
+    (y: number[][][][], i: number, j: number, k: number, n: number) => {
+      if (i + 1 + k >= 21) {
+        won[0] += x[i][j][k][n];
+      } else {
+        y[i][j][i+1+k][n] += x[i][j][k][n];
       }
-      x = y;
-    } else {
+    },
+    (y: number[][][][], i: number, j: number, k: number, n: number) => {
+      if (j + 1 + n >= 21) {
+        won[1] += x[i][j][k][n];
+      } else {
+        y[i][j][k][j+1+n] += x[i][j][k][n];
+      }
+    },
+  ];
+  while (JSON.stringify(x) !== empty) {
+    for (let action of [move, move, move, checkwin]) {
       let y = JSON.parse(empty);
       for (const [i, j, k, n] of full()) {
-        y[i][j][k][n] = x[i][(j-1+10)%10][k][n]+x[i][(j-2+10)%10][k][n]+x[i][(j-3+10)%10][k][n];
+        // position 1, position 2, score 1, score 2
+        action[player](y, i, j, k, n)
       }
       x = y;
     }
-    if (how == 2) {
-      let y = JSON.parse(empty);
-      for (const [i, j, k, n] of full()) {
-        if (i + 1 + k >= 21) {
-          won1 += x[i][j][k][n];
-        } else {
-          y[i][j][i+1+k][n] += x[i][j][k][n];
-        }
-      }
-      x = y;
-    } else if (how == 5) {
-      let y = JSON.parse(empty);
-      for (const [i, j, k, n] of full()) {
-        if (j + 1 + n >= 21) {
-          won2 += x[i][j][k][n];
-        } else {
-          y[i][j][k][j+1+n] += x[i][j][k][n];
-        }
-      }
-      x = y;
-    }
-    how = (how + 1) % 6;
-    if (JSON.stringify(x) == empty) break;
+    player = 1 - player;
   }
-  return Math.max(won1, won2);
+  return Math.max(...won);
 }
 
 export function solution(input: string): number[] {
