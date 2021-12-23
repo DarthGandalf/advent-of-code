@@ -100,6 +100,6 @@ off x=-93533..-4276,y=-16170..68771,z=-104985..-24507`;
 
   it('answers', () => {
     const input = readFileSync('public/input/day22.txt', {encoding:'utf8', flag:'r'});
-    //expect(solution(input)).toStrictEqual([588200, 1207167990362099]);
+    expect(solution(input)).toStrictEqual([588200, 1207167990362099]);
   })
 });

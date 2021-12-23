@@ -72,20 +72,23 @@ function part2(lines: Line[]): number {
   Y.sort((a: number, b: number) => a - b);
   Z.sort((a: number, b: number) => a - b);
   let sum = 0;
+  lines = [...lines]
+  lines.reverse()
   X.forEach((_, ix) => {
     if (ix == X.length - 1) return;
+    const xlines = lines.filter(({x1, x2}) => X[ix] >= x1 && X[ix + 1] <= x2+1);
     Y.forEach((_, iy) => {
       if (iy == Y.length - 1) return;
+      const ylines = xlines.filter(({y1, y2}) => Y[iy] >= y1 && Y[iy + 1] <= y2+1);
       Z.forEach((_, iz) => {
         if (iz == Z.length - 1) return;
-        let on = false;
-        for (const {state, x1, x2, y1, y2, z1, z2} of lines) {
-          if (X[ix] >= x1 && X[ix + 1] <= x2+1 && Y[iy] >= y1 && Y[iy + 1] <= y2+1 && Z[iz] >= z1 && Z[iz + 1] <= z2+1) {
-            on = state;
+        for (const {state, x1, x2, y1, y2, z1, z2} of ylines) {
+          if (Z[iz] >= z1 && Z[iz + 1] <= z2+1) {
+            if (state) {
+              sum += (X[ix + 1] - X[ix]) * (Y[iy + 1] - Y[iy]) * (Z[iz + 1] - Z[iz]);
+            }
+            break;
           }
-        }
-        if (on) {
-          sum += (X[ix + 1] - X[ix]) * (Y[iy + 1] - Y[iy]) * (Z[iz + 1] - Z[iz]);
         }
       })
     })
