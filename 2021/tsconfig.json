@@ -1,6 +1,7 @@
 {
   "extends": "@quasar/app/tsconfig-preset",
   "compilerOptions": {
+    "module": "CommonJS",
     "baseUrl": ".",
     "target": "es2020"
   }
