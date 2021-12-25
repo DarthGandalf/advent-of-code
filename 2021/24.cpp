@@ -339,7 +339,9 @@ bool test(int64_t number) {
 
 int main() {
   int steps = 0;
-  for (int64_t n = 99999999999999; n >= 11111111111111; --n) {
+  int64_t n = 99999999999999;
+  n = 97389180000000;
+  for (; n >= 11111111111111; --n) {
     if (test(n)) {
       std::cout << "Success! " << n << std::endl;
       return 0;
