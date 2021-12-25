@@ -68,7 +68,6 @@ function solve(L: number, map: (y: number, x: number) => number): number {
 }
 
 export function solution(input: string): number[] {
-  input = input.trim();
   const map = parse(input.trim());
   const L = map.length;
   return [
