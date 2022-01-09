@@ -338,9 +338,29 @@ bool test(int64_t number) {
 }
 
 int main() {
+  // part 2
+  int steps = 0;
+  int64_t n = 11111111111111;
+  n = 55835551111109;
+  for (; n <= 99999999999999; ++n) {
+    if (test(n)) {
+      std::cout << "Success! " << n << std::endl;
+      return 0;
+    }
+    steps++;
+    steps%=10000000;
+    if (steps == 0) {
+      std::cout << "progress: " << n << std::endl;
+    }
+  }
+  return 0;
+}
+
+int main1() {
+  // part 1
   int steps = 0;
   int64_t n = 99999999999999;
-  n = 97389180000000;
+  n = 92967699949891; // answer
   for (; n >= 11111111111111; --n) {
     if (test(n)) {
       std::cout << "Success! " << n << std::endl;
