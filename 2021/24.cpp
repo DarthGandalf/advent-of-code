@@ -1,4 +1,5 @@
 #include <iostream>
+#include <array>
 #include <vector>
 #include <stdint.h>
 
@@ -20,7 +21,7 @@ void process_digit(int w, int& z, int aux1, int aux2, int aux3) {
 
 
 template <typename F>
-int alu(F&& input) {
+int alu(F input) {
   int x = 0, y = 0, z = 0, w = 0;
 //  process_digit(z, 1, 11, 3);
   w = input();
@@ -306,18 +307,16 @@ int alu(F&& input) {
 }
 
 bool test(int64_t number) {
-  static std::vector<uint8_t> digits;
-  digits.clear();
+  std::array<uint8_t, 14> digits;
+  int k = 0;
   while (number > 0) {
     if (number % 10 == 0) return false;
-    digits.push_back(number % 10);
+    digits[k++] = number % 10;
     number /= 10;
   }
-  if (digits.size() != 14) throw "wrong num of digits";
-  auto next = [&] {
-    uint8_t result = digits.back();
-    digits.pop_back();
-    return result;
+  if (k != 14) throw "wrong num of digits";
+  auto next = [p = digits.end()]() mutable {
+    return *--p;
   };
   int z = alu(next);
 /*  process_digit(next(), z, 1, 11, 3);
@@ -341,7 +340,7 @@ int main() {
   // part 2
   int steps = 0;
   int64_t n = 11111111111111;
-  n = 55835551111109;
+  n = 58789911111107;
   for (; n <= 99999999999999; ++n) {
     if (test(n)) {
       std::cout << "Success! " << n << std::endl;
