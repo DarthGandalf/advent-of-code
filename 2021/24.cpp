@@ -21,8 +21,8 @@ void process_digit(int w, int& z, int aux1, int aux2, int aux3) {
 
 
 template <typename F>
-int alu(F input) {
-  int x = 0, y = 0, z = 0, w = 0;
+int64_t alu(F input) {
+  int64_t x = 0, y = 0, z = 0, w = 0;
 //  process_digit(z, 1, 11, 3);
   w = input();
   x *= 0;
@@ -318,7 +318,7 @@ bool test(int64_t number) {
   auto next = [p = digits.end()]() mutable {
     return *--p;
   };
-  int z = alu(next);
+  int64_t z = alu(next);
 /*  process_digit(next(), z, 1, 11, 3);
   process_digit(next(), z, 1, 14, 7);
   process_digit(next(), z, 1, 13, 1);
@@ -340,7 +340,7 @@ int main() {
   // part 2
   int steps = 0;
   int64_t n = 11111111111111;
-  n = 58789911111107;
+  n = 91411143612181; // answer
   for (; n <= 99999999999999; ++n) {
     if (test(n)) {
       std::cout << "Success! " << n << std::endl;
