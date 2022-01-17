@@ -6,7 +6,7 @@ For days up to 22, they can be run via `npm run test:unit:ci`
 
 Day 23 was done on paper (or, rather, in `kwrite`).
 
-Day 24 I converted the input to C++, and it's still brute forcing (as of moment of writing, 2.5% of the problem space so far). Maybe I should consider parallelizing it, or to actually figure out what it's doing.
+Day 24 I converted the input to C++, and brute forced it. Maybe I should have considered parallelizing it, or to actually figure out what it's doing, but the ETA was mid Jan, and that's exactly when it finished.
 
 For day 25, run `npx ts-node run25.ts`, because by that time I got fed up with jest randomly hiding the errors, making it impossible to debug.
 
