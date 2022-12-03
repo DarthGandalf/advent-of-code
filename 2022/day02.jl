@@ -51,7 +51,6 @@ function part2(input)
         else
             mine = their
         end
-        println("$line: their=$their score=$score mine=$mine")
         # hm, looks like I should have used modulus 3
         result += mine + score
     end
