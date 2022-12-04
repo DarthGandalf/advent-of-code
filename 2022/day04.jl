@@ -11,10 +11,10 @@ test_input = """
 
 ints(str) = parse.(Int, eachmatch(r"(\d+)", str) .|> only)
 
-within(a, b, c, d) = let x = Set(a:b), y = Set(c:d)
+within(a, b, c, d) = let x = a:b, y = c:d
     x ⊆ y || y ⊆ x
 end
-overlap(a, b, c, d) = let x = Set(a:b), y = Set(c:d)
+overlap(a, b, c, d) = let x = a:b, y = c:d
     !isempty(x ∩ y)
 end
 
