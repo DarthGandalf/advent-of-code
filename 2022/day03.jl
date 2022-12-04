@@ -29,7 +29,7 @@ end
 print("Part 1... ")
 @test part1(test_input) == 157
 println("ok")
-println("Result: ", part1(real_input))
+@time println("Result: ", part1(real_input))
 
 
 function part2(input)
@@ -43,4 +43,4 @@ end
 print("Part 2... ")
 @test part2(test_input) == 70
 println("ok")
-println("Result: ", part2(real_input))
+@time println("Result: ", part2(real_input))
