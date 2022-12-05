@@ -1,9 +1,10 @@
-ints(str) = parse.(Int, eachmatch(r"(\d+)", str) .|> only)
+ints(str::AbstractString) = Base.parse.(Int, eachmatch(r"(\d+)", str) .|> only)
 
-current_part = 0
+current_part::Int8 = 0
 
-function solve(tests, solution, real_input)
+function solve(tests::Function, solution::Function, real_input)
     global current_part += 1
+    println()
     print("Part $current_part... ")
     tests(solution)
     println("ok")
