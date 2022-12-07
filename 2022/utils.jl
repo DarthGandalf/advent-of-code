@@ -9,5 +9,6 @@ function solve(tests::Function, solution::Function, real_input)
     tests(solution)
     println("ok")
     @time result = solution(real_input)
+    @time result = solution(real_input)
     println("Result: $result")
 end
