@@ -1,4 +1,5 @@
 ints(str::AbstractString) = Base.parse.(Int, eachmatch(r"(\d+)", str) .|> only)
+ints(i::Int) = [i]
 
 current_part::Int8 = 0
 
