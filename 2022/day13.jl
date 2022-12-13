@@ -2,7 +2,7 @@ using Test
 using Pkg
 Pkg.activate(".")
 include("utils.jl")
-using YAML
+using JSON
 
 real_input = readchomp("input/2022/day13.txt")
 test_input = raw"""
@@ -48,7 +48,7 @@ end
 function part1(input)
     sum = 0
     for (i, pair) in enumerate(eachsplit(input, "\n\n"))
-        if cmp(myless, (split(pair, '\n') .|> YAML.load)...) <= 0
+        if cmp(myless, (split(pair, '\n') .|> JSON.parse)...) <= 0
             sum += i
         end
     end
@@ -59,7 +59,7 @@ solve(part1, real_input) do f
 end
 
 function part2(input)
-    v = [YAML.load(line) for line in eachsplit(input, '\n') if !isempty(line)]
+    v = [JSON.parse(line) for line in eachsplit(input, '\n') if !isempty(line)]
     push!(v, [[2]], [[6]])
     sort!(v, lt=myless)
     two = findfirst(==([[2]]), v)
