@@ -33,11 +33,8 @@ function parse_input(input)
         ch
     end
     height(c) = c - 'a'
-    charify(s) = s[1]
     M = mapreduce(vcat, split(input, '\n') |> enumerate) do (r, l)
         @chain l begin
-            split(_, "")
-            @. charify
             enumerate
             ifstart.(r, _)
             enumerate
