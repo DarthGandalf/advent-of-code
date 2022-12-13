@@ -60,8 +60,7 @@ end
 
 function part2(input)
     v = [eval(Meta.parse(line)) for line in eachsplit(input, '\n') if !isempty(line)]
-    push!(v, [[2]])
-    push!(v, [[6]])
+    push!(v, [[2]], [[6]])
     sort!(v, lt=myless)
     two = findfirst(==([[2]]), v)
     six = findfirst(==([[6]]), v)
