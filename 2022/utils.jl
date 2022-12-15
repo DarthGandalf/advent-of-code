@@ -1,3 +1,4 @@
+signed_ints(str::AbstractString) = Base.parse.(Int, eachmatch(r"(-?\d+)", str) .|> only)
 ints(str::AbstractString) = Base.parse.(Int, eachmatch(r"(\d+)", str) .|> only)
 ints(i::Int) = [i]
 

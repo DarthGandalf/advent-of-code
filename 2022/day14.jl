@@ -1,6 +1,4 @@
 using Test
-#using Pkg
-#Pkg.activate(".")
 include("utils.jl")
 
 real_input = readchomp("input/2022/day14.txt")
@@ -78,7 +76,7 @@ function part1(input)
     while do1(M)
     end
     count(==(sand), values(M))
-    end
+end
 function part2(input)
     M = parse_input(input)
     maxy = maximum(a->a[2], keys(M))
