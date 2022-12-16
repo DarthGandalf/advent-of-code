@@ -1,5 +1,7 @@
 [deps]
 Chain = "8be319e6-bccf-4806-a6f7-6fae938471bc"
+DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 OrderedCollections = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
+ResumableFunctions = "c5292f4c-5179-55e1-98c5-05642aab7184"
 YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
