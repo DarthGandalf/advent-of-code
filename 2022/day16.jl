@@ -59,8 +59,8 @@ function MyGraph(valves)
     MyGraph(valves, total_rate)
 end
 
-@resumable function neigh(g::MyGraph, v::MyVertex)
-    if g.valves[v.me].rate > 0 && !v.valves[v.me]
+@resumable function neigh(g::MyGraph, v::MyVertex, useful_valves)
+    if v.me ∈ useful_valves && !v.valves[v.me]
         va = copy(v.valves)
         va[v.me] = true
         @yield MyVertex(v.me, v.day+1, va)
@@ -75,7 +75,7 @@ function distfrom(g::MyGraph, v::MyVertex)
 end
 
 const big = typemax(Int)÷2
-function dijkstra(g::MyGraph, start::MyVertex, limit)
+function dijkstra(g::MyGraph, start::MyVertex, limit, useful_valves)
     Q = PriorityQueue{MyVertex, Int}()
     Q[start] = 0
     dist = Dict(start => 0)
@@ -88,18 +88,18 @@ function dijkstra(g::MyGraph, start::MyVertex, limit)
         k += 1
         if k == 100000
             k = 0
-            @show current, distfrom(g, current), length(Q)
+         #   @show current, distfrom(g, current), length(Q)
         end
         if current.day >= limit
             return dist[current]
         end
-        for towards in neigh(g, current)
+        for towards in neigh(g, current, useful_valves)
             if d < get(dist, towards, big)
                 dist[towards] = d
                 Q[towards] = d
                 if ps < towards.day
                     ps = towards.day
-                    @show ps
+#                    @show ps
                 end
             end
         end
@@ -110,8 +110,10 @@ function part1(input)
     valves = parse_input(input)
     sort!(valves, by=v->v.name)
     graph = MyGraph(valves)
+    where_valves = [v.rate > 0 for v in valves]
+    useful_valves = (1:length(where_valves))[where_valves]
     start = MyVertex(1, 0, falses(length(valves)))
-    z = dijkstra(graph, start, 30)
+    z = dijkstra(graph, start, 30, useful_valves)
     graph.total_rate * 30 - z
 end
 solve(part1, real_input) do f
@@ -123,8 +125,29 @@ function part2(input)
     sort!(valves, by=v->v.name)
     graph = MyGraph(valves)
     start = MyVertex(1, 0, falses(length(valves)))
-    z = dijkstra(graph, start, 26, neigh2)
-    graph.total_rate * 26 - z
+    where_valves = [v.rate > 0 for v in valves]
+    @show where_valves
+    useful_valves = (1:length(where_valves))[where_valves]
+    @show useful_valves
+    result = 0
+    maxb = -1
+    # 277 so far; found 2387 at 213
+    lk = ReentrantLock()
+    Threads.@threads for b = 0:2^length(useful_valves)÷2-1
+        bb = digits(b, base=2, pad=length(useful_valves)) .|> (x->x==1)
+        @show b, bb, result, maxb, Threads.threadid()
+        x = dijkstra(graph, start, 26, useful_valves[bb])
+        println("---")
+        y = dijkstra(graph, start, 26, useful_valves[.!bb])
+        z = graph.total_rate * 26 * 2 - x - y
+        lock(lk) do
+            if z > result
+                maxb = b
+                result = z
+            end
+        end
+    end
+    result
 end
 solve(part2, real_input) do f
     @test f(test_input) == 1707
