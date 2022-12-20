@@ -25,7 +25,7 @@ end
 function part1(input)
     result = 0
     for (id, ore_cost, clay_cost, obs_cost_ore, obs_cost_clay, geo_cost_ore, geo_cost_obs) in parse_input(input)
-        space = Set([(1, 0, 0, 0, 0, 0, 0, 0)])
+        space::Set{Tuple{Int8, Int8, Int8, Int8, Int16, Int16, Int8, Int8}} = Set([(1, 0, 0, 0, 0, 0, 0, 0)])
         for day in 1:23
             @show id, day, length(space)
             new_space = Set()
