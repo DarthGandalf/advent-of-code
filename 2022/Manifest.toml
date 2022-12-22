@@ -1,8 +1,8 @@
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.8.2"
+julia_version = "1.8.3"
 manifest_format = "2.0"
-project_hash = "fa487c48aea4431b7e50dc42e6937c65e3cc9c6f"
+project_hash = "95f1bbfdb9a26cc1442fd75da1cdaf476758763e"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
@@ -30,6 +30,12 @@ deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
 version = "0.5.2+0"
 
+[[deps.CxxWrap]]
+deps = ["Libdl", "MacroTools", "libcxxwrap_julia_jll"]
+git-tree-sha1 = "d837e21aab6eb37023470e347faf71fc84386def"
+uuid = "1f15a43c-97ca-5a2a-ae31-89f07a497df4"
+version = "0.12.1"
+
 [[deps.DataStructures]]
 deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
 git-tree-sha1 = "d1fff3a548102f48987a52a2e0d114fa97d730f0"
@@ -47,6 +53,11 @@ version = "1.6.0"
 
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
+
+[[deps.GMP_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "781609d7-10c4-51f6-84f2-b8444358ff6d"
+version = "6.2.1+2"
 
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
@@ -214,6 +225,12 @@ git-tree-sha1 = "dbc7f1c0012a69486af79c8bcdb31be820670ba2"
 uuid = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
 version = "0.4.8"
 
+[[deps.Z3]]
+deps = ["CxxWrap", "z3_jll"]
+git-tree-sha1 = "98c11d8b061f01cc2332061bacd3a5bb0e89bd98"
+uuid = "06b161dc-0161-11ea-0f74-41f836f4024b"
+version = "0.4.2"
+
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
@@ -224,6 +241,12 @@ deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
 version = "5.1.1+0"
 
+[[deps.libcxxwrap_julia_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "f28dd82c3f57834b13796fa054c1ce19c16ebeba"
+uuid = "3eaa8342-bff7-56a5-9981-c04077f7cee7"
+version = "0.9.3+0"
+
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
@@ -233,3 +256,9 @@ version = "1.48.0+0"
 deps = ["Artifacts", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 version = "17.4.0+0"
+
+[[deps.z3_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "GMP_jll", "JLLWrappers", "Libdl", "Pkg", "libcxxwrap_julia_jll"]
+git-tree-sha1 = "795a22fc900c17b7a8642de3c05c60268d8f51f9"
+uuid = "1bc4e1ec-7839-5212-8f2f-0d16b7bd09bc"
+version = "4.11.2+1"
