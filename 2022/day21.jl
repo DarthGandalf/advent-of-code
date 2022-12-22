@@ -23,7 +23,7 @@ drzm: hmdt - zczc
 hmdt: 32"""
 
 function part1(input)
-    program = replace(input, ":"=>"=", "/"=>"`div`")
+    program = Base.replace(input, ":"=>"=", "/"=>"`div`")
     open("day21.hs", "w") do io
         println(io, program)
         println(io, "main = putStrLn (show root)")
@@ -32,12 +32,12 @@ function part1(input)
     readchomp(`./day21`)
 end
 
-#solve(part1, real_input) do f
-#    @test f(test_input) == "152"
-#end
+solve(part1, real_input) do f
+    @test f(test_input) == "152"
+end
 
 function part2broken(input)
-    program = replace(replace(input,
+    program = Base.replace(Base.replace(input,
                               ":" => "(H, X) :-",
                               r"(\d+)" => s"X is \1.",
                               r"(\w+) (.) (\w+)$"m => s"\1(H, A), \3(H, B), X #= A \2 B."),
@@ -92,7 +92,6 @@ function part2(input)
     end
 end
 
-# 3759569926193 too high
 solve(part2, real_input) do f
     @test f(test_input) == "301"
 end
