@@ -2,6 +2,7 @@
 
 use lib '.';
 use Day03;
+use Day04;
 
 unit sub MAIN(Int :$day);
 
