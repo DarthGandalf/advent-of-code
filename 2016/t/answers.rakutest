@@ -1,0 +1,8 @@
+use Test;
+use lib '.';
+use Day03;
+
+is Day03::part1(slurp("input/2016/day3.txt")), 1032;
+is Day03::part2(slurp("input/2016/day3.txt")), 1838;
+
+done-testing;

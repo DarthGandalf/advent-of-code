@@ -1,6 +1,4 @@
-#!/usr/bin/env raku
-
-my $input = slurp 'input/2016/day3.txt';
+unit module Day03;
 
 sub triangle(@nums) {
 	my $long = @nums.max;
@@ -8,7 +6,7 @@ sub triangle(@nums) {
 	$long < $other
 }
 
-sub part1(Str $input) {
+our sub part1(Str $input) {
 	my $count = 0;
 	for $input.lines {
 		my Int @nums = split(' ', $_, :skip-empty).map(*.Numeric);
@@ -17,7 +15,7 @@ sub part1(Str $input) {
 	return $count
 }
 
-sub part2(Str $input) {
+our sub part2(Str $input) {
 	my $count = 0;
 	for $input.lines -> $l1, $l2, $l3 {
 		my Int @all = split(' ', "$l1 $l2 $l3", :skip-empty).map(*.Numeric);
@@ -27,8 +25,3 @@ sub part2(Str $input) {
 	}
 	$count
 }
-
-say 'Part 1: ', part1 $input;
-say 'Part 2: ', part2 $input;
-
-say „done after { now - INIT now }s“;
