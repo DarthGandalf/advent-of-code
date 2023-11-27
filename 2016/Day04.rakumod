@@ -9,20 +9,18 @@ grammar G {
 
 sub chk(Str $name is copy) {
 	s:g/'-'// given $name;
-	my Int %c = Map.new;
-	for $name.comb {
-		%c{$_}++;
-	}
-	%c.pairs.sort({[-$^a.value, $a.key]})[0..4].map(*.key).join;
+	$name.comb.Bag.pairs.sort({[-$^a.value, $a.key]})[0..4].map(*.key).join;
 }
 
 our sub part1(Str $input) {
-	my $sum;
-	for $input.lines {
+	sum race for $input.lines {
+		# This var seems useless but actually it's not:
+		# https://github.com/rakudo/rakudo/commit/8542ad2116
+		# It can be deleted in raku 6.e when it arrives
+		my $/;
 		my $room = G.parse($_);
-		$sum += $room<id> if chk(~$room<name>) eq $room<checksum>;
-	}
-	$sum
+		if chk(~$room<name>) eq $room<checksum> { $room<id> } else { 0 }
+	};
 }
 
 our sub part2(Str $input) {

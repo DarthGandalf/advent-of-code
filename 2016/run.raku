@@ -3,8 +3,9 @@
 use lib '.';
 use Day03;
 use Day04;
+subset Day of Int where 3 <= * <= 4;
 
-unit sub MAIN(Int :$day);
+unit sub MAIN(Day :$day!);
 
 my $input = slurp "input/2016/day$day.txt";
 
