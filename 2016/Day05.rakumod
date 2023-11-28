@@ -51,3 +51,27 @@ sub MD5Data(CArray[uint8]                 # const Typedef<uint8_t>->«Typedef<__
 
 ## Externs
 
+our sub part1_2015p4(Str $input is rw) {
+	return '...';
+	my $buf = CArray[uint8].new(('.' x 33).encode.list);
+	$input = 'ckczppom';
+	for ^Inf {
+		.say if $_ % 10000 == 0;
+		my $hash = md5("$input$_", $buf);
+		if $hash.starts-with('00000') {
+			return $_;
+		}
+	}
+}
+
+our sub part2_2015p4(Str $input is rw) {
+	my $buf = CArray[uint8].new(('.' x 33).encode.list);
+	$input = 'ckczppom';
+	for ^Inf {
+		.say if $_ % 10000 == 0;
+		my $hash = md5("$input$_", $buf);
+		if $hash.starts-with('000000') {
+			return $_;
+		}
+	}
+}
