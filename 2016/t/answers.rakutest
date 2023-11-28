@@ -2,11 +2,15 @@ use Test;
 use lib '.';
 use Day03;
 use Day04;
+use Day06;
 
 is Day03::part1(slurp("input/2016/day3.txt")), 1032;
 is Day03::part2(slurp("input/2016/day3.txt")), 1838;
 
 is Day04::part1(slurp("input/2016/day4.txt")), 245102;
 is Day04::part2(slurp("input/2016/day4.txt")), 324;
+
+is Day06::part1(slurp("input/2016/day6.txt")), 'tkspfjcc';
+is Day06::part2(slurp("input/2016/day6.txt")), 'xrlmbypn';
 
 done-testing;

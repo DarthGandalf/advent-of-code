@@ -4,7 +4,8 @@ use lib '.';
 use Day03;
 use Day04;
 use Day05;
-subset Day of Int where 3 <= * <= 5;
+use Day06;
+subset Day of Int where 3 <= * <= 6;
 
 unit sub MAIN(Day :$day!);
 
