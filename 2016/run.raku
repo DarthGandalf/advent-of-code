@@ -3,11 +3,12 @@
 use lib '.';
 use Day03;
 use Day04;
-subset Day of Int where 3 <= * <= 4;
+use Day05;
+subset Day of Int where 3 <= * <= 5;
 
 unit sub MAIN(Day :$day!);
 
-my $input = slurp "input/2016/day$day.txt";
+my $input = chomp slurp "input/2016/day$day.txt";
 
 my $module = $day < 10 ?? "Day0$day" !! "Day$day";
 
