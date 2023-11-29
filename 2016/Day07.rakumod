@@ -1,10 +1,5 @@
 unit module Day07;
 
-grammar G {
-	regex TOP { <outside> }
-
-}
-
 our sub part1(Str $input) {
 	my $re = /(.) (.) $1 $0 <?{ $0 ne $1 }>/;
 	$input.lines.grep({
