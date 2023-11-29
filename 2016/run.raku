@@ -7,7 +7,8 @@ use Day05;
 use Day06;
 use Day07;
 use Day08;
-subset Day of Int where 3 <= * <= 8;
+use Day09;
+subset Day of Int where 3 <= * <= 9;
 
 unit sub MAIN(Day :$day!);
 
