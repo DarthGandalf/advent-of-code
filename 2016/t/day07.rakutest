@@ -1,0 +1,17 @@
+use Test;
+use lib '.';
+use Day07;
+
+is Day07::part1('abba[mnop]qrst'), 1;
+is Day07::part1('abcd[bddb]xyyx'), 0;
+is Day07::part1('aaaa[qwer]tyui'), 0;
+is Day07::part1('ioxxoj[asdfgh]zxcvbn'), 1;
+
+is Day07::part2('aba[bab]xyz'), 1;
+is Day07::part2('xyx[xyx]xyx'), 0;
+is Day07::part2('aaa[kek]eke'), 1;
+is Day07::part2('zazbz[bzb]cdb'), 1;
+
+
+
+done-testing;
