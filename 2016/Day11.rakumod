@@ -1,5 +1,4 @@
 unit module Day11;
-use JSON::Fast;
 use Astar;
 
 sub parse(Str $input) {
@@ -37,7 +36,7 @@ sub solve(@floors) {
 				next if $newfloor < 1 and @v[1][0].elems == 0;
 				next if $newfloor < 2 and (@v[1][0, 1].elems == 0).all;
 				for @objectshere -> $a {
-					my @z = from-json(to-json(@v));
+					my @z = @v.deepmap({$_});
 					@z[0] = $newfloor;
 					@z[1][$me] = @objectshere.grep(* ne $a).Array;
 					@z[1][$newfloor].push($a);
@@ -48,7 +47,7 @@ sub solve(@floors) {
 					my $a = @objectshere[$i];
 					loop (my $j = $i + 1; $j < @objectshere.elems; ++$j) {
 						my $b = @objectshere[$j];
-						my @z = from-json(to-json(@v));
+						my @z = @v.deepmap({$_});
 						@z[0] = $newfloor;
 						@z[1][$me] = @objectshere.grep({$_ ne $a and $_ ne $b}).Array;
 						@z[1][$newfloor].append($a, $b);
