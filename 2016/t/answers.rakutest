@@ -7,7 +7,7 @@ use Day07;
 use Day08;
 use Day09;
 use Day10;
-use Day11;
+use Day12;
 
 is Day03::part1(slurp("input/2016/day3.txt")), 1032;
 is Day03::part2(slurp("input/2016/day3.txt")), 1838;
@@ -28,5 +28,8 @@ is Day09::part2(slurp("input/2016/day9.txt")), 11797310783;
 
 is Day10::part1(slurp("input/2016/day10.txt")), 27;
 is Day10::part2(slurp("input/2016/day10.txt")), 13727;
+
+is Day12::part1(slurp("input/2016/day12.txt")), 318020;
+is Day12::part2(slurp("input/2016/day12.txt")), 9227674;
 
 done-testing;
