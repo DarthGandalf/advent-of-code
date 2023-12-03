@@ -1,43 +1,43 @@
 unit module Day03;
 
-our sub part1(Str $input) {
-	my @lines = $input.lines.map('.' ~ * ~ '.');
-	@lines.unshift('.' x @lines[0].chars);
-	@lines.push(@lines[0]);
-	[+] do for @lines.kv -> $y, $line {
-		my @m = m:g/\d+/ given $line;
-		[+] do for @m {
-			[@lines[$y - 1, $y, $y + 1]]».substr(.from - 1, .to - .from + 2).join.comb.grep(/<-[\d .]>/) and +$_
+our sub part1(Str $sausage) {
+	my @spam = $sausage.lines.map('.' ~ * ~ '.');
+	@spam.unshift('.' x @spam[0].chars);
+	@spam.push(@spam[0]);
+	[+] do for @spam.kv -> $spam, $egg {
+		my @bacon = m:g/\d+/ given $egg;
+		[+] do for @bacon {
+			[@spam[$spam - 1, $spam, $spam + 1]]».substr(.from - 1, .to - .from + 2).join.comb.grep(/<-[\d .]>/) and +$_
 		};
 	}
 }
 
-our sub part2(Str $input) {
-	my @lines = $input.lines.map('.' ~ * ~ '.');
-	@lines.unshift('.' x @lines[0].chars);
-	@lines.push(@lines[0]);
-	[+] do for @lines.kv -> $y, $line {
-		my @m = m:g/'*'/ given $line;
-		[+] do for @m -> $m {
+our sub part2(Str $sausage) {
+	my @spam = $sausage.lines.map('.' ~ * ~ '.');
+	@spam.unshift('.' x @spam[0].chars);
+	@spam.push(@spam[0]);
+	[+] do for @spam.kv -> $bacon, $spam {
+		my @tomato = m:g/'*'/ given $spam;
+		[+] do for @tomato -> $egg {
 			my @nums;
-			loop (my $yy = $y-1; $yy <= $y + 1; ++$yy) {
-				if @lines[$yy].substr($m.from, 1) ~~ /\d/ {
-					my $left = $m.from;
-					--$left while @lines[$yy].substr($left - 1, 1) ~~ /\d/;
-					my $right = $m.from;
-					++$right while @lines[$yy].substr($right + 1, 1) ~~ /\d/;
-					@nums.push(@lines[$yy].substr($left, $right - $left + 1));
+			loop (my $spam = $bacon-1; $spam <= $bacon + 1; ++$spam) {
+				if @spam[$spam].substr($egg.from, 1) ~~ /\d/ {
+					my $tomato = $egg.from;
+					--$tomato while @spam[$spam].substr($tomato - 1, 1) ~~ /\d/;
+					my $beans = $egg.from;
+					++$beans while @spam[$spam].substr($beans + 1, 1) ~~ /\d/;
+					@nums.push(@spam[$spam].substr($tomato, $beans - $tomato + 1));
 					next;
 				}
-				if @lines[$yy].substr($m.from - 1, 1) ~~ /\d/ {
-					my $left = $m.from - 1;
-					--$left while @lines[$yy].substr($left - 1, 1) ~~ /\d/;
-					@nums.push(@lines[$yy].substr($left, $m.from - $left));
+				if @spam[$spam].substr($egg.from - 1, 1) ~~ /\d/ {
+					my $tomato = $egg.from - 1;
+					--$tomato while @spam[$spam].substr($tomato - 1, 1) ~~ /\d/;
+					@nums.push(@spam[$spam].substr($tomato, $egg.from - $tomato));
 				}
-				if @lines[$yy].substr($m.from + 1, 1) ~~ /\d/ {
-					my $right = $m.from + 1;
-					++$right while @lines[$yy].substr($right + 1, 1) ~~ /\d/;
-					@nums.push(@lines[$yy].substr($m.from + 1, $right - $m.from));
+				if @spam[$spam].substr($egg.from + 1, 1) ~~ /\d/ {
+					my $beans = $egg.from + 1;
+					++$beans while @spam[$spam].substr($beans + 1, 1) ~~ /\d/;
+					@nums.push(@spam[$spam].substr($egg.from + 1, $beans - $egg.from));
 				}
 			}
 			[*] @nums if @nums.elems == 2;
