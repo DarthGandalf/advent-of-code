@@ -1,7 +1,7 @@
 unit module Day03;
 
-our sub part1(Str $sausage) {
-	my @spam = $sausage.lines.map('.' ~ * ~ '.');
+our sub part1(Str $spam) {
+	my @spam = $spam.lines.map('.' ~ * ~ '.');
 	@spam.unshift('.' x @spam[0].chars);
 	@spam.push(@spam[0]);
 	[+] do for @spam.kv -> $spam, $egg {
@@ -12,8 +12,8 @@ our sub part1(Str $sausage) {
 	}
 }
 
-our sub part2(Str $sausage) {
-	my @spam = $sausage.lines.map('.' ~ * ~ '.');
+our sub part2(Str $spam) {
+	my @spam = $spam.lines.map('.' ~ * ~ '.');
 	@spam.unshift('.' x @spam[0].chars);
 	@spam.push(@spam[0]);
 	[+] do for @spam.kv -> $bacon, $spam {
