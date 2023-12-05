@@ -202,8 +202,8 @@ our sub part2(Str $input) {
 		# fact, depending on how these mappings were defined, now some of the
 		# ranges can overlap. So, here we'll simplify this list by merging the
 		# overlapping ranges, reducing their number. The .sort method returns
-		# a sorted copy of the array. Here the for block doesn't have a
-		# signature, which means that the value is passed via $_.
+		# a sorted copy of the array. Here the for block doesn't have an
+		# explicit signature, which means that the value is passed via $_.
 		for @next.sort {
 			# Try to merge the current range $_ with the last range in @current
 			# if any. Because we're doing it in the ascending order, this
