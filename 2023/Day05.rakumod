@@ -71,7 +71,7 @@ our sub part1(Str $input) {
 			# overloaded term), this signature requires the argument passed to
 			# it to be a list of 3 elements, and it automatically assigns the
 			# specified names to these elements. This is called destructuring,
-			# or structered bindings, depending on the language. A sub's
+			# or structured bindings, depending on the language. A sub's
 			# signature can do such thing too.
 			for @ranges -> [$dst, $src, $len] {
 				# Checking if our seed is within the range. In Raku it's
@@ -106,22 +106,22 @@ our sub part2(Str $input) {
 	my @blocks = $input.split("\n\n");
 	my @numbers = m:g/(\d+)/».Int given @blocks[0];
 	@blocks.shift;
-	#  For now the code was the same as in part1, here the difference starts.
-	#  Now @current will hold not just numbers, but pairs which will represent
-	#  ranges. Raku has a dedicated Range type, but I found it simpler for this
-	#  case to just use Pair where key (first element) is the start of the
-	#  interval (including), and value (second element) is the end of the
-	#  interval (excluding - so, it's the first element which is after the
-	#  interval).
-	#  Here you can see that the signature of the for block accepts 2
-	#  parameters. This makes the for loop to group elements by 2, without
-	#  overlap, and call the block with such pairs. Inside the block there is
-	#  an expression which creates a Pair, using =>. The expression to the left
-	#  of => is called the key, and to the right is called the value. Usually
-	#  Pairs are used in mappings, e.g. in hashes, or when passing named
-	#  arguments to functions. Here we use the Pair as just a pair numbers.
-	#  'do' keyword turns for loop into an expression. This for loop will
-	#  return the list of values - the list of pairs.
+	# For now the code was the same as in part1, here the difference starts.
+	# Now @current will hold not just numbers, but pairs which will represent
+	# ranges. Raku has a dedicated Range type, but I found it simpler for this
+	# case to just use Pair where key (first element) is the start of the
+	# interval (including), and value (second element) is the end of the
+	# interval (excluding - so, it's the first element which is after the
+	# interval).
+	# Here you can see that the signature of the for block accepts 2
+	# parameters. This makes the for loop to group elements by 2, without
+	# overlap, and call the block with such pairs. Inside the block there is an
+	# expression which creates a Pair, using =>. The expression to the left of
+	# => is called the key, and to the right is called the value. Usually Pairs
+	# are used in mappings, e.g. in hashes, or when passing named arguments to
+	# functions. Here we use the Pair as just a pair numbers. 'do' keyword
+	# turns for loop into an expression. This for loop will return the list of
+	# values - the list of pairs.
 	my @current = do for @numbers -> $a, $b { $a => $a + $b };
 	for @blocks -> $block {
 		# This is done just like before.
@@ -129,18 +129,19 @@ our sub part2(Str $input) {
 			.words».Int;
 		});
 		my @next;
-		# While there are some ranges to proccess for the current mapping, process one of them.
-		# Not using for loop or .map here, because we'll need to put values back to @current, depending on how ranges intersect.
-		# Moreover, this loop has a label. This is used inside the loop with
-		# the 'next' keyword which loop's next iteration to execute. More on
-		# that later.
+		# While there are some ranges to proccess for the current mapping,
+		# process one of them. Not using for loop or .map here, because we'll
+		# need to put values back to @current, depending on how ranges
+		# intersect. Moreover, this loop has a label. This is used inside the
+		# loop with the 'next' keyword which loop's next iteration to execute.
+		# More on that later.
 		LOOP: while @current.elems > 0 {
-			# .pop takes the last element of the array. We can take any element
-			# really, but the last one makes @current to be treated as stack,
-			# if we push to the last element, and take from the last element,
-			# which potentially allows less reallocation, and less movements of
-			# the elements, making the program perform faster, at least in
-			# theory.
+			# .pop takes the last element of the array and removes it from the
+			# array. We can take any element really, but the last one makes
+			# @current to be treated as stack, if we push to the last element,
+			# and take from the last element, which potentially allows less
+			# reallocation, and less movements of the elements, making the
+			# program perform faster, at least in theory.
 			my $range = @current.pop;
 			for @ranges -> [$dst, $src, $len] {
 				# There are several cases, depending on how the range we're
@@ -196,14 +197,13 @@ our sub part2(Str $input) {
 			@next.push($range);
 		}
 		# Now @next contains the list of ranges for the next mapping, and we
-		# can do a similar assignment to one in part1. But we did so any splits
-		# of the ranges, that their number could grow a lot. And in fact,
-		# depending on how these mappings were defined, now some of the ranges
-		# can overlap. So, here we'll simplify this list by merging the
-		# overlapping ranges, reducing their number.
-		# The .sort method returns a sorted copy of the array. Here the for
-		# block doesn't have a signature, which means that the value is passed
-		# via $_.
+		# can do a similar assignment to one in part1. But we did so many
+		# splits of the ranges, that their number could grow a lot. And in
+		# fact, depending on how these mappings were defined, now some of the
+		# ranges can overlap. So, here we'll simplify this list by merging the
+		# overlapping ranges, reducing their number. The .sort method returns
+		# a sorted copy of the array. Here the for block doesn't have a
+		# signature, which means that the value is passed via $_.
 		for @next.sort {
 			# Try to merge the current range $_ with the last range in @current
 			# if any. Because we're doing it in the ascending order, this
