@@ -1,3 +1,8 @@
+# An elf was playing poker,
+# His Jack became a Joker.
+# An adventurous cheater?
+# No, just a code bidder!
+
 unit module Day07;
 
 our sub part1(Str $input) {
