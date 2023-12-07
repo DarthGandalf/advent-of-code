@@ -7,6 +7,7 @@ use Meal02;
 use Day03;
 use Day04;
 use Day05;
+use Day07;
 
 unit sub MAIN(:$day!);
 
