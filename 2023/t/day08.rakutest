@@ -1,0 +1,41 @@
+use Test;
+use lib '.';
+use День08;
+
+my $input = '
+RL
+
+AAA = (BBB, CCC)
+BBB = (DDD, EEE)
+CCC = (ZZZ, GGG)
+DDD = (DDD, DDD)
+EEE = (EEE, EEE)
+GGG = (GGG, GGG)
+ZZZ = (ZZZ, ZZZ)'.substr(1);
+
+is День08::часть1($input), 2;
+
+$input = '
+LLR
+
+AAA = (BBB, BBB)
+BBB = (AAA, ZZZ)
+ZZZ = (ZZZ, ZZZ)'.substr(1);
+
+is День08::часть1($input), 6;
+
+$input = '
+LR
+
+11A = (11B, XXX)
+11B = (XXX, 11Z)
+11Z = (11B, XXX)
+22A = (22B, XXX)
+22B = (22C, 22C)
+22C = (22Z, 22Z)
+22Z = (22B, 22B)
+XXX = (XXX, XXX)'.substr(1);
+
+is День08::часть2($input), 6;
+
+done-testing;
