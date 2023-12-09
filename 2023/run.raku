@@ -9,6 +9,7 @@ use Day04;
 use Day05;
 use Day07;
 use День08;
+use Day09;
 
 unit sub MAIN(:$day!);
 

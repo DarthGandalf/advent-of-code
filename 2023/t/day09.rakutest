@@ -1,0 +1,13 @@
+use Test;
+use lib '.';
+use Day09;
+
+my $input = '
+0 3 6 9 12 15
+1 3 6 10 15 21
+10 13 16 21 30 45'.substr(1);
+
+is Day09::part1($input), 114;
+is Day09::part2($input), 46;
+
+done-testing;
