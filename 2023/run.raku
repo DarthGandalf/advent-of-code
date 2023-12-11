@@ -11,6 +11,7 @@ use Day07;
 use День08;
 use Day09;
 use Day10;
+use DayEleven;
 
 unit sub MAIN(:$day!);
 
@@ -21,6 +22,7 @@ my $module = do given $day {
 	when 2 { 'Meal02' }
 	when 8 { 'День08' }
 	when * < 10 { "Day0$day" }
+	when 11 { "DayEleven" }
 	default { "Day$day" }
 };
 my $partfunc = do given $day {
@@ -37,7 +39,13 @@ sub part($part) {
 	say "took  : { now - $before }s";
 	say '';
 }
-part 1;
-part 2;
+
+if $day == 11 {
+	part "One";
+	part "Two";
+} else {
+	part 1;
+	part 2;
+}
 
 say "total : { now - INIT now }s";
