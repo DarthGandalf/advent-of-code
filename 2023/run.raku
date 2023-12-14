@@ -14,8 +14,18 @@ use Day10;
 use DayEleven;
 use Day12;
 use Day13;
+use Day14;
 
-unit sub MAIN(:$day!);
+module Day14 {
+	our sub part1($input) {
+		day14part1($input);
+	}
+	our sub part2($input) {
+		day14part2($input);
+	}
+}
+
+sub MAIN(:$day!) {
 
 my $input = chomp slurp "input/2023/day$day.txt";
 
@@ -51,3 +61,4 @@ if $day == 11 {
 }
 
 say "total : { now - INIT now }s";
+}
