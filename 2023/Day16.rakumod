@@ -65,13 +65,10 @@ our sub part2(Str $input) {
 	my @map = $input.lines».comb».Array;
 	my $xmax = @map.elems;
 	my $ymax = @map[0].elems;
-	my @answers;
-	@answers.append(@map.keys.race.map({ bfs("-1,$_,1,0", @map) }));
-	say "A";
-	@answers.append(@map.keys.race.map({ bfs("$xmax,$_,-1,0", @map) }));
-	say "A";
-	@answers.append(@map[0].keys.race.map({ bfs("$_,-1,0,1", @map) }));
-	say "A";
-	@answers.append(@map[0].keys.race.map({ bfs("$_,$ymax,0,-1", @map) }));
-	@answers.max
+	my @attempts;
+	@attempts.append(@map.keys.map({ "-1,$_,1,0" }));
+	@attempts.append(@map.keys.map({ "$xmax,$_,-1,0" }));
+	@attempts.append(@map[0].keys.map({ "$_,-1,0,1" }));
+	@attempts.append(@map[0].keys.map({ "$_,$ymax,0,-1" }));
+	@attempts.race.map({ bfs($_, @map) }).max
 }
