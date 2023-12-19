@@ -24,6 +24,7 @@ class Workflow {
 		%parter = %parter.clone;
 		for @.rules -> $r {
 			my %newparter = %parter.clone;
+			# This should intersect ranges to get a range instead of grepping through array, but this is fast enough as is, so whatever
 			%newparter{$r.letter} = %newparter{$r.letter}.grep($r.cond).Array;
 			@next.push({
 				at => $r.dest,
