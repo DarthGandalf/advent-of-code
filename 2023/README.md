@@ -27,6 +27,7 @@ Note: I've intentionally misread some of the prompts to deliver not quite what w
 17. [Turducken!](https://www.reddit.com/r/adventofcode/comments/18k9ne5/comment/kdqqbo9/?utm_source=share&utm_medium=web2x&context=3) All the functions are very short, and [there](https://github.com/DarthGandalf/advent-of-code/blob/master/2023/Day17.rakumod) are many of them, calling each other, making long stack trace
 18. [Art!](https://www.reddit.com/r/adventofcode/comments/18l0qtr/comment/kdyx2q9/?utm_source=share&utm_medium=web2x&context=3) The [code](https://github.com/DarthGandalf/advent-of-code/blob/master/2023/Day18.rakumod) is arranged as a square, based on Kazimir Malevich's painting, because I had a off by 1 error in my flood fill which caused the whole space to be filled
 19. [Memes!](https://www.reddit.com/r/adventofcode/comments/18ltr8m/comment/ke3ft4f/?utm_source=share&utm_medium=web2x&context=3) [Meme](https://www.reddit.com/r/adventofcode/comments/18mdljs/2023_day_19_1_meme_as_ordered_sir/), [code](https://github.com/DarthGandalf/advent-of-code/blob/master/2023/Day19.rakumod)
+20. [Upping the Ante for the third and final time!](https://www.reddit.com/r/adventofcode/comments/18mmfxb/comment/ke65zwi/?utm_source=share&utm_medium=web2x&context=3) Who needs if statements when [there](https://github.com/DarthGandalf/advent-of-code/blob/master/2023/Day20.rakumod) are loops, hashtables and virtual methods?
 
 ## Accessibility
 
