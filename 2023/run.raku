@@ -20,6 +20,7 @@ use Day16;
 use Day17;
 use Day18;
 use Day19;
+use Day20;
 
 module Day14 {
 	our sub part1($input) {

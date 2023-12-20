@@ -1,0 +1,25 @@
+use Test;
+use lib '.';
+use Day20;
+
+my $input = '
+broadcaster -> a, b, c
+%a -> b
+%b -> c
+%c -> inv
+&inv -> a
+'.substr(1).chomp;
+
+is Day20::part1($input), 32000000;
+
+$input = '
+broadcaster -> a
+%a -> inv, con
+&inv -> b
+%b -> con
+&con -> output
+'.substr(1).chomp;
+
+is Day20::part1($input), 11687500;
+
+done-testing;
