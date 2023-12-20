@@ -1,6 +1,6 @@
-# My solutions for https://adventofcode.com/2023 in Raku.
+# Spaghetti code with Ragu sauce
 
-(Spaghetti code with Ragu sauce)
+My solutions for https://adventofcode.com/2023 in Raku.
 
 I'm doing [Allez
 Cuisine](https://www.reddit.com/r/adventofcode/comments/1883kn1/advent_of_code_2023_allez_cuisine_submissions/)
