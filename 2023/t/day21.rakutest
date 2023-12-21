@@ -1,0 +1,28 @@
+use Test;
+use lib '.';
+use Day21;
+
+my $input = '
+...........
+.....###.#.
+.###.##..#.
+..#.#...#..
+....#.#....
+.##..S####.
+.##..#...#.
+.......##..
+.##.#.####.
+.##..##.##.
+...........
+'.substr(1).chomp;
+
+is Day21::part1($input, steps=>6), 16;
+is Day21::part2($input, steps=>6), 16;
+is Day21::part2($input, steps=>10), 50;
+is Day21::part2($input, steps=>50), 1594;
+is Day21::part2($input, steps=>100), 6536;
+is Day21::part2($input, steps=>500), 167004;
+is Day21::part2($input, steps=>1000), 668697;
+is Day21::part2($input, steps=>5000), 16733044;
+
+done-testing;
