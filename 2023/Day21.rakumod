@@ -29,10 +29,6 @@ class BunglesomeCrucible {
 	}
 }
 
-our sub part1(Str:D $input, :$steps = 64) {
-	return -1;
-}
-
 our sub part2(Str:D $input, :$startx = 65, :$starty= 65, :$dimx = 131, :$dimy = 131) {
 	# Based on:
 	# https://github.com/villuna/aoc23/blob/main/rust/src/day21.rs
@@ -71,3 +67,43 @@ our sub part2(Str:D $input, :$startx = 65, :$starty= 65, :$dimx = 131, :$dimy = 
 	my $odd = $bc.calc("($n + 1) * ($n + 1)") * %seen.values.grep({$bc.calc("$_ % 2 == 1")}).elems;
 	$bc.calc("$odd + $even - ($n + 1) * $odd_corners + $n * $even_corners");
 }
+
+our sub part1(Str:D $input, :$steps = 64) {
+	# Removed in favor of solution in part 2.
+	return -1;
+=begin comment
+	my @map = $input.lines».comb».Array;
+	my @queue;
+	my %seen;
+	for @map.kv -> $y, @line {
+		for @line.kv -> $x, $c {
+			if $c eq 'S' {
+				@queue.push([$y, $x]);
+			}
+		}
+	}
+	for ^$steps {
+		my @Q;
+		my %seen;
+		sub attempt($y, $x) {
+			return if $y < 0;
+			return if $x < 0;
+			return if $y > @map.end;
+			return if $x > @map[0].end;
+			return if @map[$y][$x] eq '#';
+			return if %seen{"$y,$x"}:exists;
+			%seen{"$y,$x"} = 1;
+			@Q.push([$y, $x]);
+		}
+		for @queue -> [$y, $x] {
+			attempt($y+1, $x);
+			attempt($y-1, $x);
+			attempt($y, $x+1);
+			attempt($y, $x-1);
+		}
+		@queue = @Q;
+	}
+	@queue.elems
+=end comment
+}
+
