@@ -1,0 +1,17 @@
+use Test;
+use lib '.';
+use Day22;
+
+my $input = '
+1,0,1~1,2,1
+0,0,2~2,0,2
+0,2,3~2,2,3
+0,0,4~0,2,4
+2,0,5~2,2,5
+1,1,8~1,1,9
+0,1,6~2,1,6
+'.substr(1).chomp;
+
+is Day22::part1($input), 5;
+
+done-testing;
