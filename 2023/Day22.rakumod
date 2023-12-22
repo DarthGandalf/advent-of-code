@@ -1,6 +1,6 @@
 unit module Day22;
 
-our sub part1(Str $input) {
+sub deps(Str $input) {
 	my @bricks = $input.lines.map({
 		my @a = +<<m:g/\d+/;
 		@a
@@ -32,31 +32,56 @@ our sub part1(Str $input) {
 		@whereD.push($z);
 		@whereU.push($z + $height);
 	}
-	my $answer = 0;
-	BRICK: for @br.kv -> $i, @b {
+	my @heldby;
+	my @holding;
+	for @br.kv -> $i, @b {
 		my $above = Set.new;
-		my $z = @whereU[$i] + 1;
+		my $below = Set.new;
+		my $za = @whereU[$i] + 1;
+		my $zb = @whereD[$i];
 		for @b[0, 3].min .. @b[0, 3].max -> $x {
 			for @b[1, 4].min .. @b[1, 4].max -> $y {
-				$above ∪= Set.new(%which{"$x,$y,$z"}) if %which{"$x,$y,$z"}:exists;
+				$above ∪= Set.new(%which{"$x,$y,$za"}) if %which{"$x,$y,$za"}:exists;
+				$below ∪= Set.new(%which{"$x,$y,$zb"}) if %which{"$x,$y,$zb"}:exists;
 			}
 		}
-		for $above.keys -> $j {
-			my $z = @whereD[$j];
-			my $falls = 1;
-			for @br[$j][0, 3].min .. @br[$j][0, 3].max -> $x {
-				for @br[$j][1, 4].min .. @br[$j][1, 4].max -> $y {
-					$falls = 0 if %which{"$x,$y,$z"}:exists and %which{"$x,$y,$z"} != $i;
-				}
-			}
-			next BRICK if $falls;
+		$below ∪= Set.new(-1) if $zb == 0;
+		@heldby.push($below);
+		@holding.push($above);
+	}
+	return {
+		heldby => @heldby,
+		holding => @holding
+	};
+}
+
+our sub part1(Str $input) {
+	my %input = deps($input);
+	my @heldby = @(%input<heldby>);
+	my @holding = @(%input<holding>);
+	my $answer = 0;
+	BRICK: for @holding.keys -> $i {
+		for @holding[$i].keys -> $j {
+			next BRICK if @heldby[$j].elems == 1;
 		}
 		$answer++;
 	}
-	$answer
+	$answer;
 }
 
 our sub part2(Str $input) {
+	my %input = deps($input);
+	my @heldby = @(%input<heldby>);
+	my @holding = @(%input<holding>);
+	my $answer = 0;
+	for @holding.keys -> $i {
+		my $gone = Set.new($i);
+		for @holding.keys -> $j {
+			if @heldby[$j] ⊆ $gone {
+				$gone ∪= Set.new($j);
+			}
+		}
+		$answer += $gone.elems - 1;
+	}
+	$answer;
 }
-
- # 521 is too low

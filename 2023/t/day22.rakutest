@@ -13,5 +13,6 @@ my $input = '
 '.substr(1).chomp;
 
 is Day22::part1($input), 5;
+is Day22::part2($input), 7;
 
 done-testing;
