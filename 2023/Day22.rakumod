@@ -23,8 +23,7 @@ sub deps(Str $input) {
 		for @b[0, 3].min .. @b[0, 3].max -> $x {
 			for @b[1, 4].min .. @b[1, 4].max -> $y {
 				@map[$x][$y] = $z + $height;
-				for $z .. $z+$height-1 -> $z is copy {
-					$z++;
+				for $z+1 .. $z+$height -> $z {
 					%which{"$x,$y,$z"} = $i;
 				}
 			}
