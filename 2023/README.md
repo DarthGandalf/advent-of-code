@@ -34,6 +34,7 @@ Note: I've intentionally misread some of the prompts to deliver not quite what w
 | 22|Sand Slabs | Omakase! (Chef's Choice)          | [link](https://www.reddit.com/r/adventofcode/comments/18o7014/comment/kehpgsa/?utm_source=share&utm_medium=web2x&context=3) | [link](https://github.com/DarthGandalf/advent-of-code/blob/master/2023/Day22.rakumod) | Poetry. Day 22. The poem is in the code |
 | 23|A Long Walk | N/A                              | [link](https://www.reddit.com/r/adventofcode/comments/18oy4pc/comment/keo6oq4/?utm_source=share&utm_medium=web2x&context=3) | [link](https://github.com/DarthGandalf/advent-of-code/blob/master/2023/Day23.rakumod) | Not an Allez Cuisine anymore :( |
 | 24|Never Tell Me The Odds | N/A                   | [link](https://www.reddit.com/r/adventofcode/comments/18pnycy/comment/keqnrj0/?utm_source=share&utm_medium=web2x&context=3) | [link](https://github.com/DarthGandalf/advent-of-code/blob/master/2023/Day24.rakumod) | Not an Allez Cuisine anymore :( |
+| 25|Snowverload | N/A                              | [link](https://www.reddit.com/r/adventofcode/comments/18qbsxs/comment/keutzrm/?utm_source=share&utm_medium=web2x&context=3) | [link](https://github.com/DarthGandalf/advent-of-code/blob/master/2023/Day25.rakumod) | Not an Allez Cuisine anymore :( At least I was able to use `Inline::Python` somewhat successfully |
 
 ## Accessibility
 
