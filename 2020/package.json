@@ -23,7 +23,7 @@
     "vue-template-compiler": "^2.6.12",
     "vuetify": "^2.6.10",
     "vuetify-loader": "^1.9.2",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^5.0.4"
   },
   "devDependencies": {
     "webpack": "^5.76.0",
