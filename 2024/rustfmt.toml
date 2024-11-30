@@ -1,0 +1,5 @@
+edition = "2021"
+hard_tabs = true
+normalize_doc_attributes = true
+overflow_delimited_expr = true
+reorder_impl_items = true
