@@ -18,7 +18,7 @@
     "sass": "^1.26.10",
     "sass-loader": "^9.0.3",
     "style-loader": "^2.0.0",
-    "vue": "^2.6.12",
+    "vue": "^3.0.0",
     "vue-loader": "^17.0.1",
     "vue-template-compiler": "^2.6.12",
     "vuetify": "^2.6.10",
