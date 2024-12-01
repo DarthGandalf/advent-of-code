@@ -34,14 +34,18 @@ fn part2(input: &(Vec<i32>, Vec<i32>)) -> usize {
 		let Some(&y) = bi.peek() else {
 			break;
 		};
-		if x[0] == y[0] {
-			sum += x[0] as usize * x.len() * y.len();
-			ai.next();
-			bi.next();
-		} else if x[0] < y[0] {
-			ai.next();
-		} else {
-			bi.next();
+		match x[0].cmp(&y[0]) {
+			std::cmp::Ordering::Equal => {
+				sum += x[0] as usize * x.len() * y.len();
+				ai.next();
+				bi.next();
+			}
+			std::cmp::Ordering::Less => {
+				ai.next();
+			}
+			std::cmp::Ordering::Greater => {
+				bi.next();
+			}
 		}
 	}
 	sum
