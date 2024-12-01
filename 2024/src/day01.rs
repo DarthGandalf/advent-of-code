@@ -71,12 +71,12 @@ mod tests {
 
 	#[test]
 	fn test1() {
-		assert_eq!(part1(&parse(INPUT)), 11);
+		assert_eq!(part1(INPUT), 11);
 	}
 
 	#[test]
 	fn test2() {
-		assert_eq!(part2(&parse(INPUT)), 31);
+		assert_eq!(part2(INPUT), 31);
 	}
 }
 
