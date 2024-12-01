@@ -3,8 +3,8 @@ use aoc_runner_derive::{aoc, aoc_generator};
 
 #[aoc_generator(day1)]
 fn parse(input: &str) -> (Vec<i32>, Vec<i32>) {
-	let mut a = Vec::new();
-	let mut b = Vec::new();
+	let mut a = Vec::with_capacity(1500);
+	let mut b = Vec::with_capacity(1500);
 	for l in input.lines() {
 		let mut iter = l.split_whitespace();
 		a.push(iter.next().unwrap().parse().unwrap());
@@ -16,13 +16,13 @@ fn parse(input: &str) -> (Vec<i32>, Vec<i32>) {
 }
 
 #[aoc(day1, part1)]
-pub fn part1(input: &(Vec<i32>, Vec<i32>)) -> u32 {
+fn realpart1(input: &(Vec<i32>, Vec<i32>)) -> u32 {
 	let (a, b) = &input;
 	std::iter::zip(a, b).map(|(x, y)| x.abs_diff(*y)).sum()
 }
 
 #[aoc(day1, part2)]
-pub fn part2(input: &(Vec<i32>, Vec<i32>)) -> usize {
+fn realpart2(input: &(Vec<i32>, Vec<i32>)) -> usize {
 	let (a, b) = &input;
 	let mut ai = a.chunk_by(|x, y| x == y).peekable();
 	let mut bi = b.chunk_by(|x, y| x == y).peekable();
@@ -49,6 +49,14 @@ pub fn part2(input: &(Vec<i32>, Vec<i32>)) -> usize {
 		}
 	}
 	sum
+}
+
+// for codspeed
+pub fn part1(input: &str) -> u32 {
+	realpart1(&parse(input))
+}
+pub fn part2(input: &str) -> usize {
+	realpart2(&parse(input))
 }
 
 #[cfg(test)]
