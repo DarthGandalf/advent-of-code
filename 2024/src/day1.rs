@@ -80,3 +80,9 @@ mod tests {
 		assert_eq!(part2(&parse(INPUT)), 31);
 	}
 }
+
+// Solution: me
+// Puzzle: Eric Wastl
+// Language: Rust
+// cargo aoc: gobanos
+// bLOOPer: I forgot to call ai.next() and bi.next() in case of equality, resulting in inf loop
