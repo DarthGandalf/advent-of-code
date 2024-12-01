@@ -10,3 +10,4 @@ Year | Language
 2021 | TypeScript
 2022 | Julia
 2023 | Raku
+2024 | Rust
