@@ -16,13 +16,13 @@ fn parse(input: &str) -> (Vec<i32>, Vec<i32>) {
 }
 
 #[aoc(day1, part1)]
-fn part1(input: &(Vec<i32>, Vec<i32>)) -> u32 {
+pub fn part1(input: &(Vec<i32>, Vec<i32>)) -> u32 {
 	let (a, b) = &input;
 	std::iter::zip(a, b).map(|(x, y)| x.abs_diff(*y)).sum()
 }
 
 #[aoc(day1, part2)]
-fn part2(input: &(Vec<i32>, Vec<i32>)) -> usize {
+pub fn part2(input: &(Vec<i32>, Vec<i32>)) -> usize {
 	let (a, b) = &input;
 	let mut ai = a.chunk_by(|x, y| x == y).peekable();
 	let mut bi = b.chunk_by(|x, y| x == y).peekable();
