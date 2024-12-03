@@ -51,6 +51,7 @@ pub fn part1(input: &str) -> u32 {
 #[aoc(day3, part2)]
 pub fn part2(input: &str) -> u32 {
 	let mut skip = false;
+	// Any way with nom to not do it symbol by symbol?
 	many0(alt((
 		mul,
 		value(Finding::Do, tag("do()")),
