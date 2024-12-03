@@ -61,7 +61,7 @@ pub fn part2(input: &str) -> u32 {
 	.1
 	.into_iter()
 	.map(|a| match a {
-		Finding::Mul(m) if skip => 0,
+		Finding::Mul(_) if skip => 0,
 		Finding::Mul(m) => m,
 		Finding::Do => {
 			skip = false;

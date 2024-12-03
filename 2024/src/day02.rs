@@ -67,14 +67,12 @@ pub fn part2(input: &str) -> usize {
 		.lines()
 		.map(|l| {
 			let report: Vec<i32> = l.split_whitespace().flat_map(|x| x.parse()).collect();
-			let x = if try_inc(&report, 1) {
-				1
-			} else if try_inc(&report, -1) {
+
+			if try_inc(&report, 1) || try_inc(&report, -1) {
 				1
 			} else {
 				0
-			};
-			x
+			}
 		})
 		.sum()
 }
