@@ -27,7 +27,9 @@ pub fn part1(input: &str) -> u32 {
 	for book in books {
 		let mut map = fnv::FnvHashMap::<u8, u8>::default();
 		for (index, page) in book.iter().enumerate() {
-			map.entry(*page).and_modify(|_| panic!("duplicate page {page}")).or_insert(index as u8);
+			map.entry(*page)
+				.and_modify(|_| panic!("duplicate page {page}"))
+				.or_insert(index as u8);
 		}
 		let mut good = true;
 		for (a, b) in &rules {
@@ -35,6 +37,7 @@ pub fn part1(input: &str) -> u32 {
 			let bb = map.get(b);
 			if aa.is_some() && bb.is_some() && aa.unwrap() > bb.unwrap() {
 				good = false;
+				break;
 			}
 		}
 		if good {
@@ -51,7 +54,9 @@ pub fn part2(input: &str) -> u32 {
 	for book in books {
 		let mut map = fnv::FnvHashMap::<u8, u8>::default();
 		for (index, page) in book.iter().enumerate() {
-			map.entry(*page).and_modify(|_| panic!("duplicate page {page}")).or_insert(index as u8);
+			map.entry(*page)
+				.and_modify(|_| panic!("duplicate page {page}"))
+				.or_insert(index as u8);
 		}
 		let mut good = true;
 		for (a, b) in &rules {
@@ -59,11 +64,13 @@ pub fn part2(input: &str) -> u32 {
 			let bb = map.get(b);
 			if aa.is_some() && bb.is_some() && aa.unwrap() > bb.unwrap() {
 				good = false;
+				break;
 			}
 		}
 		if !good {
 			let mut graph = petgraph::Graph::<u8, u8>::new();
-			let nodes: fnv::FnvHashMap<u8, petgraph::graph::NodeIndex> = book.iter().map(|p| (*p, graph.add_node(*p))).collect();
+			let nodes: fnv::FnvHashMap<u8, petgraph::graph::NodeIndex> =
+				book.iter().map(|p| (*p, graph.add_node(*p))).collect();
 			for (a, b) in &rules {
 				let aa = nodes.get(a);
 				let bb = nodes.get(b);
