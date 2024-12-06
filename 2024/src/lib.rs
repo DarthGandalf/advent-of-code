@@ -8,5 +8,7 @@ pub mod day3;
 pub mod day4;
 #[path = "day05.rs"]
 pub mod day5;
+#[path = "day06.rs"]
+pub mod day6;
 
 aoc_runner_derive::aoc_lib! { year = 2024 }
