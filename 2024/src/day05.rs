@@ -33,11 +33,13 @@ pub fn part1(input: &str) -> u32 {
 		}
 		let mut good = true;
 		for (a, b) in &rules {
-			let aa = map.get(a);
-			let bb = map.get(b);
-			if aa.is_some() && bb.is_some() && aa.unwrap() > bb.unwrap() {
-				good = false;
-				break;
+			if let Some(aa) = map.get(a) {
+				if let Some(bb) = map.get(b) {
+					if aa > bb {
+						good = false;
+						break;
+					}
+				}
 			}
 		}
 		if good {
@@ -60,11 +62,13 @@ pub fn part2(input: &str) -> u32 {
 		}
 		let mut good = true;
 		for (a, b) in &rules {
-			let aa = map.get(a);
-			let bb = map.get(b);
-			if aa.is_some() && bb.is_some() && aa.unwrap() > bb.unwrap() {
-				good = false;
-				break;
+			if let Some(aa) = map.get(a) {
+				if let Some(bb) = map.get(b) {
+					if aa > bb {
+						good = false;
+						break;
+					}
+				}
 			}
 		}
 		if !good {
@@ -72,10 +76,8 @@ pub fn part2(input: &str) -> u32 {
 			let nodes: fnv::FnvHashMap<u8, petgraph::graph::NodeIndex> =
 				book.iter().map(|p| (*p, graph.add_node(*p))).collect();
 			for (a, b) in &rules {
-				let aa = nodes.get(a);
-				let bb = nodes.get(b);
-				if let Some(aa) = aa {
-					if let Some(bb) = bb {
+				if let Some(aa) = nodes.get(a) {
+					if let Some(bb) = nodes.get(b) {
 						graph.add_edge(*aa, *bb, 1);
 					}
 				}
