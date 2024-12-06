@@ -74,8 +74,10 @@ pub fn part2(input: &str) -> u32 {
 			for (a, b) in &rules {
 				let aa = nodes.get(a);
 				let bb = nodes.get(b);
-				if aa.is_some() && bb.is_some() {
-					graph.add_edge(*aa.unwrap(), *bb.unwrap(), 1);
+				if let Some(aa) = aa {
+					if let Some(bb) = bb {
+						graph.add_edge(*aa, *bb, 1);
+					}
 				}
 			}
 			let nodes = petgraph::algo::toposort(&graph, None).unwrap();
