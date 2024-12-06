@@ -24,11 +24,13 @@ fn parse(input: &str) -> Input {
 		for (x, c) in l.chars().enumerate() {
 			let x = x as i16;
 			match c {
-				'#' => {walls.insert(Coord {x, y});}
-				'^' => her = Coord {x, y},
+				'#' => {
+					walls.insert(Coord { x, y });
+				}
+				'^' => her = Coord { x, y },
 				_ => {}
 			}
-			size = Coord {x, y};
+			size = Coord { x, y };
 		}
 	}
 	Input { walls, her, size }
@@ -36,7 +38,7 @@ fn parse(input: &str) -> Input {
 
 #[aoc(day6, part1)]
 pub fn part1(input: &str) -> usize {
-	let Input {walls, her, size} = parse(input);
+	let Input { walls, her, size } = parse(input);
 	let mut her = her;
 	let mut was = Map::default();
 	let mut dx: i16 = 0;
@@ -59,7 +61,12 @@ pub fn part1(input: &str) -> usize {
 }
 
 fn attempt(input: &Input, newwall: Coord) -> bool {
-	if newwall == input.her || newwall.x < 0 || newwall.y < 0 || newwall.x > input.size.x || newwall.y > input.size.y {
+	if newwall == input.her
+		|| newwall.x < 0
+		|| newwall.y < 0
+		|| newwall.x > input.size.x
+		|| newwall.y > input.size.y
+	{
 		return false;
 	}
 	//println!("Attempt {:?}", newwall);
@@ -69,7 +76,7 @@ fn attempt(input: &Input, newwall: Coord) -> bool {
 	let mut was = fnv::FnvHashSet::<(Coord, i16, i16)>::default();
 	while her.x >= 0 && her.y >= 0 && her.x <= input.size.x && her.y <= input.size.y {
 		if was.contains(&(her, dx, dy)) {
-	/*		println!("AAAAAAAAAA {:?}", her);
+			/*		println!("AAAAAAAAAA {:?}", her);
 			for y in 0..=input.size.y {
 				for x in 0..=input.size.x {
 					let here = Coord{x,y};
