@@ -5,7 +5,7 @@ use nom::{
 	IResult,
 	bytes::complete::tag,
 	character::complete::{digit1, space1},
-	combinator::{eof, map_res},
+	combinator::{eof, map, map_res},
 	multi::separated_list1,
 	sequence::tuple,
 };
@@ -13,11 +13,15 @@ use nom::{
 struct Task {
 	operands: Vec<u64>,
 	expected: u64,
-	concat: bool,
+	lengths: Vec<u8>,
 }
 
 fn parseu64(input: &str) -> IResult<&str, u64> {
 	map_res(digit1, str::parse)(input)
+}
+
+fn parseu64_2(input: &str) -> IResult<&str, (u64, u8)> {
+	map(digit1, |s: &str| (s.parse().unwrap(), s.len() as u8))(input)
 }
 
 fn attempt(already: u64, index: usize, task: &Task) -> bool {
@@ -25,20 +29,32 @@ fn attempt(already: u64, index: usize, task: &Task) -> bool {
 		return false;
 	}
 	let operands = &task.operands;
-	if index == operands.len() {
+	if index == task.operands.len() {
 		return already == task.expected;
 	}
 	attempt(already + operands[index], index + 1, task)
 		|| attempt(already * operands[index], index + 1, task)
-		|| task.concat
-			&& attempt(
-				format!("{}{}", already, operands[index]).parse().unwrap(),
+		}
+
+fn attempt_2(already: u64, index: usize, task: &Task) -> bool {
+	if already > task.expected {
+		return false;
+	}
+	let operands = &task.operands;
+	if index == task.operands.len() {
+		return already == task.expected;
+	}
+	attempt_2(already + operands[index], index + 1, task)
+		|| attempt_2(already * operands[index], index + 1, task)
+		|| attempt_2(
+				already * 10u64.pow(task.lengths[index] as u32) + operands[index],
 				index + 1,
 				task,
 			)
 }
 
-fn solve(input: &str, concat: bool) -> u64 {
+#[aoc(day7, part1)]
+pub fn part1(input: &str) -> u64 {
 	input
 		.lines()
 		.map(|l| {
@@ -48,8 +64,8 @@ fn solve(input: &str, concat: bool) -> u64 {
 					.1;
 			let task = Task {
 				expected,
-				concat,
 				operands,
+				lengths: vec![],
 			};
 			if attempt(task.operands[0], 1, &task) {
 				expected
@@ -60,14 +76,27 @@ fn solve(input: &str, concat: bool) -> u64 {
 		.sum()
 }
 
-#[aoc(day7, part1)]
-pub fn part1(input: &str) -> u64 {
-	solve(input, false)
-}
-
 #[aoc(day7, part2)]
 pub fn part2(input: &str) -> u64 {
-	solve(input, true)
+	input
+		.lines()
+		.map(|l| {
+			let ((expected, _), _, operands, _) =
+				tuple((parseu64_2, tag(": "), separated_list1(space1, parseu64_2), eof))(l)
+					.unwrap()
+					.1;
+			let task = Task {
+				expected,
+				operands: operands.iter().map(|(x, _)| *x).collect(),
+				lengths: operands.iter().map(|(_, x)| *x).collect(),
+			};
+			if attempt_2(task.operands[0], 1, &task) {
+				expected
+			} else {
+				0
+			}
+		})
+		.sum()
 }
 
 #[cfg(test)]
