@@ -34,7 +34,7 @@ fn attempt(already: u64, index: usize, task: &Task) -> bool {
 	}
 	attempt(already + operands[index], index + 1, task)
 		|| attempt(already * operands[index], index + 1, task)
-		}
+}
 
 fn attempt_2(already: u64, index: usize, task: &Task) -> bool {
 	if already > task.expected {
@@ -47,10 +47,10 @@ fn attempt_2(already: u64, index: usize, task: &Task) -> bool {
 	attempt_2(already + operands[index], index + 1, task)
 		|| attempt_2(already * operands[index], index + 1, task)
 		|| attempt_2(
-				already * 10u64.pow(task.lengths[index] as u32) + operands[index],
-				index + 1,
-				task,
-			)
+			already * 10u64.pow(task.lengths[index] as u32) + operands[index],
+			index + 1,
+			task,
+		)
 }
 
 #[aoc(day7, part1)]
@@ -81,10 +81,14 @@ pub fn part2(input: &str) -> u64 {
 	input
 		.lines()
 		.map(|l| {
-			let ((expected, _), _, operands, _) =
-				tuple((parseu64_2, tag(": "), separated_list1(space1, parseu64_2), eof))(l)
-					.unwrap()
-					.1;
+			let ((expected, _), _, operands, _) = tuple((
+				parseu64_2,
+				tag(": "),
+				separated_list1(space1, parseu64_2),
+				eof,
+			))(l)
+			.unwrap()
+			.1;
 			let task = Task {
 				expected,
 				operands: operands.iter().map(|(x, _)| *x).collect(),
