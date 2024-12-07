@@ -11,6 +11,7 @@ use nom::{
 };
 
 struct Task {
+	operands: Vec<u64>,
 	expected: u64,
 	concat: bool,
 }
@@ -19,19 +20,20 @@ fn parseu64(input: &str) -> IResult<&str, u64> {
 	map_res(digit1, str::parse)(input)
 }
 
-fn attempt(already: u64, operands: &[u64], task: &Task) -> bool {
+fn attempt(already: u64, index: usize, task: &Task) -> bool {
 	if already > task.expected {
 		return false;
 	}
-	if operands.is_empty() {
+	let operands = &task.operands;
+	if index == operands.len() {
 		return already == task.expected;
 	}
-	attempt(already + operands[0], &operands[1..], task)
-		|| attempt(already * operands[0], &operands[1..], task)
+	attempt(already + operands[index], index + 1, task)
+		|| attempt(already * operands[index], index + 1, task)
 		|| task.concat
 			&& attempt(
-				format!("{}{}", already, operands[0]).parse().unwrap(),
-				&operands[1..],
+				format!("{}{}", already, operands[index]).parse().unwrap(),
+				index + 1,
 				task,
 			)
 }
@@ -44,8 +46,12 @@ fn solve(input: &str, concat: bool) -> u64 {
 				tuple((parseu64, tag(": "), separated_list1(space1, parseu64), eof))(l)
 					.unwrap()
 					.1;
-			let task = Task { expected, concat };
-			if attempt(operands[0], &operands[1..], &task) {
+			let task = Task {
+				expected,
+				concat,
+				operands,
+			};
+			if attempt(task.operands[0], 1, &task) {
 				expected
 			} else {
 				0
