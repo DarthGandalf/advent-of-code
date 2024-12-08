@@ -15,7 +15,10 @@ fn parse(input: &str) -> (Map, Coord) {
 	let mut size = Coord::default();
 	for (y, l) in input.lines().enumerate() {
 		for (x, c) in l.chars().enumerate() {
-			size = Coord { x: x as i8, y: y as i8 };
+			size = Coord {
+				x: x as i8,
+				y: y as i8,
+			};
 			if c != '.' {
 				map.entry(c).or_default().push(size);
 			}
