@@ -69,7 +69,20 @@ pub fn part2(input: &str) -> usize {
 			while u.x >= 0 && u.y >= 0 && u.x <= size.x && u.y <= size.y {
 				anti.insert(u);
 				u.x -= dx;
-				u.y -= dy;
+				#[cfg(not(target_arch = "x86_64"))]
+				{
+					u.y -= dy;
+				}
+				#[cfg(target_arch = "x86_64")]
+				{
+					unsafe {
+						std::arch::asm!(
+							"sub {z}, {dy}",
+							z = inout(reg_byte) u.y,
+							dy = in(reg_byte) dy
+						);
+					}
+				}
 			}
 		}
 	}
