@@ -13,7 +13,7 @@ use nom::{
 struct Task {
 	operands: Vec<u64>,
 	expected: u64,
-	lengths: Vec<u8>,
+	powers: Vec<u64>,
 }
 
 fn parseu64(input: &str) -> IResult<&str, u64> {
@@ -47,7 +47,7 @@ fn attempt_2(already: u64, index: usize, task: &Task) -> bool {
 	attempt_2(already + operands[index], index + 1, task)
 		|| attempt_2(already * operands[index], index + 1, task)
 		|| attempt_2(
-			already * 10u64.pow(task.lengths[index] as u32) + operands[index],
+			already * task.powers[index] + operands[index],
 			index + 1,
 			task,
 		)
@@ -65,7 +65,7 @@ pub fn part1(input: &str) -> u64 {
 			let task = Task {
 				expected,
 				operands,
-				lengths: vec![],
+				powers: vec![],
 			};
 			if attempt(task.operands[0], 1, &task) {
 				expected
@@ -92,7 +92,7 @@ pub fn part2(input: &str) -> u64 {
 			let task = Task {
 				expected,
 				operands: operands.iter().map(|(x, _)| *x).collect(),
-				lengths: operands.iter().map(|(_, x)| *x).collect(),
+				powers: operands.iter().map(|(_, x)| 10u64.pow(*x as u32)).collect(),
 			};
 			if attempt_2(task.operands[0], 1, &task) {
 				expected
