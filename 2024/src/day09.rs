@@ -7,7 +7,10 @@ fn gauss(pos: i64, len: i64) -> i64 {
 	(pos + pos + len - 1) * len / 2
 }
 
-fn parse(input: &str) -> (VecDeque<(i64, i64)>, VecDeque<(i64, i64, i64)>) {
+type Holes = VecDeque<(i64, i64)>;
+type Files = VecDeque<(i64, i64, i64)>;
+
+fn parse(input: &str) -> (Holes, Files) {
 	let mut holes = VecDeque::new();
 	let mut files = VecDeque::new();
 	let mut flip = true;
@@ -19,10 +22,8 @@ fn parse(input: &str) -> (VecDeque<(i64, i64)>, VecDeque<(i64, i64, i64)>) {
 			assert!(c > 0);
 			files.push_back((pos, c, id));
 			id += 1;
-		} else {
-			if c > 0 {
-				holes.push_back((pos, c));
-			}
+		} else if c > 0 {
+			holes.push_back((pos, c));
 		}
 		flip = !flip;
 		pos += c;
