@@ -9,149 +9,82 @@ struct Coord {
 }
 type Map = FnvHashMap<Coord, i8>;
 
-#[memoize::memoize(Ignore: m)]
-fn reachable(pos: Coord, m: &Map) -> FnvHashSet<Coord> {
-	let mut r = FnvHashSet::default();
+trait Part {
+	type R;
+	fn initial(pos: Coord) -> Self::R;
+	fn combine(a: Self::R, b: Self::R) -> Self::R;
+}
+
+struct Part1;
+
+impl Part for Part1 {
+	type R = FnvHashSet<Coord>;
+
+	fn initial(pos: Coord) -> Self::R {
+		[pos].into_iter().collect()
+	}
+
+	fn combine(a: Self::R, b: Self::R) -> Self::R {
+		a.union(&b).cloned().collect()
+	}
+}
+
+struct Part2;
+
+impl Part for Part2 {
+	type R = usize;
+
+	fn initial(_pos: Coord) -> Self::R {
+		1
+	}
+
+	fn combine(a: Self::R, b: Self::R) -> Self::R {
+		a + b
+	}
+}
+
+fn reachable<P: Part<R: Default>>(pos: Coord, m: &Map) -> P::R {
+	let mut r: P::R = Default::default();
 	let h = m.get(&pos).unwrap();
 	if *h == 9 {
-		r.insert(pos);
-		return r;
+		return P::initial(pos);
 	}
-	if let Some(n) = m.get(&Coord {
+	let attempt = |prev: P::R, c: Coord| {
+		if let Some(n) = m.get(&c) {
+			if *n == h + 1 {
+				return P::combine(prev, reachable::<P>(c, &m));
+			}
+		}
+		prev
+	};
+	r = attempt(r, Coord {
 		x: pos.x - 1,
 		y: pos.y,
-	}) {
-		if *n == h + 1 {
-			r = r
-				.union(&reachable(
-					Coord {
-						x: pos.x - 1,
-						y: pos.y,
-					},
-					m,
-				))
-				.cloned()
-				.collect();
-		}
-	}
-	if let Some(n) = m.get(&Coord {
+	});
+	r = attempt(r, Coord {
 		x: pos.x + 1,
 		y: pos.y,
-	}) {
-		if *n == h + 1 {
-			r = r
-				.union(&reachable(
-					Coord {
-						x: pos.x + 1,
-						y: pos.y,
-					},
-					m,
-				))
-				.cloned()
-				.collect();
-		}
-	}
-	if let Some(n) = m.get(&Coord {
+	});
+	r = attempt(r, Coord {
 		x: pos.x,
 		y: pos.y - 1,
-	}) {
-		if *n == h + 1 {
-			r = r
-				.union(&reachable(
-					Coord {
-						x: pos.x,
-						y: pos.y - 1,
-					},
-					m,
-				))
-				.cloned()
-				.collect();
-		}
-	}
-	if let Some(n) = m.get(&Coord {
+	});
+	r = attempt(r, Coord {
 		x: pos.x,
 		y: pos.y + 1,
-	}) {
-		if *n == h + 1 {
-			r = r
-				.union(&reachable(
-					Coord {
-						x: pos.x,
-						y: pos.y + 1,
-					},
-					m,
-				))
-				.cloned()
-				.collect();
-		}
-	}
+	});
 	r
 }
 
+// I couldn't find a better way to memoize generic function other than to ungeneric it
 #[memoize::memoize(Ignore: m)]
-fn reachable2(pos: Coord, m: &Map) -> usize {
-	let mut r = 0;
-	let h = m.get(&pos).unwrap();
-	if *h == 9 {
-		return 1;
-	}
-	if let Some(n) = m.get(&Coord {
-		x: pos.x - 1,
-		y: pos.y,
-	}) {
-		if *n == h + 1 {
-			r += reachable2(
-				Coord {
-					x: pos.x - 1,
-					y: pos.y,
-				},
-				m,
-			);
-		}
-	}
-	if let Some(n) = m.get(&Coord {
-		x: pos.x + 1,
-		y: pos.y,
-	}) {
-		if *n == h + 1 {
-			r += reachable2(
-				Coord {
-					x: pos.x + 1,
-					y: pos.y,
-				},
-				m,
-			);
-		}
-	}
-	if let Some(n) = m.get(&Coord {
-		x: pos.x,
-		y: pos.y - 1,
-	}) {
-		if *n == h + 1 {
-			r += reachable2(
-				Coord {
-					x: pos.x,
-					y: pos.y - 1,
-				},
-				m,
-			);
-		}
-	}
-	if let Some(n) = m.get(&Coord {
-		x: pos.x,
-		y: pos.y + 1,
-	}) {
-		if *n == h + 1 {
-			r += reachable2(
-				Coord {
-					x: pos.x,
-					y: pos.y + 1,
-				},
-				m,
-			);
-		}
-	}
-	r
+fn reachable1(pos: Coord, m: &Map) -> <Part1 as Part>::R {
+	reachable::<Part1>(pos, m)
+}
+
+#[memoize::memoize(Ignore: m)]
+fn reachable2(pos: Coord, m: &Map) -> <Part2 as Part>::R {
+	reachable::<Part2>(pos, m)
 }
 
 fn parse(input: &str) -> (Map, Coord) {
@@ -169,34 +102,28 @@ fn parse(input: &str) -> (Map, Coord) {
 	(m, size)
 }
 
-#[aoc(day10, part1)]
-pub fn part1(input: &str) -> usize {
+fn solve(input: &str, f: impl Fn(Coord, &Map) -> usize) -> usize {
 	let (m, size) = parse(input);
 	let mut sum = 0;
 	for y in 0..=size.y {
 		for x in 0..=size.x {
 			let pos = Coord { x, y };
 			if *m.get(&pos).unwrap() == 0 {
-				sum += reachable(pos, &m).len();
+				sum += f(pos, &m);
 			}
 		}
 	}
 	sum
 }
 
+#[aoc(day10, part1)]
+pub fn part1(input: &str) -> usize {
+	solve(input, |pos, m| reachable1(pos, m).len())
+}
+
 #[aoc(day10, part2)]
 pub fn part2(input: &str) -> usize {
-	let (m, size) = parse(input);
-	let mut sum = 0;
-	for y in 0..=size.y {
-		for x in 0..=size.x {
-			let pos = Coord { x, y };
-			if *m.get(&pos).unwrap() == 0 {
-				sum += reachable2(pos, &m);
-			}
-		}
-	}
-	sum
+	solve(input, |pos, m| reachable2(pos, m))
 }
 
 #[cfg(test)]
