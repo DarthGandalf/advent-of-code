@@ -1,13 +1,13 @@
 use anyhow::Result;
 use aoc_runner_derive::aoc;
-use fnv::{FnvHashMap, FnvHashSet};
+use fnv::FnvHashSet;
 
 #[derive(Debug, Hash, PartialEq, Eq, Default, Clone, Copy)]
 struct Coord {
 	x: i8,
 	y: i8,
 }
-type Map = FnvHashMap<Coord, i8>;
+type Map = Vec<Vec<i8>>;
 
 trait Part {
 	type R;
@@ -45,13 +45,14 @@ impl Part for Part2 {
 
 fn reachable<P: Part<R: Default>>(pos: Coord, m: &Map) -> P::R {
 	let mut r: P::R = Default::default();
-	let h = m.get(&pos).unwrap();
-	if *h == 9 {
+	let h = m[pos.y as usize][pos.x as usize];
+	if h == 9 {
 		return P::initial(pos);
 	}
 	let attempt = |prev: P::R, c: Coord| {
-		if let Some(n) = m.get(&c) {
-			if *n == h + 1 {
+		if c.x >= 0 && c.y >= 0 && (c.y as usize) < m.len() && (c.x as usize) < m[0].len() {
+			let n = m[c.y as usize][c.x as usize];
+			if n == h + 1 {
 				return P::combine(prev, reachable::<P>(c, &m));
 			}
 		}
@@ -87,28 +88,20 @@ fn reachable2(pos: Coord, m: &Map) -> <Part2 as Part>::R {
 	reachable::<Part2>(pos, m)
 }
 
-fn parse(input: &str) -> (Map, Coord) {
-	let mut m = Map::default();
-	let mut size = Coord::default();
-	for (y, l) in input.lines().enumerate() {
-		for (x, c) in l.chars().enumerate() {
-			size = Coord {
-				x: x as i8,
-				y: y as i8,
-			};
-			m.insert(size, c.to_digit(10).unwrap() as i8);
-		}
-	}
-	(m, size)
+fn parse(input: &str) -> Map {
+	input
+		.lines()
+		.map(|l| l.chars().map(|c| c.to_digit(10).unwrap() as i8).collect())
+		.collect()
 }
 
 fn solve(input: &str, f: impl Fn(Coord, &Map) -> usize) -> usize {
-	let (m, size) = parse(input);
+	let m = parse(input);
 	let mut sum = 0;
-	for y in 0..=size.y {
-		for x in 0..=size.x {
-			let pos = Coord { x, y };
-			if *m.get(&pos).unwrap() == 0 {
+	for y in 0..m.len() {
+		for x in 0..m[0].len() {
+			let pos = Coord { x: x as i8, y: y as i8 };
+			if m[y][x] == 0 {
 				sum += f(pos, &m);
 			}
 		}
