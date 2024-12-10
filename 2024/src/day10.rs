@@ -100,7 +100,10 @@ fn solve(input: &str, f: impl Fn(Coord, &Map) -> usize) -> usize {
 	let mut sum = 0;
 	for y in 0..m.len() {
 		for x in 0..m[0].len() {
-			let pos = Coord { x: x as i8, y: y as i8 };
+			let pos = Coord {
+				x: x as i8,
+				y: y as i8,
+			};
 			if m[y][x] == 0 {
 				sum += f(pos, &m);
 			}
