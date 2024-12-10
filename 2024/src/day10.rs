@@ -53,7 +53,7 @@ fn reachable<P: Part<R: Default>>(pos: Coord, m: &Map) -> P::R {
 		if c.x >= 0 && c.y >= 0 && (c.y as usize) < m.len() && (c.x as usize) < m[0].len() {
 			let n = m[c.y as usize][c.x as usize];
 			if n == h + 1 {
-				return P::combine(prev, reachable::<P>(c, &m));
+				return P::combine(prev, reachable::<P>(c, m));
 			}
 		}
 		prev
@@ -119,7 +119,7 @@ pub fn part1(input: &str) -> usize {
 
 #[aoc(day10, part2)]
 pub fn part2(input: &str) -> usize {
-	solve(input, |pos, m| reachable2(pos, m))
+	solve(input, reachable2)
 }
 
 #[cfg(test)]
