@@ -1,8 +1,6 @@
 use anyhow::Result;
 use aoc_runner_derive::aoc;
 use fnv::{FnvHashMap, FnvHashSet};
-use itertools::Itertools;
-use std::collections::VecDeque;
 
 #[derive(Debug, Hash, PartialEq, Eq, Default, Clone, Copy)]
 struct Coord {
