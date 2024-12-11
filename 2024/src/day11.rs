@@ -28,28 +28,25 @@ fn blink(x: FnvHashMap<i64, usize>) -> FnvHashMap<i64, usize> {
 	n
 }
 
-#[aoc(day11, part1)]
-pub fn part1(input: &str) -> usize {
+fn solve(input: &str, iterations: usize) -> usize {
 	let mut x = FnvHashMap::<i64, usize>::default();
 	for i in input.split_whitespace().flat_map(str::parse::<i64>) {
 		*x.entry(i).or_default() += 1;
 	}
-	for _ in 0..25 {
+	for _ in 0..iterations {
 		x = blink(x);
 	}
 	x.values().sum()
 }
 
+#[aoc(day11, part1)]
+pub fn part1(input: &str) -> usize {
+	solve(input, 25)
+}
+
 #[aoc(day11, part2)]
 pub fn part2(input: &str) -> usize {
-	let mut x = FnvHashMap::<i64, usize>::default();
-	for i in input.split_whitespace().flat_map(str::parse::<i64>) {
-		*x.entry(i).or_default() += 1;
-	}
-	for _ in 0..75 {
-		x = blink(x);
-	}
-	x.values().sum()
+	solve(input, 75)
 }
 
 #[cfg(test)]
