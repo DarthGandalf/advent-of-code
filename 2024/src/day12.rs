@@ -104,9 +104,9 @@ pub fn part2(input: &str) -> usize {
 						area += 1;
 					}
 				};
-				go(x + 1, y, PerimeterElement(x + 1, y, Direction::V, true));
+				go(x + 1, y, PerimeterElement(x, y, Direction::V, true));
 				go(x - 1, y, PerimeterElement(x, y, Direction::V, false));
-				go(x, y + 1, PerimeterElement(x, y + 1, Direction::H, true));
+				go(x, y + 1, PerimeterElement(x, y, Direction::H, true));
 				go(x, y - 1, PerimeterElement(x, y, Direction::H, false));
 			}
 			while let Some(e) = perimeter.iter().next().cloned() {
