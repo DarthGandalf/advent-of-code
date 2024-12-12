@@ -1,4 +1,3 @@
-use anyhow::Result;
 use aoc_runner_derive::aoc;
 
 #[derive(Default, Eq, PartialEq, Hash, Copy, Clone, Debug)]

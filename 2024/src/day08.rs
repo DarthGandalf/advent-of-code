@@ -1,4 +1,3 @@
-use anyhow::Result;
 use aoc_runner_derive::aoc;
 use itertools::Itertools;
 

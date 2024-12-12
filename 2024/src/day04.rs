@@ -1,4 +1,3 @@
-use anyhow::Result;
 use aoc_runner_derive::aoc;
 
 #[aoc(day4, part1)]

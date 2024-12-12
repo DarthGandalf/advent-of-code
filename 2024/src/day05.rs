@@ -1,4 +1,3 @@
-use anyhow::Result;
 use aoc_runner_derive::aoc;
 
 fn parse(input: &str) -> (Vec<(u8, u8)>, Vec<Vec<u8>>) {

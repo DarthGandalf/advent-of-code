@@ -3,7 +3,6 @@
 //  x  /  x   /      x    /   x  /   x   /
 // Is nom as good? Let's try if nom is fine.
 
-use anyhow::Result;
 use aoc_runner_derive::aoc;
 
 use nom::{

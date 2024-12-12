@@ -6,7 +6,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-anyhow = "1.0.93"
 aoc-runner = "0.3.0"
 aoc-runner-derive = "0.3.0"
 fnv = "1.0.7"
