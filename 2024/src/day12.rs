@@ -1,6 +1,6 @@
 use anyhow::Result;
 use aoc_runner_derive::aoc;
-use fnv::{FnvHashMap, FnvHashSet};
+use fnv::FnvHashSet;
 use itertools::Itertools;
 use std::collections::VecDeque;
 
