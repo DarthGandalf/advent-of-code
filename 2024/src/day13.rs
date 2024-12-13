@@ -1,15 +1,11 @@
 use aoc_runner_derive::aoc;
-use fnv::FnvHashSet;
-use itertools::Itertools;
-use std::collections::VecDeque;
 
 use nom::{
 	Err, IResult,
 	bytes::complete::tag,
-	character::complete::{digit1, space1},
-	combinator::{eof, map, map_res},
+	character::complete::digit1,
+	combinator::{eof, map_res},
 	error::{Error, ErrorKind},
-	multi::separated_list1,
 	sequence::tuple,
 };
 
