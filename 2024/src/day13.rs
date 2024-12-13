@@ -77,7 +77,7 @@ fn solve(input: &str, offset: i64) -> i64 {
 	input
 		.split("\n\n")
 		.map(|block| {
-			if let Ok((_, Machine {a, b, prize: mut p})) = parse_block(block) {
+			if let Ok((_, Machine { a, b, prize: mut p })) = parse_block(block) {
 				p.x += offset;
 				p.y += offset;
 				let d = b.y * a.x - a.y * b.x;
