@@ -82,8 +82,8 @@ pub fn part1(input: &str) -> i64 {
 
 #[aoc(day14, part2)]
 pub fn part2(input: &str) -> i64 {
-	const width: usize = 101;
-	const height: usize = 103;
+	const WIDTH: usize = 101;
+	const HEIGHT: usize = 103;
 	let mut robots = input
 		.lines()
 		.flat_map(|l| parse_robot(l))
@@ -94,8 +94,8 @@ pub fn part2(input: &str) -> i64 {
 		counter += 1;
 		let mut poses = FnvHashSet::default();
 		for r in &mut robots {
-			r.p.x = (r.p.x + r.v.x).rem_euclid(width as i64);
-			r.p.y = (r.p.y + r.v.y).rem_euclid(height as i64);
+			r.p.x = (r.p.x + r.v.x).rem_euclid(WIDTH as i64);
+			r.p.y = (r.p.y + r.v.y).rem_euclid(HEIGHT as i64);
 			poses.insert(r.p.clone());
 		}
 		if poses.len() == robots.len() {
