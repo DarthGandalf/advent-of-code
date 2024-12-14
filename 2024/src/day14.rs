@@ -1,4 +1,5 @@
 use aoc_runner_derive::aoc;
+use fnv::FnvHashSet;
 use itertools::Itertools;
 use nom::{
 	IResult,
@@ -7,7 +8,6 @@ use nom::{
 	combinator::{eof, map_res, opt},
 	sequence::tuple,
 };
-use fnv::FnvHashSet;
 
 #[derive(Debug, Hash, Eq, PartialEq, Clone)]
 struct Coord {
