@@ -75,15 +75,16 @@ fn solve1(input: &str, width: i64, height: i64) -> i64 {
 	q.iter().product()
 }
 
+const WIDTH: usize = 101;
+const HEIGHT: usize = 103;
+
 #[aoc(day14, part1)]
 pub fn part1(input: &str) -> i64 {
-	solve1(input, 101, 103)
+	solve1(input, WIDTH as i64, HEIGHT as i64)
 }
 
 #[aoc(day14, part2)]
 pub fn part2(input: &str) -> i64 {
-	const WIDTH: usize = 101;
-	const HEIGHT: usize = 103;
 	let mut robots = input
 		.lines()
 		.flat_map(|l| parse_robot(l))
