@@ -30,6 +30,31 @@ impl Coord {
 		}
 		n
 	}
+
+	fn neigh(&self, m: &[Vec<char>]) -> Vec<(Self, i64)> {
+		let mut v = Vec::with_capacity(3);
+		let fwd = self.stepfwd();
+		if m[fwd.y as usize][fwd.x as usize] != '#' {
+			v.push((fwd, 1i64));
+		}
+		v.push((
+			Coord {
+				x: self.x,
+				y: self.y,
+				d: Dir::from_repr((self.d as usize + 1) % 4).unwrap(),
+			},
+			1000,
+		));
+		v.push((
+			Coord {
+				x: self.x,
+				y: self.y,
+				d: Dir::from_repr((self.d as usize + 3) % 4).unwrap(),
+			},
+			1000,
+		));
+		v
+	}
 }
 
 fn parse(input: &str) -> (Vec<Vec<char>>, Coord, u8, u8) {
@@ -57,30 +82,7 @@ pub fn part1(input: &str) -> i64 {
 	let (m, s, ex, ey) = parse(input);
 	pathfinding::directed::astar::astar(
 		&s,
-		|n| {
-			let mut v = Vec::with_capacity(3);
-			let fwd = n.stepfwd();
-			if m[fwd.y as usize][fwd.x as usize] != '#' {
-				v.push((fwd, 1i64));
-			}
-			v.push((
-				Coord {
-					x: n.x,
-					y: n.y,
-					d: Dir::from_repr((n.d as usize + 1) % 4).unwrap(),
-				},
-				1000,
-			));
-			v.push((
-				Coord {
-					x: n.x,
-					y: n.y,
-					d: Dir::from_repr((n.d as usize + 3) % 4).unwrap(),
-				},
-				1000,
-			));
-			v
-		},
+		|n| n.neigh(&m),
 		|n| n.x.abs_diff(ex) as i64 + n.y.abs_diff(ey) as i64,
 		|n: &Coord| n.x == ex && n.y == ey,
 	)
@@ -94,30 +96,7 @@ pub fn part2(input: &str) -> usize {
 	let mut ss = FnvHashSet::default();
 	for p in pathfinding::directed::astar::astar_bag_collect(
 		&s,
-		|n| {
-			let mut v = Vec::with_capacity(3);
-			let fwd = n.stepfwd();
-			if m[fwd.y as usize][fwd.x as usize] != '#' {
-				v.push((fwd, 1i64));
-			}
-			v.push((
-				Coord {
-					x: n.x,
-					y: n.y,
-					d: Dir::from_repr((n.d as usize + 1) % 4).unwrap(),
-				},
-				1000,
-			));
-			v.push((
-				Coord {
-					x: n.x,
-					y: n.y,
-					d: Dir::from_repr((n.d as usize + 3) % 4).unwrap(),
-				},
-				1000,
-			));
-			v
-		},
+		|n| n.neigh(&m),
 		|n| n.x.abs_diff(ex) as i64 + n.y.abs_diff(ey) as i64,
 		|n: &Coord| n.x == ex && n.y == ey,
 	)
