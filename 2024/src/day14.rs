@@ -10,15 +10,15 @@ use nom::{
 };
 
 #[derive(Debug, Hash, Eq, PartialEq, Clone)]
-struct Coord {
-	x: i64,
-	y: i64,
+pub struct Coord {
+	pub x: i64,
+	pub y: i64,
 }
 
 #[derive(Debug)]
-struct Robot {
-	p: Coord,
-	v: Coord,
+pub struct Robot {
+	pub p: Coord,
+	pub v: Coord,
 }
 
 fn parsei64(input: &str) -> IResult<&str, i64> {
@@ -83,13 +83,17 @@ pub fn part1(input: &str) -> i64 {
 	solve1(input, WIDTH as i64, HEIGHT as i64)
 }
 
-#[aoc(day14, part2)]
-pub fn part2(input: &str) -> i64 {
-	let mut robots = input
+pub fn parse(input: &str) -> Vec<Robot> {
+	input
 		.lines()
 		.flat_map(|l| parse_robot(l))
 		.map(|r| r.1)
-		.collect_vec();
+		.collect_vec()
+}
+
+#[aoc(day14, part2)]
+pub fn part2(input: &str) -> i64 {
+	let mut robots = parse(input);
 	let mut counter = 0;
 	loop {
 		counter += 1;
