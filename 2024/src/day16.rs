@@ -1,9 +1,9 @@
 use aoc_runner_derive::aoc;
+use fnv::FnvHashSet;
 use itertools::Itertools;
-use petgraph::visit::{EdgeRef, NodeRef};
-use strum::{EnumIter, FromRepr, IntoEnumIterator};
+use strum::FromRepr;
 
-#[derive(EnumIter, Clone, Copy, PartialEq, Eq, Hash, FromRepr, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, FromRepr, Default)]
 enum Dir {
 	#[default]
 	E = 0,
@@ -32,8 +32,7 @@ impl Coord {
 	}
 }
 
-#[aoc(day16, part1)]
-pub fn part1(input: &str) -> i64 {
+fn parse(input: &str) -> (Vec<Vec<char>>, Coord, u8, u8) {
 	let m = input.lines().map(|l| l.chars().collect_vec()).collect_vec();
 	let mut s = Coord::default();
 	let mut ex = 0;
@@ -50,6 +49,12 @@ pub fn part1(input: &str) -> i64 {
 			}
 		}
 	}
+	(m, s, ex, ey)
+}
+
+#[aoc(day16, part1)]
+pub fn part1(input: &str) -> i64 {
+	let (m, s, ex, ey) = parse(input);
 	pathfinding::directed::astar::astar(
 		&s,
 		|n| {
@@ -84,8 +89,46 @@ pub fn part1(input: &str) -> i64 {
 }
 
 #[aoc(day16, part2)]
-pub fn part2(_input: &str) -> u64 {
-	0
+pub fn part2(input: &str) -> usize {
+	let (m, s, ex, ey) = parse(input);
+	let mut ss = FnvHashSet::default();
+	for p in pathfinding::directed::astar::astar_bag_collect(
+		&s,
+		|n| {
+			let mut v = Vec::with_capacity(3);
+			let fwd = n.stepfwd();
+			if m[fwd.y as usize][fwd.x as usize] != '#' {
+				v.push((fwd, 1i64));
+			}
+			v.push((
+				Coord {
+					x: n.x,
+					y: n.y,
+					d: Dir::from_repr((n.d as usize + 1) % 4).unwrap(),
+				},
+				1000,
+			));
+			v.push((
+				Coord {
+					x: n.x,
+					y: n.y,
+					d: Dir::from_repr((n.d as usize + 3) % 4).unwrap(),
+				},
+				1000,
+			));
+			v
+		},
+		|n| n.x.abs_diff(ex) as i64 + n.y.abs_diff(ey) as i64,
+		|n: &Coord| n.x == ex && n.y == ey,
+	)
+	.unwrap()
+	.0
+	{
+		for x in p {
+			ss.insert((x.x, x.y));
+		}
+	}
+	ss.len()
 }
 
 #[cfg(test)]
@@ -139,5 +182,8 @@ mod tests {
 	}
 
 	#[test]
-	fn test2() {}
+	fn test2() {
+		assert_eq!(part2(INPUT_1), 45);
+		assert_eq!(part2(INPUT_2), 64);
+	}
 }
