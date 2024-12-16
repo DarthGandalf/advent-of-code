@@ -1,57 +1,45 @@
 use aoc_runner_derive::aoc;
 use itertools::Itertools;
 use petgraph::visit::{EdgeRef, NodeRef};
-use strum::{EnumIter, IntoEnumIterator};
+use strum::{EnumIter, FromRepr, IntoEnumIterator};
 
-#[derive(EnumIter, Clone, Copy, PartialEq)]
+#[derive(EnumIter, Clone, Copy, PartialEq, Eq, Hash, FromRepr, Default)]
 enum Dir {
+	#[default]
 	E = 0,
 	N = 1,
 	W = 2,
 	S = 3,
 }
 
-#[derive(Default)]
+#[derive(Default, Clone, Hash, PartialEq, Eq)]
 struct Coord {
 	x: u8,
 	y: u8,
-	d: u8,
+	d: Dir,
+}
+
+impl Coord {
+	fn stepfwd(&self) -> Self {
+		let mut n = self.clone();
+		match self.d {
+			Dir::E => n.x += 1,
+			Dir::W => n.x -= 1,
+			Dir::N => n.y -= 1,
+			Dir::S => n.y += 1,
+		}
+		n
+	}
 }
 
 #[aoc(day16, part1)]
 pub fn part1(input: &str) -> i64 {
 	let m = input.lines().map(|l| l.chars().collect_vec()).collect_vec();
-	let mut g =
-		petgraph::Graph::<Coord, i64, petgraph::Directed>::new(
-		);
-	let mi = m
-		.iter()
-		.enumerate()
-		.map(|(y, row)| {
-			row.iter()
-				.enumerate()
-				.map(|(x, c)| {
-					Dir::iter()
-						.map(|d| {
-							g.add_node(Coord {
-								x: x as u8,
-								y: y as u8,
-								d: d as u8,
-							})
-						})
-						.collect_vec()
-				})
-				.collect_vec()
-		})
-		.collect_vec();
 	let mut s = Coord::default();
 	let mut ex = 0;
 	let mut ey = 0;
 	for y in 0..m.len() {
 		for x in 0..m[0].len() {
-			if m[y][x] == '#' {
-				continue;
-			}
 			if m[y][x] == 'S' {
 				s.x = x as u8;
 				s.y = y as u8;
@@ -60,31 +48,39 @@ pub fn part1(input: &str) -> i64 {
 				ex = x as u8;
 				ey = y as u8;
 			}
-			for d in Dir::iter() {
-				if m[y][x - 1] != '#' && d == Dir::W {
-					g.add_edge(mi[y][x][d as usize], mi[y][x - 1][d as usize], 1);
-				}
-				if m[y][x + 1] != '#' && d == Dir::E {
-					g.add_edge(mi[y][x][d as usize], mi[y][x + 1][d as usize], 1);
-				}
-				if m[y - 1][x] != '#' && d == Dir::N {
-					g.add_edge(mi[y][x][d as usize], mi[y - 1][x][d as usize], 1);
-				}
-				if m[y + 1][x] != '#' && d == Dir::S {
-					g.add_edge(mi[y][x][d as usize], mi[y + 1][x][d as usize], 1);
-				}
-				g.add_edge(mi[y][x][d as usize], mi[y][x][(d as usize + 1) % 4], 1000);
-				g.add_edge(mi[y][x][d as usize], mi[y][x][(d as usize + 3) % 4], 1000);
-			}
 		}
 	}
-	petgraph::algo::astar(
-		&g,
-		mi[s.y as usize][s.x as usize][s.d as usize],
-		|n| g[n].x == ex && g[n].y == ey,
-		|e| *e.weight(),
-		|n| (g[n].x.abs_diff(ex) + g[n].y.abs_diff(ey)).into(),
-	).unwrap().0
+	pathfinding::directed::astar::astar(
+		&s,
+		|n| {
+			let mut v = Vec::with_capacity(3);
+			let fwd = n.stepfwd();
+			if m[fwd.y as usize][fwd.x as usize] != '#' {
+				v.push((fwd, 1i64));
+			}
+			v.push((
+				Coord {
+					x: n.x,
+					y: n.y,
+					d: Dir::from_repr((n.d as usize + 1) % 4).unwrap(),
+				},
+				1000,
+			));
+			v.push((
+				Coord {
+					x: n.x,
+					y: n.y,
+					d: Dir::from_repr((n.d as usize + 3) % 4).unwrap(),
+				},
+				1000,
+			));
+			v
+		},
+		|n| n.x.abs_diff(ex) as i64 + n.y.abs_diff(ey) as i64,
+		|n: &Coord| n.x == ex && n.y == ey,
+	)
+	.unwrap()
+	.1
 }
 
 #[aoc(day16, part2)]
