@@ -17,6 +17,7 @@ itertools = "0.13.0"
 memoize = "0.4.2"
 nom = "7.1.3"
 petgraph = "0.6.5"
+strum = { version = "0.26", features = ["derive"] }
 
 [[bin]]
 name = "vis14"
