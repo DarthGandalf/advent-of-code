@@ -220,6 +220,7 @@ dependencies = [
  "nom",
  "pathfinding",
  "petgraph",
+ "smallvec",
  "strum",
 ]
 

@@ -2,14 +2,14 @@ use anyhow::{Result, bail};
 use aoc_runner_derive::aoc;
 use itertools::Itertools;
 use std::collections::VecDeque;
+use smallvec::SmallVec;
 
 #[derive(Default)]
 struct Computer<'a> {
 	mem: &'a [i8],
 	reg: [i64; 3],
 	ip: usize,
-	out: [i8; 16],
-	outlen: usize,
+	out: SmallVec<[i8; 16]>,
 }
 
 impl<'a> Computer<'a> {
@@ -51,9 +51,7 @@ impl<'a> Computer<'a> {
 			5 => {
 				// out
 				let value = self.combo(operand)? % 8;
-				//self.out.push(value as i8);
-				self.out[self.outlen] = value as i8;
-				self.outlen += 1;
+				self.out.push(value as i8);
 			}
 			6 => {
 				// bdv
@@ -68,11 +66,11 @@ impl<'a> Computer<'a> {
 		Ok(())
 	}
 
-	fn run(mut self) -> Result<Vec<i8>> {
+	fn run(mut self) -> Result<SmallVec<[i8; 16]>> {
 		while self.ip < self.mem.len() {
 			self.step()?;
 		}
-		Ok(self.out[..self.outlen].to_vec())
+		Ok(self.out)
 	}
 }
 
@@ -119,7 +117,7 @@ pub fn part2(input: &str) -> i64 {
 		})
 		.run()
 		{
-			if mem[mem.len() - d..] == out {
+			if mem[mem.len() - d..] == *out {
 				if d == mem.len() {
 					return a;
 				}
