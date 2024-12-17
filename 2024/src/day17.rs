@@ -109,14 +109,17 @@ pub fn part2(input: &str) -> i64 {
 	let (_, mem) = parse(input);
 	let mut q: VecDeque<(i64, usize)> = (0..=7).rev().map(|a| (a, 1)).collect();
 	while let Some((a, d)) = q.pop_back() {
-		if let Ok(out) = (Computer {
-			mem: &mem,
-			reg: [a, 0, 0],
-			..Default::default()
-		})
-		.run(1)
-		{
-			if mem[mem.len() - d] == out[0] {
+		let b = a % 8;
+		let c = a >> (b ^ 7);
+		if ((b ^ c) % 8) as i8 == mem[mem.len() - d] {
+		//if let Ok(out) = (Computer {
+		//	mem: &mem,
+		//	reg: [a, 0, 0],
+		//	..Default::default()
+		//})
+		//.run(1)
+		//{
+		//	if mem[mem.len() - d] == out[0] {
 				if d == mem.len() {
 					return a;
 				}
@@ -124,7 +127,7 @@ pub fn part2(input: &str) -> i64 {
 					q.push_back((a * 8 + k, d + 1));
 				}
 			}
-		}
+		//}
 	}
 	-1
 }
