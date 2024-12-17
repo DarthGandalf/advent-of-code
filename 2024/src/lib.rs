@@ -24,5 +24,6 @@ pub mod day13;
 pub mod day14;
 pub mod day15;
 pub mod day16;
+pub mod day17;
 
 aoc_runner_derive::aoc_lib! { year = 2024 }
