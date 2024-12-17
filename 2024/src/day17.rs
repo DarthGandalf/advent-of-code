@@ -1,29 +1,29 @@
-use aoc_runner_derive::aoc;
 use anyhow::{Result, bail};
+use aoc_runner_derive::aoc;
 use itertools::Itertools;
+use std::collections::VecDeque;
 
 #[derive(Default)]
-struct Computer {
-	mem: Vec<i64>,
+struct Computer<'a> {
+	mem: &'a [i8],
 	reg: [i64; 3],
 	ip: usize,
-	out: Vec<i64>,
+	out: [i8; 16],
 	outlen: usize,
-	part2: bool,
 }
 
-impl Computer {
-	fn combo(&self, x: i64) -> Result<i64> {
+impl<'a> Computer<'a> {
+	fn combo(&self, x: i8) -> Result<i64> {
 		match x {
-			0..=3 => Ok(x),
-			4..=6 => Ok(self.reg[x as usize-4]),
+			0..=3 => Ok(x as i64),
+			4..=6 => Ok(self.reg[x as usize - 4]),
 			_ => bail!("combo operand {x}"),
 		}
 	}
 
-	fn step(&mut self) -> anyhow::Result<()> {
+	fn step(&mut self) -> Result<()> {
 		let op = self.mem[self.ip];
-		let operand = self.mem[self.ip+1];
+		let operand = self.mem[self.ip + 1];
 		self.ip += 2;
 		match op {
 			0 => {
@@ -32,7 +32,7 @@ impl Computer {
 			}
 			1 => {
 				// bxl
-				self.reg[1] ^= operand;
+				self.reg[1] ^= operand as i64;
 			}
 			2 => {
 				// bst
@@ -51,17 +51,9 @@ impl Computer {
 			5 => {
 				// out
 				let value = self.combo(operand)? % 8;
-				if self.part2 {
-					if self.outlen >= self.mem.len() {
-						bail!("too long output");
-					}
-					if self.mem[self.outlen] != value {
-						bail!("wrong out value");
-					}
-					self.outlen += 1;
-				} else {
-					self.out.push(value);
-				}
+				//self.out.push(value as i8);
+				self.out[self.outlen] = value as i8;
+				self.outlen += 1;
 			}
 			6 => {
 				// bdv
@@ -76,22 +68,22 @@ impl Computer {
 		Ok(())
 	}
 
-	fn reset(&mut self, a: i64) {
-		self.reg[0] = a;
-		self.reg[1] = 0;
-		self.reg[2] = 0;
-		self.outlen = 0;
+	fn run(mut self) -> Result<Vec<i8>> {
+		while self.ip < self.mem.len() {
+			self.step()?;
+		}
+		Ok(self.out[..self.outlen].to_vec())
 	}
 }
 
-fn parse(input: &str) -> Computer {
+fn parse(input: &str) -> ([i64; 3], Vec<i8>) {
 	let mut iter = input.lines();
-	let mut c = Computer::default();
-	for r in &mut c.reg {
+	let mut reg = [0; 3];
+	for r in &mut reg {
 		let line = iter.next().unwrap();
 		*r = line.split_whitespace().last().unwrap().parse().unwrap();
 	}
-	c.mem = iter
+	let mem = iter
 		.skip(1)
 		.next()
 		.unwrap()
@@ -101,37 +93,43 @@ fn parse(input: &str) -> Computer {
 		.split(',')
 		.flat_map(str::parse)
 		.collect_vec();
-	c
+	(reg, mem)
 }
 
 #[aoc(day17, part1)]
 pub fn part1(input: &str) -> String {
-	let mut c = parse(input);
-	while c.ip < c.mem.len() {
-		c.step().unwrap();
-	}
-	c.out.into_iter().join(",")
+	let (reg, mem) = parse(input);
+	let c = Computer {
+		mem: &mem,
+		reg,
+		..Default::default()
+	};
+	c.run().unwrap().into_iter().join(",")
 }
 
 #[aoc(day17, part2)]
 pub fn part2(input: &str) -> i64 {
-	let mut c = parse(input);
-	c.part2 = true;
-	'loo: for a in 0.. {
-		c.reset(a);
-		let mut x = 0;
-		while c.ip < c.mem.len() && x < 100 {
-			x += 1;
-			let r = c.step();
-			if r.is_err() {
-				continue 'loo;
+	let (_, mem) = parse(input);
+	let mut q: VecDeque<(i64, usize)> = (0..=7).rev().map(|a| (a, 1)).collect();
+	while let Some((a, d)) = q.pop_back() {
+		if let Ok(out) = (Computer {
+			mem: &mem,
+			reg: [a, 0, 0],
+			..Default::default()
+		})
+		.run()
+		{
+			if mem[mem.len() - d..] == out {
+				if d == mem.len() {
+					return a;
+				}
+				for k in (0..=7).rev() {
+					q.push_back((a * 8 + k, d + 1));
+				}
 			}
 		}
-		if c.ip >= c.mem.len() && c.outlen == c.mem.len() {
-			return a;
-		}
 	}
-	panic!("no result");
+	0
 }
 
 #[cfg(test)]
@@ -155,7 +153,7 @@ Program: 0,1,5,4,3,0
 	#[test]
 	fn test_adv() {
 		let mut c = Computer {
-			mem: vec![0, 2],
+			mem: &[0, 2],
 			reg: [100, 0, 0],
 			..Default::default()
 		};
@@ -168,3 +166,14 @@ Program: 0,1,5,4,3,0
 		//		assert_eq!(part2(INPUT_1), 45);
 	}
 }
+
+// 2,4,1,7,7,5,1,7,4,6,0,3,5,5,3,0
+//
+// 2,4 bst-4: B = A % 8
+// 1,7 bxl-7: B ^= 7
+// 7,5 cdv-5: C = A >> B
+// 1,7 bxl-7: B ^= 7
+// 4,6 bxc-6: B ^= C
+// 0,3 adv-3: A >>= 3
+// 5,5 out-5: out B
+// 3,0 jnz-0
