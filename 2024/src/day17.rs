@@ -12,7 +12,7 @@ struct Computer<'a> {
 	out: SmallVec<[i8; 16]>,
 }
 
-impl<'a> Computer<'a> {
+impl Computer<'_> {
 	fn combo(&self, x: i8) -> Result<i64> {
 		match x {
 			0..=3 => Ok(x as i64),
@@ -82,8 +82,7 @@ fn parse(input: &str) -> ([i64; 3], Vec<i8>) {
 		*r = line.split_whitespace().last().unwrap().parse().unwrap();
 	}
 	let mem = iter
-		.skip(1)
-		.next()
+		.nth(1)
 		.unwrap()
 		.split_whitespace()
 		.last()
