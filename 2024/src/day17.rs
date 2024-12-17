@@ -1,8 +1,8 @@
 use anyhow::{Result, bail};
 use aoc_runner_derive::aoc;
 use itertools::Itertools;
-use std::collections::VecDeque;
 use smallvec::SmallVec;
+use std::collections::VecDeque;
 
 #[derive(Default)]
 struct Computer<'a> {
@@ -66,8 +66,8 @@ impl Computer<'_> {
 		Ok(())
 	}
 
-	fn run(mut self) -> Result<SmallVec<[i8; 16]>> {
-		while self.ip < self.mem.len() {
+	fn run(mut self, until: usize) -> Result<SmallVec<[i8; 16]>> {
+		while self.ip < self.mem.len() && self.out.len() < until {
 			self.step()?;
 		}
 		Ok(self.out)
@@ -101,7 +101,7 @@ pub fn part1(input: &str) -> String {
 		reg,
 		..Default::default()
 	};
-	c.run().unwrap().into_iter().join(",")
+	c.run(16).unwrap().into_iter().join(",")
 }
 
 #[aoc(day17, part2)]
@@ -114,9 +114,9 @@ pub fn part2(input: &str) -> i64 {
 			reg: [a, 0, 0],
 			..Default::default()
 		})
-		.run()
+		.run(1)
 		{
-			if mem[mem.len() - d..] == *out {
+			if mem[mem.len() - d] == out[0] {
 				if d == mem.len() {
 					return a;
 				}
@@ -126,7 +126,7 @@ pub fn part2(input: &str) -> i64 {
 			}
 		}
 	}
-	0
+	-1
 }
 
 #[cfg(test)]
@@ -160,7 +160,10 @@ Program: 0,1,5,4,3,0
 
 	#[test]
 	fn test2() {
-		//		assert_eq!(part2(INPUT_1), 45);
+		assert_eq!(
+			part2(include_str!("../input/2024/day17.txt").trim()),
+			265061364597659
+		);
 	}
 }
 
