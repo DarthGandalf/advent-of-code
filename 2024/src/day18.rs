@@ -33,7 +33,7 @@ fn solve1(input: &[(usize, usize)], size: usize) -> Option<usize> {
 			n.push((y, x+1));
 		}
 		n.into_iter().map(|v| (v, 1)).collect_vec()
-	}, |&(y, x)| y.abs_diff(size) + x.abs_diff(size), |&(y, x)| y == size && x == size).and_then(|(_, len)| Some(len))
+	}, |&(y, x)| y.abs_diff(size) + x.abs_diff(size), |&(y, x)| y == size && x == size).map(|(_, len)| len)
 }
 
 #[aoc(day18, part2)]
