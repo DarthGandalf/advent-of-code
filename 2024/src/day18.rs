@@ -8,32 +8,39 @@ pub fn part1(input: &str) -> usize {
 }
 
 fn parse(input: &str) -> Vec<(usize, usize)> {
-	input.lines().flat_map(|l| {
-		l.split(',').flat_map(str::parse::<usize>).collect_tuple()
-	}).collect_vec()
+	input
+		.lines()
+		.flat_map(|l| l.split(',').flat_map(str::parse::<usize>).collect_tuple())
+		.collect_vec()
 }
 
 fn solve1(input: &[(usize, usize)], size: usize) -> Option<usize> {
-	let mut m = vec![vec![true; size+1]; size+1];
+	let mut m = vec![vec![true; size + 1]; size + 1];
 	for &(y, x) in input {
 		m[y][x] = false;
 	}
-	pathfinding::directed::astar::astar(&(0, 0), |&(y, x)| {
-		let mut n = Vec::new();
-		if y>0 && m[y-1][x] {
-			n.push((y-1, x));
-		}
-		if y < size && m[y+1][x] {
-			n.push((y+1, x));
-		}
-		if x>0 && m[y][x-1] {
-			n.push((y, x-1));
-		}
-		if x<size && m[y][x+1] {
-			n.push((y, x+1));
-		}
-		n.into_iter().map(|v| (v, 1)).collect_vec()
-	}, |&(y, x)| y.abs_diff(size) + x.abs_diff(size), |&(y, x)| y == size && x == size).map(|(_, len)| len)
+	pathfinding::directed::astar::astar(
+		&(0, 0),
+		|&(y, x)| {
+			let mut n = Vec::new();
+			if y > 0 && m[y - 1][x] {
+				n.push((y - 1, x));
+			}
+			if y < size && m[y + 1][x] {
+				n.push((y + 1, x));
+			}
+			if x > 0 && m[y][x - 1] {
+				n.push((y, x - 1));
+			}
+			if x < size && m[y][x + 1] {
+				n.push((y, x + 1));
+			}
+			n.into_iter().map(|v| (v, 1)).collect_vec()
+		},
+		|&(y, x)| y.abs_diff(size) + x.abs_diff(size),
+		|&(y, x)| y == size && x == size,
+	)
+	.map(|(_, len)| len)
 }
 
 #[aoc(day18, part2)]
