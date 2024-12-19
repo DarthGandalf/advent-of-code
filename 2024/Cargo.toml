@@ -19,6 +19,7 @@ memoize = "0.4.2"
 nom = "7.1.3"
 pathfinding = "4.12.0"
 petgraph = "0.6.5"
+regex = "1.11.1"
 smallvec = { version = "1.13.2", features = ["union"] }
 strum = { version = "0.26", features = ["derive"] }
 
