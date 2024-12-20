@@ -25,7 +25,7 @@ impl Plugin for VisualizationPlugin {
 			move |commands: Commands,
 			      meshes: ResMut<Assets<Mesh>>,
 			      materials: ResMut<Assets<StandardMaterial>>,
-				  asset_server: Res<AssetServer>| {
+			      asset_server: Res<AssetServer>| {
 				add_robots(commands, meshes, materials, asset_server, &input)
 			},
 		)
@@ -49,11 +49,12 @@ fn add_robots(
 		let x = (r.p.x + 6285 * r.v.x).rem_euclid(101);
 		let y = (r.p.y + 6285 * r.v.y).rem_euclid(103);
 		(
-			Transform::from_rotation(Quat::from_rotation_x(std::f32::consts::PI / 2.0)).with_scale(Vec3::new(1.0, 1.0, 1.0)).with_translation(Vec3::new(x as f32, y as f32, 0.0)),
+			Transform::from_rotation(Quat::from_rotation_x(std::f32::consts::PI / 2.0))
+				.with_scale(Vec3::new(1.0, 1.0, 1.0))
+				.with_translation(Vec3::new(x as f32, y as f32, 0.0)),
 			Robot(r),
-			SceneRoot(ass.clone())
-//			Mesh3d(mesh.clone()),
-//			MeshMaterial3d(material.clone()),
+			SceneRoot(ass.clone()), //			Mesh3d(mesh.clone()),
+			                        //			MeshMaterial3d(material.clone()),
 		)
 	}));
 	commands.spawn((
@@ -61,12 +62,13 @@ fn add_robots(
 		Transform::from_xyz(101.0 / 2.0, 103.0 / 2.0 + 70.0, 10.0)
 			.looking_at(Vec3::new(101.0 / 2.0, 103.0 / 2.0 + 10.0, 0.0), Vec3::Z),
 	));
-/*	commands.spawn((
-		Mesh3d(meshes.add(Rectangle::new(101.0, 103.0))),
-		MeshMaterial3d(materials.add(Color::WHITE)),
-		Transform::from_xyz(101.0 / 2.0, 103.0 / 2.0, 0.0),
-	));
-*/	commands.spawn((
+	/*	commands.spawn((
+			Mesh3d(meshes.add(Rectangle::new(101.0, 103.0))),
+			MeshMaterial3d(materials.add(Color::WHITE)),
+			Transform::from_xyz(101.0 / 2.0, 103.0 / 2.0, 0.0),
+		));
+	*/
+	commands.spawn((
 		DirectionalLight {
 			shadows_enabled: true,
 			illuminance: 1000.0,
