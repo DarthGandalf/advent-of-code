@@ -24,8 +24,9 @@ impl Plugin for VisualizationPlugin {
 			Startup,
 			move |commands: Commands,
 			      meshes: ResMut<Assets<Mesh>>,
-			      materials: ResMut<Assets<StandardMaterial>>| {
-				add_robots(commands, meshes, materials, &input)
+			      materials: ResMut<Assets<StandardMaterial>>,
+				  asset_server: Res<AssetServer>| {
+				add_robots(commands, meshes, materials, asset_server, &input)
 			},
 		)
 		.insert_resource(AmbientLight {
@@ -38,31 +39,34 @@ fn add_robots(
 	mut commands: Commands,
 	mut meshes: ResMut<Assets<Mesh>>,
 	mut materials: ResMut<Assets<StandardMaterial>>,
+	asset_server: Res<AssetServer>,
 	input: &str,
 ) {
+	let ass = asset_server.load(GltfAssetLabel::Scene(0).from_asset("robot.glb"));
 	let mesh = meshes.add(Cuboid::new(1.0, 1.0, 1.0));
 	let material = materials.add(Color::srgb_u8(255, 0, 0));
 	commands.spawn_batch(aoc2024::day14::parse(input).into_iter().map(move |r| {
 		let x = (r.p.x + 6285 * r.v.x).rem_euclid(101);
 		let y = (r.p.y + 6285 * r.v.y).rem_euclid(103);
 		(
-			Transform::from_xyz(x as f32, y as f32, 0.5),
+			Transform::from_rotation(Quat::from_rotation_x(std::f32::consts::PI / 2.0)).with_scale(Vec3::new(1.0, 1.0, 1.0)).with_translation(Vec3::new(x as f32, y as f32, 0.0)),
 			Robot(r),
-			Mesh3d(mesh.clone()),
-			MeshMaterial3d(material.clone()),
+			SceneRoot(ass.clone())
+//			Mesh3d(mesh.clone()),
+//			MeshMaterial3d(material.clone()),
 		)
 	}));
 	commands.spawn((
 		Camera3d::default(),
-		Transform::from_xyz(101.0 / 2.0, 103.0 / 2.0 + 70.0, 100.0)
+		Transform::from_xyz(101.0 / 2.0, 103.0 / 2.0 + 70.0, 10.0)
 			.looking_at(Vec3::new(101.0 / 2.0, 103.0 / 2.0 + 10.0, 0.0), Vec3::Z),
 	));
-	commands.spawn((
+/*	commands.spawn((
 		Mesh3d(meshes.add(Rectangle::new(101.0, 103.0))),
 		MeshMaterial3d(materials.add(Color::WHITE)),
 		Transform::from_xyz(101.0 / 2.0, 103.0 / 2.0, 0.0),
 	));
-	commands.spawn((
+*/	commands.spawn((
 		DirectionalLight {
 			shadows_enabled: true,
 			illuminance: 1000.0,
