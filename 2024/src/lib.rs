@@ -1,4 +1,5 @@
 #![feature(num_midpoint)]
+#![feature(iter_map_windows)]
 
 #[path = "day01.rs"]
 pub mod day1;
@@ -30,5 +31,7 @@ pub mod day17;
 pub mod day18;
 pub mod day19;
 pub mod day20;
+pub mod day21;
+pub mod day22;
 
 aoc_runner_derive::aoc_lib! { year = 2024 }
