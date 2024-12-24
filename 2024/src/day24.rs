@@ -1,7 +1,10 @@
-use aoc_runner_derive::aoc;
 use anyhow::Result;
-use std::{collections::{BTreeMap, BTreeSet}, fmt::Write};
+use aoc_runner_derive::aoc;
 use itertools::Itertools;
+use std::{
+	collections::{BTreeMap, BTreeSet},
+	fmt::Write,
+};
 
 #[derive(Copy, Clone, Ord, PartialEq, PartialOrd, Eq)]
 struct Id(u16);
@@ -80,30 +83,48 @@ struct Dep {
 
 fn parse(input: &str) -> (BTreeMap<Id, bool>, Vec<Dep>) {
 	let mut iter = input.split("\n\n");
-	let start: BTreeMap<Id, bool> = iter.next().unwrap().lines().map(|l| {
-		let mut it = l.split(": ");
-		(Id::from_string(it.next().unwrap()), it.next().unwrap() == "1")
-	}).collect();
-	let deps = iter.next().unwrap().lines().map(|l| {
-		let v = l.split(' ').collect_vec();
-		Dep {
-			op: Op::parse(v[1]),
-			operands: [Id::from_string(v[0]), Id::from_string(v[2])],
-			result: Id::from_string(v[4]),
-		}
-	}).collect_vec();
+	let start: BTreeMap<Id, bool> = iter
+		.next()
+		.unwrap()
+		.lines()
+		.map(|l| {
+			let mut it = l.split(": ");
+			(
+				Id::from_string(it.next().unwrap()),
+				it.next().unwrap() == "1",
+			)
+		})
+		.collect();
+	let deps = iter
+		.next()
+		.unwrap()
+		.lines()
+		.map(|l| {
+			let v = l.split(' ').collect_vec();
+			Dep {
+				op: Op::parse(v[1]),
+				operands: [Id::from_string(v[0]), Id::from_string(v[2])],
+				result: Id::from_string(v[4]),
+			}
+		})
+		.collect_vec();
 	(start, deps)
 }
 
 #[aoc(day24, part1)]
 pub fn part1(input: &str) -> u64 {
 	let (mut values, deps) = parse(input);
+	//fix(&mut deps);
 	let mut g = petgraph::Graph::<Id, ()>::new();
 	let mut nodes = BTreeMap::<Id, petgraph::graph::NodeIndex>::default();
 	let mut how = BTreeMap::<Id, &Dep>::default();
 	for d in &deps {
-		let a = *nodes.entry(d.operands[0]).or_insert_with_key(|&k| g.add_node(k));
-		let b = *nodes.entry(d.operands[1]).or_insert_with_key(|&k| g.add_node(k));
+		let a = *nodes
+			.entry(d.operands[0])
+			.or_insert_with_key(|&k| g.add_node(k));
+		let b = *nodes
+			.entry(d.operands[1])
+			.or_insert_with_key(|&k| g.add_node(k));
 		let c = *nodes.entry(d.result).or_insert_with_key(|&k| g.add_node(k));
 		g.add_edge(a, c, ());
 		g.add_edge(b, c, ());
@@ -112,16 +133,35 @@ pub fn part1(input: &str) -> u64 {
 	let order = petgraph::algo::toposort(&g, None).unwrap();
 	for d in order {
 		if let Some(&rule) = how.get(&g[d]) {
-			values.insert(rule.result, rule.op.calc(*values.get(&rule.operands[0]).unwrap(), *values.get(&rule.operands[1]).unwrap()));
+			values.insert(
+				rule.result,
+				rule.op.calc(
+					*values.get(&rule.operands[0]).unwrap(),
+					*values.get(&rule.operands[1]).unwrap(),
+				),
+			);
 		}
 	}
 	let mut result = 0;
-	for (_, yes) in values.into_iter().rev().take_while(|(id, _)| id.0 >= 35 * 36 * 36) {
-		result <<= 1;
+	let mut x: u64 = 0;
+	let mut y: u64 = 0;
+	for (u, yes) in values
+		.into_iter()
+		.rev()
+		.take_while(|(id, _)| id.0 >= 35 * 36 * 36)
+	{
+		let k = match u.0 {
+			45360.. => &mut result,
+			44064.. => &mut y,
+			_ => &mut x,
+		};
+		*k <<= 1;
 		if yes {
-			result += 1;
+			*k += 1;
 		}
 	}
+	//dbg!(x, y, result);
+	//assert_eq!(x+y, result);
 	result
 }
 
@@ -134,6 +174,8 @@ fn fix(deps: &mut Vec<Dep>) {
 			"swt" => d.result = Id::from_string("z07"),
 			"z13" => d.result = Id::from_string("pqc"),
 			"pqc" => d.result = Id::from_string("z13"),
+			"z31" => d.result = Id::from_string("bgs"),
+			"bgs" => d.result = Id::from_string("z31"),
 			_ => {}
 		}
 	}
@@ -163,7 +205,12 @@ pub fn part2(input: &str) -> Result<u32> {
 		writeln!(&mut f, "{n}[style=filled,fillcolor={color}];")?;
 	}
 	for (i, d) in deps.iter().enumerate() {
-		writeln!(&mut f, "_{i}[style=filled,fillcolor={},label={}];", d.op.color(), d.op)?;
+		writeln!(
+			&mut f,
+			"_{i}[style=filled,fillcolor={},label={}];",
+			d.op.color(),
+			d.op
+		)?;
 		writeln!(&mut f, "{} -> _{i};", d.operands[0])?;
 		writeln!(&mut f, "{} -> _{i};", d.operands[1])?;
 		writeln!(&mut f, "_{i} -> {};", d.result)?;
@@ -192,7 +239,8 @@ y02: 0
 x00 AND y00 -> z00
 x01 XOR y01 -> z01
 x02 OR y02 -> z02
-".trim_ascii();
+"
+	.trim_ascii();
 
 	const INPUT_2: &str = "
 x00: 1
@@ -242,7 +290,8 @@ y03 OR x01 -> nrd
 hwm AND bqk -> z03
 tgd XOR rvg -> z12
 tnw OR pbm -> gnj
-".trim_ascii();
+"
+	.trim_ascii();
 
 	#[test]
 	fn test1() {
@@ -252,6 +301,5 @@ tnw OR pbm -> gnj
 	}
 
 	#[test]
-	fn test2() {
-	}
+	fn test2() {}
 }

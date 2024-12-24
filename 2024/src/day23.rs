@@ -46,7 +46,7 @@ pub fn part1(input: &str) -> usize {
 					continue;
 				}
 				if edges.get(v).unwrap().contains(t) {
-					let mut vec = vec![u, v, t];
+					let mut vec = [u, v, t];
 					vec.sort_unstable();
 					result.insert(*vec[0] as u32 * 36 * 36 + *vec[1] as u32 * 36 + *vec[2] as u32);
 				}
