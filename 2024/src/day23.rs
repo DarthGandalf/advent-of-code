@@ -55,8 +55,12 @@ fn bron(mut a: A<'_>) -> Vec<BTreeSet<&str>> {
 	if a.p.is_empty() && a.x.is_empty() {
 		return vec![a.r];
 	}
-	let p = a.p.clone();
 	let mut q = vec![];
+	let u = if a.p.is_empty() { &a.x } else { &a.p }
+		.iter()
+		.next()
+		.unwrap();
+	let p: BTreeSet<&str> = a.p.difference(a.edges.get(u).unwrap()).cloned().collect();
 	for &v in &p {
 		let b = A {
 			edges: a.edges,
