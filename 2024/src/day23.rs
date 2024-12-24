@@ -4,11 +4,16 @@ use itertools::Itertools;
 use std::collections::{BTreeMap, BTreeSet};
 
 fn numerize(a: &str) -> i16 {
-	a.chars().fold(0, |acc, x| acc * 36 + x.to_digit(36).unwrap() as i16)
+	a.chars()
+		.fold(0, |acc, x| acc * 36 + x.to_digit(36).unwrap() as i16)
 }
 
 fn stringize(a: i16) -> String {
-	format!("{}{}", char::from_digit((a / 36) as u32, 36).unwrap(), char::from_digit((a % 36) as u32, 36).unwrap())
+	format!(
+		"{}{}",
+		char::from_digit((a / 36) as u32, 36).unwrap(),
+		char::from_digit((a % 36) as u32, 36).unwrap()
+	)
 }
 
 fn parse(input: &str) -> (BTreeSet<i16>, BTreeMap<i16, BTreeSet<i16>>) {
@@ -31,7 +36,7 @@ pub fn part1(input: &str) -> usize {
 	let (vertices, edges) = parse(input);
 	let mut result = FnvHashSet::<String>::default();
 	for v in &vertices {
-		if char::from_digit((v/36) as u32, 36) != Some('t') {
+		if char::from_digit((v / 36) as u32, 36) != Some('t') {
 			continue;
 		}
 		for u in edges.get(v).unwrap() {
@@ -75,8 +80,14 @@ fn bron(mut a: A<'_>) -> Vec<BTreeSet<i16>> {
 		let b = A {
 			edges: a.edges,
 			r: a.r.iter().cloned().chain(std::iter::once(v)).collect(),
-			p: a.p.intersection(a.edges.get(&v).unwrap()).cloned().collect(),
-			x: a.x.intersection(a.edges.get(&v).unwrap()).cloned().collect(),
+			p: a.p
+				.intersection(a.edges.get(&v).unwrap())
+				.cloned()
+				.collect(),
+			x: a.x
+				.intersection(a.edges.get(&v).unwrap())
+				.cloned()
+				.collect(),
 		};
 		q.extend(bron(b));
 		a.p.remove(&v);
