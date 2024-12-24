@@ -3,11 +3,21 @@ use fnv::FnvHashSet;
 use itertools::Itertools;
 use std::collections::{BTreeMap, BTreeSet};
 
-fn parse(input: &str) -> (BTreeSet<&str>, BTreeMap<&str, BTreeSet<&str>>) {
-	let mut vertices = BTreeSet::<&str>::default();
-	let mut edges = BTreeMap::<&str, BTreeSet<&str>>::default();
+fn numerize(a: &str) -> i16 {
+	a.chars().fold(0, |acc, x| acc * 36 + x.to_digit(36).unwrap() as i16)
+}
+
+fn stringize(a: i16) -> String {
+	format!("{}{}", char::from_digit((a / 36) as u32, 36).unwrap(), char::from_digit((a % 36) as u32, 36).unwrap())
+}
+
+fn parse(input: &str) -> (BTreeSet<i16>, BTreeMap<i16, BTreeSet<i16>>) {
+	let mut vertices = BTreeSet::<i16>::default();
+	let mut edges = BTreeMap::<i16, BTreeSet<i16>>::default();
 	for l in input.lines() {
 		let (a, b) = l.split('-').collect_tuple().unwrap();
+		let a = numerize(a);
+		let b = numerize(b);
 		edges.entry(a).or_default().insert(b);
 		edges.entry(b).or_default().insert(a);
 		vertices.insert(a);
@@ -21,7 +31,7 @@ pub fn part1(input: &str) -> usize {
 	let (vertices, edges) = parse(input);
 	let mut result = FnvHashSet::<String>::default();
 	for v in &vertices {
-		if !v.starts_with('t') {
+		if char::from_digit((v/36) as u32, 36) != Some('t') {
 			continue;
 		}
 		for u in edges.get(v).unwrap() {
@@ -44,14 +54,14 @@ pub fn part1(input: &str) -> usize {
 }
 
 struct A<'a> {
-	edges: &'a BTreeMap<&'a str, BTreeSet<&'a str>>,
-	r: BTreeSet<&'a str>,
-	p: BTreeSet<&'a str>,
-	x: BTreeSet<&'a str>,
+	edges: &'a BTreeMap<i16, BTreeSet<i16>>,
+	r: BTreeSet<i16>,
+	p: BTreeSet<i16>,
+	x: BTreeSet<i16>,
 }
 
 // https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm
-fn bron(mut a: A<'_>) -> Vec<BTreeSet<&str>> {
+fn bron(mut a: A<'_>) -> Vec<BTreeSet<i16>> {
 	if a.p.is_empty() && a.x.is_empty() {
 		return vec![a.r];
 	}
@@ -60,16 +70,16 @@ fn bron(mut a: A<'_>) -> Vec<BTreeSet<&str>> {
 		.iter()
 		.next()
 		.unwrap();
-	let p: BTreeSet<&str> = a.p.difference(a.edges.get(u).unwrap()).cloned().collect();
+	let p: BTreeSet<i16> = a.p.difference(a.edges.get(u).unwrap()).cloned().collect();
 	for &v in &p {
 		let b = A {
 			edges: a.edges,
 			r: a.r.iter().cloned().chain(std::iter::once(v)).collect(),
-			p: a.p.intersection(a.edges.get(v).unwrap()).cloned().collect(),
-			x: a.x.intersection(a.edges.get(v).unwrap()).cloned().collect(),
+			p: a.p.intersection(a.edges.get(&v).unwrap()).cloned().collect(),
+			x: a.x.intersection(a.edges.get(&v).unwrap()).cloned().collect(),
 		};
 		q.extend(bron(b));
-		a.p.remove(v);
+		a.p.remove(&v);
 		a.x.insert(v);
 	}
 	q
@@ -88,6 +98,7 @@ pub fn part2(input: &str) -> String {
 	.max_by_key(|s| s.len())
 	.unwrap()
 	.into_iter()
+	.map(stringize)
 	.join(",")
 }
 
