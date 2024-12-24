@@ -20,9 +20,7 @@ fn parse(input: &str) -> (BTreeSet<i16>, BTreeMap<i16, BTreeSet<i16>>) {
 	let mut vertices = BTreeSet::<i16>::default();
 	let mut edges = BTreeMap::<i16, BTreeSet<i16>>::default();
 	for l in input.lines() {
-		let (a, b) = l.split('-').collect_tuple().unwrap();
-		let a = numerize(a);
-		let b = numerize(b);
+		let (a, b) = l.split('-').map(numerize).collect_tuple().unwrap();
 		edges.entry(a).or_default().insert(b);
 		edges.entry(b).or_default().insert(a);
 		vertices.insert(a);
