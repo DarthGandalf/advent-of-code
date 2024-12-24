@@ -3,12 +3,12 @@ use fnv::FnvHashSet;
 use itertools::Itertools;
 use std::collections::{BTreeMap, BTreeSet};
 
-fn numerize(a: &str) -> i16 {
+fn numerize(a: &str) -> u16 {
 	a.chars()
-		.fold(0, |acc, x| acc * 36 + x.to_digit(36).unwrap() as i16)
+		.fold(0, |acc, x| acc * 36 + x.to_digit(36).unwrap() as u16)
 }
 
-fn stringize(a: i16) -> String {
+fn stringize(a: u16) -> String {
 	format!(
 		"{}{}",
 		char::from_digit((a / 36) as u32, 36).unwrap(),
@@ -16,9 +16,9 @@ fn stringize(a: i16) -> String {
 	)
 }
 
-fn parse(input: &str) -> (BTreeSet<i16>, BTreeMap<i16, BTreeSet<i16>>) {
-	let mut vertices = BTreeSet::<i16>::default();
-	let mut edges = BTreeMap::<i16, BTreeSet<i16>>::default();
+fn parse(input: &str) -> (BTreeSet<u16>, BTreeMap<u16, BTreeSet<u16>>) {
+	let mut vertices = BTreeSet::<u16>::default();
+	let mut edges = BTreeMap::<u16, BTreeSet<u16>>::default();
 	for l in input.lines() {
 		let (a, b) = l.split('-').map(numerize).collect_tuple().unwrap();
 		edges.entry(a).or_default().insert(b);
@@ -32,7 +32,7 @@ fn parse(input: &str) -> (BTreeSet<i16>, BTreeMap<i16, BTreeSet<i16>>) {
 #[aoc(day23, part1)]
 pub fn part1(input: &str) -> usize {
 	let (vertices, edges) = parse(input);
-	let mut result = FnvHashSet::<String>::default();
+	let mut result = FnvHashSet::<u32>::default();
 	for v in &vertices {
 		if char::from_digit((v / 36) as u32, 36) != Some('t') {
 			continue;
@@ -48,7 +48,7 @@ pub fn part1(input: &str) -> usize {
 				if edges.get(v).unwrap().contains(t) {
 					let mut vec = vec![u, v, t];
 					vec.sort_unstable();
-					result.insert(vec.into_iter().join(","));
+					result.insert(*vec[0] as u32 * 36 * 36 + *vec[1] as u32 * 36 + *vec[2] as u32);
 				}
 			}
 		}
@@ -57,14 +57,14 @@ pub fn part1(input: &str) -> usize {
 }
 
 struct A<'a> {
-	edges: &'a BTreeMap<i16, BTreeSet<i16>>,
-	r: BTreeSet<i16>,
-	p: BTreeSet<i16>,
-	x: BTreeSet<i16>,
+	edges: &'a BTreeMap<u16, BTreeSet<u16>>,
+	r: BTreeSet<u16>,
+	p: BTreeSet<u16>,
+	x: BTreeSet<u16>,
 }
 
 // https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm
-fn bron(mut a: A<'_>) -> Vec<BTreeSet<i16>> {
+fn bron(mut a: A<'_>) -> Vec<BTreeSet<u16>> {
 	if a.p.is_empty() && a.x.is_empty() {
 		return vec![a.r];
 	}
@@ -73,7 +73,7 @@ fn bron(mut a: A<'_>) -> Vec<BTreeSet<i16>> {
 		.iter()
 		.next()
 		.unwrap();
-	let p: BTreeSet<i16> = a.p.difference(a.edges.get(u).unwrap()).cloned().collect();
+	let p: BTreeSet<u16> = a.p.difference(a.edges.get(u).unwrap()).cloned().collect();
 	for &v in &p {
 		let b = A {
 			edges: a.edges,
