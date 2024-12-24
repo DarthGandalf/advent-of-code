@@ -95,13 +95,13 @@ mod tests {
 
 	#[test]
 	fn test1() {
-		assert_eq!(part1(&include_str!("../input/2024/day20.txt").trim()), 1321);
+		assert_eq!(part1(include_str!("../input/2024/day20.txt").trim()), 1321);
 	}
 
 	#[test]
 	fn test2() {
 		assert_eq!(
-			part2(&include_str!("../input/2024/day20.txt").trim()),
+			part2(include_str!("../input/2024/day20.txt").trim()),
 			971737
 		);
 	}

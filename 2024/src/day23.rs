@@ -1,7 +1,7 @@
-use std::collections::{BTreeMap, BTreeSet, VecDeque};
 use aoc_runner_derive::aoc;
-use fnv::{FnvHashMap, FnvHashSet};
+use fnv::FnvHashSet;
 use itertools::Itertools;
+use std::collections::{BTreeMap, BTreeSet};
 
 fn parse(input: &str) -> (BTreeSet<&str>, BTreeMap<&str, BTreeSet<&str>>) {
 	let mut vertices = BTreeSet::<&str>::default();
@@ -21,7 +21,7 @@ pub fn part1(input: &str) -> usize {
 	let (vertices, edges) = parse(input);
 	let mut result = FnvHashSet::<String>::default();
 	for v in &vertices {
-		if v.chars().next().unwrap() != 't' {
+		if !v.starts_with('t') {
 			continue;
 		}
 		for u in edges.get(v).unwrap() {
@@ -51,7 +51,7 @@ struct A<'a> {
 }
 
 // https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm
-fn bron<'a>(mut a: A<'a>) -> Vec<BTreeSet<&'a str>> {
+fn bron(mut a: A<'_>) -> Vec<BTreeSet<&str>> {
 	if a.p.is_empty() && a.x.is_empty() {
 		return vec![a.r];
 	}
@@ -74,12 +74,17 @@ fn bron<'a>(mut a: A<'a>) -> Vec<BTreeSet<&'a str>> {
 #[aoc(day23, part2)]
 pub fn part2(input: &str) -> String {
 	let (vertices, edges) = parse(input);
-	bron(A{
+	bron(A {
 		edges: &edges,
 		r: Default::default(),
 		p: vertices,
 		x: Default::default(),
-	}).into_iter().max_by_key(|s| s.len()).unwrap().into_iter().join(",")
+	})
+	.into_iter()
+	.max_by_key(|s| s.len())
+	.unwrap()
+	.into_iter()
+	.join(",")
 }
 
 #[cfg(test)]
