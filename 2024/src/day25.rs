@@ -1,10 +1,5 @@
-use anyhow::Result;
 use aoc_runner_derive::aoc;
 use itertools::Itertools;
-use std::{
-	collections::{BTreeMap, BTreeSet},
-	fmt::Write,
-};
 
 #[derive(Debug)]
 struct Seq([u8; 5]);
@@ -29,7 +24,10 @@ pub fn part1(input: &str) -> usize {
 			locks.push(Seq(heights));
 		}
 	}
-	keys.iter().cartesian_product(&locks).filter(|&(k, l)| (0..5).all(|i| k.0[i] + l.0[i] <= 5)).count()
+	keys.iter()
+		.cartesian_product(&locks)
+		.filter(|&(k, l)| (0..5).all(|i| k.0[i] + l.0[i] <= 5))
+		.count()
 }
 
 #[cfg(test)]
