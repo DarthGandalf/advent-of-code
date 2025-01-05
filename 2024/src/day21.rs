@@ -1,29 +1,13 @@
+use std::collections::VecDeque;
+
 use aoc_runner_derive::aoc;
 use fnv::FnvHashMap;
 use itertools::Itertools;
 use regex::Regex;
 use strum::{EnumIter, IntoEnumIterator};
 
-#[derive(Hash, Eq, PartialEq, EnumIter, Clone, Copy)]
-enum Key {
-	Up,
-	Down,
-	Left,
-	Right,
-	A,
-}
-
-#[derive(Default)]
-struct Pusher {
-	m: FnvHashMap<(Key, Key), usize>,
-}
-
-#[memoize::memoize]
-fn keypress(level: u8, target: u8, from: char, to: char) -> usize {
-	if level == target {
-		return 1;
-	}
-	let loc: FnvHashMap<char, (i8, i8)> = if level == 0 {
+fn get_map_by_level(digits: bool) -> FnvHashMap<char, (i8, i8)> {
+	if digits {
 		[
 			('A', (3, 2)),
 			('0', (3, 1)),
@@ -49,114 +33,138 @@ fn keypress(level: u8, target: u8, from: char, to: char) -> usize {
 		]
 		.into_iter()
 		.collect()
-	};
-	let from = loc.get(&from).unwrap();
-	let to = loc.get(&to).unwrap();
-	let mut sum = 0;
-	let mut current = 'A';
-	if from.0 < to.0 {
-		for i in from.0..to.0 {
-			sum += &keypress(level + 1, target, current, 'v');
-			current = 'v';
-		}
 	}
-	if from.0 > to.0 {
-		for i in to.0..from.0 {
-			sum += &keypress(level + 1, target, current, '^');
-			current = '^';
-		}
+}
+
+#[derive(Eq, PartialEq, Hash, Clone)]
+struct Pos {
+	typed: String,
+	current: char,
+}
+
+fn find_path(
+	loc: &FnvHashMap<char, (i8, i8)>,
+	grid: &FnvHashMap<(i8, i8), char>,
+	cost: &FnvHashMap<char, usize>,
+	target: &str,
+) -> usize {
+	pathfinding::directed::astar::astar(
+		&Pos {
+			typed: String::new(),
+			current: 'A',
+		},
+		|p| {
+			let mut neigh = vec![];
+			let (y, x) = *loc.get(&p.current).unwrap();
+			let next_typed = format!("{}{}", p.typed, p.current);
+			if target.starts_with(&next_typed) {
+				neigh.push((
+					Pos {
+						typed: next_typed,
+						current: p.current,
+					},
+					*cost.get(&'A').unwrap(),
+				));
+			}
+			if let Some(&n) = grid.get(&(y - 1, x)) {
+				neigh.push((
+					Pos {
+						typed: p.typed.clone(),
+						current: n,
+					},
+					*cost.get(&'^').unwrap(),
+				));
+			}
+			if let Some(&n) = grid.get(&(y + 1, x)) {
+				neigh.push((
+					Pos {
+						typed: p.typed.clone(),
+						current: n,
+					},
+					*cost.get(&'v').unwrap(),
+				));
+			}
+			if let Some(&n) = grid.get(&(y, x - 1)) {
+				neigh.push((
+					Pos {
+						typed: p.typed.clone(),
+						current: n,
+					},
+					*cost.get(&'<').unwrap(),
+				));
+			}
+			if let Some(&n) = grid.get(&(y, x + 1)) {
+				neigh.push((
+					Pos {
+						typed: p.typed.clone(),
+						current: n,
+					},
+					*cost.get(&'>').unwrap(),
+				));
+			}
+			neigh
+		},
+		|_| 0,
+		|p| p.typed == target,
+	)
+	.unwrap()
+	.1 as usize
+}
+
+fn next_level(
+	loc: FnvHashMap<char, (i8, i8)>,
+	cost: FnvHashMap<char, usize>,
+) -> FnvHashMap<char, usize> {
+	let grid: FnvHashMap<(i8, i8), char> = loc.iter().map(|(&a, &b)| (b, a)).collect();
+	let mut new_cost = FnvHashMap::<char, usize>::default();
+	for &tgt in loc.keys() {
+		let target = tgt.to_string();
+		new_cost.insert(tgt, find_path(&loc, &grid, &cost, &target));
 	}
-	if from.1 < to.1 {
-		for i in from.1..to.1 {
-			sum += &keypress(level + 1, target, current, '>');
-			current = '>';
-		}
+	new_cost
+}
+
+fn keypress(level: i8) -> FnvHashMap<char, usize> {
+	if level == 0 {
+		return ['A', '^', 'v', '<', '>']
+			.into_iter()
+			.map(|c| (c, 1))
+			.collect();
 	}
-	if from.1 > to.1 {
-		for i in to.1..from.1 {
-			sum += &keypress(level + 1, target, current, '<');
-			current = '<';
-		}
-	}
-	sum += &keypress(level + 1, target, current, 'A');
-	sum
+	let cost = keypress(level - 1);
+	let loc: FnvHashMap<char, (i8, i8)> = [
+		('A', (0, 2)),
+		('^', (0, 1)),
+		('<', (1, 0)),
+		('v', (1, 1)),
+		('>', (1, 2)),
+	]
+	.into_iter()
+	.collect();
+	next_level(loc, cost)
 }
 
 #[aoc(day21, part1)]
 pub fn part1(input: &str) -> usize {
+	let cost = keypress(2);
+	let loc = get_map_by_level(true);
+	let grid: FnvHashMap<(i8, i8), char> = loc.iter().map(|(&a, &b)| (b, a)).collect();
+	dbg!(&cost);
 	input
-		.lines()
-		.map(|l| {
-			println!("==={l}");
-			let c: usize = l[..3].parse().unwrap();
-			std::iter::once('A')
-				.chain(l.chars())
-				.map_windows(|a: &[char; 2]| keypress(0, 3, a[0], a[1]))
-				.inspect(|x| println!("{x}"))
-				.sum::<usize>()
-				* c
-		})
-		.sum()
+	.lines()
+	.map(|l| {
+		println!("==={l}");
+		let c: usize = l[..3].parse().unwrap();
+		find_path(&loc, &grid, &cost, &l[..3]) * c
+	})
+	.sum()
 }
-
-/*#[aoc(day21, part1)]
-pub fn part1(input: &str) -> usize {
-	let loc: FnvHashMap<Key, (i32, i32)> = [
-		(Key::Up, (0, 1)),
-		(Key::A, (0, 2)),
-		(Key::Left, (1, 0)),
-		(Key::Down, (1, 1)),
-		(Key::Right, (1, 2)),
-	]
-	.into_iter()
-	.collect();
-	let mut p = Pusher::default();
-	for from in Key::iter() {
-		for to in Key::iter() {
-			p.m.insert((from, to), 1);
-		}
-	}
-	for i in 0..2 {
-		let mut newp = Pusher::default();
-		for from in Key::iter() {
-			let frloc = loc.get(&from).unwrap();
-			for to in Key::iter() {
-				let toloc = loc.get(&to).unwrap();
-				let dy = toloc.0 - frloc.0;
-				let dx = toloc.1 - frloc.1;
-				let sum = 0;
-				let mut needed_buttons = vec![Key::A];
-				if dx > 0 {
-					needed_buttons.push(Key::Right);
-				}
-				if dx < 0 {
-					needed_buttons.push(Key::Left);
-				}
-				if dy > 0 {
-					needed_buttons.push(Key::Down);
-				}
-				if dy < 0 {
-					needed_buttons.push(Key::Up);
-				}
-				let miny = needed_buttons.iter().map(|b| loc.get(&b).unwrap().0).min().unwrap();
-				let maxy = needed_buttons.iter().map(|b| loc.get(&b).unwrap().0).max().unwrap();
-				let minx = needed_buttons.iter().map(|b| loc.get(&b).unwrap().1).min().unwrap();
-				let maxx = needed_buttons.iter().map(|b| loc.get(&b).unwrap().1).max().unwrap();
-				let dx = maxx - minx;
-				let dy = maxy - miny;
-				p.m.get();
-			}
-		}
-		p = newp;
-	}
-	0
-}*/
 
 #[aoc(day21, part2)]
 pub fn part2(input: &str) -> usize {
 	0
 }
-/*
+
 #[cfg(test)]
 mod tests {
 	use super::*;
@@ -180,4 +188,3 @@ mod tests {
 		assert_eq!(part2(INPUT), 0);
 	}
 }
-*/
