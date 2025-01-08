@@ -36,7 +36,7 @@ fn get_map_by_level(digits: bool) -> FnvHashMap<char, (i8, i8)> {
 	}
 }
 
-#[derive(Eq, PartialEq, Hash, Clone)]
+#[derive(Eq, PartialEq, Hash, Clone, Debug)]
 struct Pos {
 	typed: String,
 	current: char,
@@ -48,7 +48,7 @@ fn find_path(
 	cost: &FnvHashMap<char, usize>,
 	target: &str,
 ) -> usize {
-	pathfinding::directed::astar::astar(
+	let (path, len) = pathfinding::directed::astar::astar(
 		&Pos {
 			typed: String::new(),
 			current: 'A',
@@ -107,8 +107,9 @@ fn find_path(
 		|_| 0,
 		|p| p.typed == target,
 	)
-	.unwrap()
-	.1 as usize
+	.unwrap();
+	dbg!(target, &path);
+	len as usize
 }
 
 fn next_level(
@@ -155,7 +156,7 @@ pub fn part1(input: &str) -> usize {
 	.map(|l| {
 		println!("==={l}");
 		let c: usize = l[..3].parse().unwrap();
-		find_path(&loc, &grid, &cost, &l[..3]) * c
+		find_path(&loc, &grid, &cost, &l) * c
 	})
 	.sum()
 }
