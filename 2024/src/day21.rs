@@ -40,66 +40,79 @@ fn get_map_by_level(digits: bool) -> FnvHashMap<char, (i8, i8)> {
 struct Pos {
 	typed: String,
 	current: char,
+	controlling_robot: char,
 }
 
 fn find_path(
 	loc: &FnvHashMap<char, (i8, i8)>,
 	grid: &FnvHashMap<(i8, i8), char>,
-	cost: &FnvHashMap<char, usize>,
+	cost: &FnvHashMap<(char, char), usize>,
+	src: char,
 	target: &str,
 ) -> usize {
 	let (path, len) = pathfinding::directed::astar::astar(
 		&Pos {
 			typed: String::new(),
-			current: 'A',
+			current: src,
+			controlling_robot: 'A',
 		},
 		|p| {
 			let mut neigh = vec![];
 			let (y, x) = *loc.get(&p.current).unwrap();
 			let next_typed = format!("{}{}", p.typed, p.current);
 			if target.starts_with(&next_typed) {
+				let controlling_robot = 'A';
 				neigh.push((
 					Pos {
 						typed: next_typed,
 						current: p.current,
+						controlling_robot,
 					},
-					*cost.get(&'A').unwrap(),
+					*cost.get(&(p.controlling_robot, controlling_robot)).unwrap(),
 				));
 			}
 			if let Some(&n) = grid.get(&(y - 1, x)) {
+				let controlling_robot = '^';
 				neigh.push((
 					Pos {
 						typed: p.typed.clone(),
 						current: n,
+						controlling_robot,
 					},
-					*cost.get(&'^').unwrap(),
+					*cost.get(&(p.controlling_robot, controlling_robot)).unwrap(),
 				));
 			}
 			if let Some(&n) = grid.get(&(y + 1, x)) {
+				let controlling_robot = 'v';
 				neigh.push((
 					Pos {
 						typed: p.typed.clone(),
 						current: n,
+						controlling_robot,
 					},
-					*cost.get(&'v').unwrap(),
+					*cost.get(&(p.controlling_robot, controlling_robot)).unwrap(),
 				));
 			}
 			if let Some(&n) = grid.get(&(y, x - 1)) {
+				let controlling_robot = '<';
 				neigh.push((
 					Pos {
 						typed: p.typed.clone(),
 						current: n,
+						controlling_robot,
 					},
-					*cost.get(&'<').unwrap(),
+					*cost.get(&(p.controlling_robot, controlling_robot)).unwrap(),
 				));
 			}
 			if let Some(&n) = grid.get(&(y, x + 1)) {
+				let controlling_robot = '>';
 				neigh.push((
 					Pos {
 						typed: p.typed.clone(),
 						current: n,
+						controlling_robot,
 					},
-					*cost.get(&'>').unwrap(),
+					*cost.get(&(p.controlling_robot, controlling_robot)).unwrap(),
 				));
 			}
 			neigh
@@ -108,28 +121,30 @@ fn find_path(
 		|p| p.typed == target,
 	)
 	.unwrap();
-	dbg!(target, &path);
 	len as usize
 }
 
 fn next_level(
 	loc: FnvHashMap<char, (i8, i8)>,
-	cost: FnvHashMap<char, usize>,
-) -> FnvHashMap<char, usize> {
+	cost: FnvHashMap<(char, char), usize>,
+) -> FnvHashMap<(char, char), usize> {
 	let grid: FnvHashMap<(i8, i8), char> = loc.iter().map(|(&a, &b)| (b, a)).collect();
-	let mut new_cost = FnvHashMap::<char, usize>::default();
-	for &tgt in loc.keys() {
-		let target = tgt.to_string();
-		new_cost.insert(tgt, find_path(&loc, &grid, &cost, &target));
+	let mut new_cost = FnvHashMap::<(char, char), usize>::default();
+	for &src in loc.keys() {
+		for &tgt in loc.keys() {
+			let target = tgt.to_string();
+			new_cost.insert((src, tgt), find_path(&loc, &grid, &cost, src, &target));
+		}
 	}
 	new_cost
 }
 
-fn keypress(level: i8) -> FnvHashMap<char, usize> {
+fn keypress(level: i8) -> FnvHashMap<(char, char), usize> {
 	if level == 0 {
-		return ['A', '^', 'v', '<', '>']
-			.into_iter()
-			.map(|c| (c, 1))
+		let keys = ['A', '^', 'v', '<', '>'];
+		return keys
+			.iter().cartesian_product(&keys)
+			.map(|(&f, &t)| ((f, t), 1))
 			.collect();
 	}
 	let cost = keypress(level - 1);
@@ -150,13 +165,11 @@ pub fn part1(input: &str) -> usize {
 	let cost = keypress(2);
 	let loc = get_map_by_level(true);
 	let grid: FnvHashMap<(i8, i8), char> = loc.iter().map(|(&a, &b)| (b, a)).collect();
-	dbg!(&cost);
 	input
 	.lines()
 	.map(|l| {
-		println!("==={l}");
 		let c: usize = l[..3].parse().unwrap();
-		find_path(&loc, &grid, &cost, &l) * c
+		find_path(&loc, &grid, &cost, 'A', &l) * c
 	})
 	.sum()
 }
