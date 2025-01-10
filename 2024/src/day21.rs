@@ -83,7 +83,7 @@ fn find_path(
 			}
 			neigh
 		},
-		|_| 0,
+		|p| target.len() - p.typed.len(),
 		|p| p.typed == target,
 	)
 	.unwrap()
@@ -105,6 +105,7 @@ fn next_level(
 	new_cost
 }
 
+#[memoize::memoize]
 fn keypress(level: i8) -> FnvHashMap<(char, char), usize> {
 	if level == 0 {
 		let keys = ['A', '^', 'v', '<', '>'];
