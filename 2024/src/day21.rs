@@ -1,10 +1,6 @@
-use std::collections::VecDeque;
-
 use aoc_runner_derive::aoc;
 use fnv::FnvHashMap;
 use itertools::Itertools;
-use regex::Regex;
-use strum::{EnumIter, IntoEnumIterator};
 
 fn get_map_by_level(digits: bool) -> FnvHashMap<char, (i8, i8)> {
 	if digits {
@@ -50,7 +46,7 @@ fn find_path(
 	src: char,
 	target: &str,
 ) -> usize {
-	let (path, len) = pathfinding::directed::astar::astar(
+	pathfinding::directed::astar::astar(
 		&Pos {
 			typed: String::new(),
 			current: src,
@@ -120,8 +116,7 @@ fn find_path(
 		|_| 0,
 		|p| p.typed == target,
 	)
-	.unwrap();
-	len as usize
+	.unwrap().1
 }
 
 fn next_level(
@@ -160,9 +155,8 @@ fn keypress(level: i8) -> FnvHashMap<(char, char), usize> {
 	next_level(loc, cost)
 }
 
-#[aoc(day21, part1)]
-pub fn part1(input: &str) -> usize {
-	let cost = keypress(2);
+fn solve(input: &str, level: i8) -> usize {
+	let cost = keypress(level);
 	let loc = get_map_by_level(true);
 	let grid: FnvHashMap<(i8, i8), char> = loc.iter().map(|(&a, &b)| (b, a)).collect();
 	input
@@ -174,9 +168,14 @@ pub fn part1(input: &str) -> usize {
 	.sum()
 }
 
+#[aoc(day21, part1)]
+pub fn part1(input: &str) -> usize {
+	solve(input, 2)
+}
+
 #[aoc(day21, part2)]
 pub fn part2(input: &str) -> usize {
-	0
+	solve(input, 25)
 }
 
 #[cfg(test)]
@@ -199,6 +198,5 @@ mod tests {
 
 	#[test]
 	fn test2() {
-		assert_eq!(part2(INPUT), 0);
 	}
 }
