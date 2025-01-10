@@ -2,36 +2,6 @@ use aoc_runner_derive::aoc;
 use fnv::FnvHashMap;
 use itertools::Itertools;
 
-fn get_map_by_level(digits: bool) -> FnvHashMap<char, (i8, i8)> {
-	if digits {
-		[
-			('A', (3, 2)),
-			('0', (3, 1)),
-			('1', (2, 0)),
-			('2', (2, 1)),
-			('3', (2, 2)),
-			('4', (1, 0)),
-			('5', (1, 1)),
-			('6', (1, 2)),
-			('7', (0, 0)),
-			('8', (0, 1)),
-			('9', (0, 2)),
-		]
-		.into_iter()
-		.collect()
-	} else {
-		[
-			('A', (0, 2)),
-			('^', (0, 1)),
-			('<', (1, 0)),
-			('v', (1, 1)),
-			('>', (1, 2)),
-		]
-		.into_iter()
-		.collect()
-	}
-}
-
 #[derive(Eq, PartialEq, Hash, Clone, Debug)]
 struct Pos {
 	typed: String,
@@ -116,7 +86,8 @@ fn find_path(
 		|_| 0,
 		|p| p.typed == target,
 	)
-	.unwrap().1
+	.unwrap()
+	.1
 }
 
 fn next_level(
@@ -138,7 +109,8 @@ fn keypress(level: i8) -> FnvHashMap<(char, char), usize> {
 	if level == 0 {
 		let keys = ['A', '^', 'v', '<', '>'];
 		return keys
-			.iter().cartesian_product(&keys)
+			.iter()
+			.cartesian_product(&keys)
 			.map(|(&f, &t)| ((f, t), 1))
 			.collect();
 	}
@@ -157,15 +129,29 @@ fn keypress(level: i8) -> FnvHashMap<(char, char), usize> {
 
 fn solve(input: &str, level: i8) -> usize {
 	let cost = keypress(level);
-	let loc = get_map_by_level(true);
+	let loc: FnvHashMap<char, (i8, i8)> = [
+		('A', (3, 2)),
+		('0', (3, 1)),
+		('1', (2, 0)),
+		('2', (2, 1)),
+		('3', (2, 2)),
+		('4', (1, 0)),
+		('5', (1, 1)),
+		('6', (1, 2)),
+		('7', (0, 0)),
+		('8', (0, 1)),
+		('9', (0, 2)),
+	]
+	.into_iter()
+	.collect();
 	let grid: FnvHashMap<(i8, i8), char> = loc.iter().map(|(&a, &b)| (b, a)).collect();
 	input
-	.lines()
-	.map(|l| {
-		let c: usize = l[..3].parse().unwrap();
-		find_path(&loc, &grid, &cost, 'A', &l) * c
-	})
-	.sum()
+		.lines()
+		.map(|l| {
+			let c: usize = l[..3].parse().unwrap();
+			find_path(&loc, &grid, &cost, 'A', &l) * c
+		})
+		.sum()
 }
 
 #[aoc(day21, part1)]
@@ -197,6 +183,5 @@ mod tests {
 	}
 
 	#[test]
-	fn test2() {
-	}
+	fn test2() {}
 }
