@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aoc2025"
+version = "2025"
+requires-python = ">=3.14"
+dependencies = [
+	"pytest >= 9.0",
+]
+
+[tool.pytest]
+addopts = ["--import-mode=importlib"]
+strict = true
+
+[project.scripts]
+aoc2025 = "aoc2025:run.run"
+
+[project.entry-points."aoc2025.day"]
+#day1 = "aoc2025:day1.Solver"

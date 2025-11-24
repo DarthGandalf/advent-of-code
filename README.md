@@ -11,3 +11,4 @@ Year | Language
 2022 | Julia
 2023 | Raku
 2024 | Rust
+2025 | Python
