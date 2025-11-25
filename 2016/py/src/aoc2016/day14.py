@@ -12,11 +12,11 @@ class Solver:
         self.salt = f.read().strip()
 
     @functools.cache
-    def hash(self, index):
+    def hash(self, index: int):
         return md5(data=f"{self.salt}{index}".encode()).hexdigest()
 
     @functools.cache
-    def hash2(self, index):
+    def hash2(self, index: int):
         h = self.hash(index)
         for _ in range(0, 2016):
             h = md5(h.encode()).hexdigest()
