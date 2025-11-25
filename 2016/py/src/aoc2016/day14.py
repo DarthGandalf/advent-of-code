@@ -1,6 +1,5 @@
 import io
 import functools
-from collections import deque
 from hashlib import md5
 import itertools
 import re
