@@ -19,3 +19,4 @@ aoc2016 = "aoc2016:run.run"
 
 [project.entry-points."aoc2016.day"]
 day13 = "aoc2016:day13.Solver"
+day14 = "aoc2016:day14.Solver"

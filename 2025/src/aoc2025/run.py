@@ -23,6 +23,6 @@ def run():
             start = time.time_ns()
             result = func()
             end = time.time_ns()
-            elapsed = datetime.timedelta(microseconds=end - start)
+            elapsed = datetime.timedelta(microseconds=(end - start) / 1000)
             print(f"Result: {result} ({elapsed})")
             print()
