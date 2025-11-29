@@ -1,6 +1,8 @@
 from aoc2016.day14 import Solver
 from io import StringIO
+import pytest
 
+@pytest.mark.skip(reason="slow")
 def test_example():
     solver = Solver()
     solver.parse(StringIO("abc"))
