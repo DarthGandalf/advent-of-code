@@ -14,7 +14,7 @@ def run():
     eps = entry_points(group="aoc2025.day")
     solver = eps[f"day{args.day}"].load()()
 
-    with open(f'../input/2025/day{args.day}.txt', 'rt') as f:
+    with open(f'input/day{args.day}.txt', 'rt') as f:
         solver.parse(f)
 
     for part, func in {1: solver.part1, 2: solver.part2}.items():
