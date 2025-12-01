@@ -16,7 +16,12 @@ def run():
     solver = eps[f"day{args.day}{args.variant}"].load()()
 
     with open(f'input/day{args.day}.txt', 'rt') as f:
+        start = time.time_ns()
         solver.parse(f)
+        end = time.time_ns()
+        elapsed = datetime.timedelta(microseconds=(end - start) / 1000)
+        print(f"Parsed in {elapsed}")
+        print()
 
     for part, func in {1: solver.part1, 2: solver.part2}.items():
         if args.part is None or args.part == part:
