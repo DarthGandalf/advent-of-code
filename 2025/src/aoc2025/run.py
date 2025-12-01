@@ -9,10 +9,11 @@ def run():
     parser = argparse.ArgumentParser()
     parser.add_argument("--day", type=int, required=True)
     parser.add_argument("--part", type=int)
+    parser.add_argument("--variant", default="")
     args = parser.parse_args()
 
     eps = entry_points(group="aoc2025.day")
-    solver = eps[f"day{args.day}"].load()()
+    solver = eps[f"day{args.day}{args.variant}"].load()()
 
     with open(f'input/day{args.day}.txt', 'rt') as f:
         solver.parse(f)
