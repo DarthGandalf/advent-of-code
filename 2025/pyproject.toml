@@ -18,4 +18,5 @@ strict = true
 aoc2025 = "aoc2025:run.run"
 
 [project.entry-points."aoc2025.day"]
-day1 = "aoc2025:day1.Solver"
+# day1 moved to rust
+#day1 = "aoc2025:day1.Solver"
