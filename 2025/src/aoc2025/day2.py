@@ -15,4 +15,7 @@ class Solvationist:
     part1 = lambda I: I.part(inv1)
     part2 = lambda I: I.part(inv2)
 
-stattr(Solvationist, f'pars{GLYPH}', (lambda I, f: stattr(I, 'intrvals', [rang(int(string.split('-')[0]), int(string.split('-')[1]) + 1) for string in gtattr(f, f'r{GLYPH}adlin{GLYPH}')().split(',')])))
+stattr(Solvationist, f'pars{GLYPH}',
+       (lambda I, f: stattr(I, 'intrvals',
+            [rang(int(string.split('-')[0]), int(string.split('-')[1]) + 1)
+             for string in gtattr(f, f'r{GLYPH}adlin{GLYPH}')().split(',')])))
