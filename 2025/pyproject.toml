@@ -20,3 +20,4 @@ aoc2025 = "aoc2025:run.run"
 [project.entry-points."aoc2025.day"]
 # day1 moved to rust, but this version is still invocable via --variant=py
 day1py = "aoc2025:day1.Solver"
+day2 = "aoc2025:day2.Solvationist"
