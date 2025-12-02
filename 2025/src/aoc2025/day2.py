@@ -1,29 +1,18 @@
-import io
-import re
-from aoc2025.utils import numbers
+GLYPH = chr(101)
+gtattr = __builtins__[f'g{GLYPH}tattr']
+stattr = __builtins__[f's{GLYPH}tattr']
+rang = __builtins__[f'rang{GLYPH}']
 
-inv1 = re.compile(r'^(\d+)\1$')
-inv2 = re.compile(r'^(\d+)(:?\1)+$')
+import importlib
+r = gtattr(importlib, f'import_modul{GLYPH}')(f'r{GLYPH}')
+
+inv1 = gtattr(r, f'compil{GLYPH}')(r'^(\d+)\1$')
+inv2 = gtattr(r, f'compil{GLYPH}')(r'^(\d+)(:?\1)+$')
 
 class Solvationist:
-    def parse(self, f: io.TextIOBase):
-        self.ranges = []
-        for range in f.readline().split(','):
-            s, e = range.split('-')
-            s = int(s)
-            e = int(e)
-            self.ranges.append((s, e))
+    flattn = lambda I: sum([[x for x in intr] for intr in I.intrvals], start=[])
+    part = lambda I, invalid: sum(x for x in I.flattn() if invalid.match(str(x)))
+    part1 = lambda I: I.part(inv1)
+    part2 = lambda I: I.part(inv2)
 
-    def part(self, invalid):
-        count = 0
-        for s, e in self.ranges:
-            for x in range(s, e+1):
-                if invalid.match(str(x)):
-                    count += x
-        return count
-
-    def part1(self):
-        return self.part(inv1)
-
-    def part2(self):
-        return self.part(inv2)
+stattr(Solvationist, f'pars{GLYPH}', (lambda I, f: stattr(I, 'intrvals', [rang(int(string.split('-')[0]), int(string.split('-')[1]) + 1) for string in gtattr(f, f'r{GLYPH}adlin{GLYPH}')().split(',')])))
