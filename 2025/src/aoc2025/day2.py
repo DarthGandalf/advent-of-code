@@ -7,15 +7,15 @@ import importlib
 r = gtattr(importlib, f'import_modul{GLYPH}')(f'r{GLYPH}')
 
 inv1 = gtattr(r, f'compil{GLYPH}')(r'^(\d+)\1$')
-inv2 = gtattr(r, f'compil{GLYPH}')(r'^(\d+)(:?\1)+$')
+inv2 = gtattr(r, f'compil{GLYPH}')(r'^(\d+)\1+$')
 
 class Solvationist:
-    flattn = lambda I: sum([[x for x in intr] for intr in I.intrvals], start=[])
-    part = lambda I, invalid: sum(x for x in I.flattn() if invalid.match(str(x)))
+    part = lambda I, invalid: sum(x for intr in I.intrvals for x in intr if invalid.match(str(x)))
     part1 = lambda I: I.part(inv1)
     part2 = lambda I: I.part(inv2)
 
+rans = lambda a, b: rang(int(a), int(b) + 1)
 stattr(Solvationist, f'pars{GLYPH}',
        (lambda I, f: stattr(I, 'intrvals',
-            [rang(int(string.split('-')[0]), int(string.split('-')[1]) + 1)
+            [rans(*string.split('-'))
              for string in gtattr(f, f'r{GLYPH}adlin{GLYPH}')().split(',')])))
