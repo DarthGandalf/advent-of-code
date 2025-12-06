@@ -2,6 +2,11 @@ import io
 import math
 import itertools
 
+OP = {
+    '+': sum,
+    '*': math.prod,
+}
+
 class Solver:
     def parse(self, f: io.TextIOBase):
         self.lines = f.readlines()
@@ -12,31 +17,23 @@ class Solver:
             x = list(x)
             op = x.pop()
             x = [int(y) for y in x]
-            if op == '+':
-                result += sum(x)
-            else:
-                result += math.prod(x)
+            result += OP[op](x)
         return result
 
     def part2(self):
         result = 0
         op = None
         nums = []
-        def calc():
-            if op == '+':
-                return sum(nums)
-            else:
-                return math.prod(nums)
         for x in itertools.zip_longest(*(list(l) for l in self.lines)):
             if set(x) == set([' ']):
-                result += calc()
+                result += OP[op](nums)
                 op = None
                 nums = []
                 continue
-            if x[-1] is not None and x[-1] != ' ':
+            if x[-1] is not None and x[-1].strip():
                 op = x[-1]
             s = ''.join(x[:-1]).strip()
             if s:
                 nums.append(int(''.join(x[:-1])))
-        result += calc()
+        result += OP[op](nums)
         return result
