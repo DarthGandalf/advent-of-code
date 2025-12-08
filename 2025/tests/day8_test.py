@@ -27,4 +27,4 @@ def test_example():
         425,690,689
     """).strip()))
     assert solver.part1(limit=10) == 40
-    assert solver.part2() == 43
+    assert solver.part2() == 25272

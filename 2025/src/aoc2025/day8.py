@@ -18,17 +18,18 @@ class Solver:
                 dist = sum((x - y) ** 2 for x, y in zip(b1, b2))
                 edges.append((dist, i, j))
         edges.sort()
-        return s, edges
+        self.edges = edges
+        self.s = s
 
     def part1(self, limit=1000):
-        s, edges = self.prepare()
-        for _, i, j in edges[:limit]:
-            s.union(i, j)
-        return math.prod(sorted(len(u) for u in s.itersets())[-3:])
+        self.prepare()
+        for _, i, j in self.edges[:limit]:
+            self.s.union(i, j)
+        self.edges = self.edges[limit:]
+        return math.prod(sorted(len(u) for u in self.s.itersets())[-3:])
 
     def part2(self):
-        s, edges = self.prepare()
-        while len(list(s.itersets())) > 1:
-            _, i, j = edges.pop(0)
-            s.union(i, j)
+        while len(list(self.s.itersets())) > 1:
+            _, i, j = self.edges.pop(0)
+            self.s.union(i, j)
         return self.boxes[i][0] * self.boxes[j][0]
