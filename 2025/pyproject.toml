@@ -9,6 +9,7 @@ requires-python = ">=3.14"
 dependencies = [
 	"pytest >= 9.0",
 	"numpy >= 2.3.5",
+	"disjoint-set >= 0.8.0",
 ]
 
 [tool.pytest]
@@ -27,3 +28,4 @@ day4 = "aoc2025:day4.Solver"
 day5 = "aoc2025:day5.Solver"
 day6 = "aoc2025:day6.Solver"
 day7 = "aoc2025:day7.Solver"
+day8 = "aoc2025:day8.Solver"
