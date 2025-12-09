@@ -8,7 +8,7 @@ class Solver:
         self.tiles = [tuple(numbers(l)) for l in f]
 
     def part1(self):
-        return max(abs((a[0]-b[0]+1)*(a[1]-b[1]+1)) for a, b in itertools.combinations(self.tiles, 2))
+        return max((abs((a[0]-b[0])+1)*(abs(a[1]-b[1])+1)) for a, b in itertools.combinations(self.tiles, 2))
 
     def part2(self):
         xs = set()
