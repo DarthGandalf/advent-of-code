@@ -16,4 +16,3 @@ def test_example():
     """).strip()))
     assert solver.part1() == 50
     assert solver.part2() == 24
-    assert False
