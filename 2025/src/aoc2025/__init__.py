@@ -9,3 +9,4 @@ from . import day8
 from . import day9
 from . import day10
 from . import day11
+from . import day12
